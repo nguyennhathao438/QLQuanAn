@@ -19,6 +19,7 @@ public class NguyenLieuJFrame extends javax.swing.JFrame {
     public NguyenLieuJFrame() {
         initComponents();
         kn.layNL(dsnl);
+        setLocationRelativeTo(null);
     }
     public NguyenLieuJFrame(String maNguyenL) throws SQLException{ 
         initComponents();

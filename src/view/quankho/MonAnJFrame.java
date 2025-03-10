@@ -23,6 +23,7 @@ public class MonAnJFrame extends javax.swing.JFrame {
     public MonAnJFrame() {
         initComponents();
         kn.layMonAn(dsma);
+        setLocationRelativeTo(null);
     }
     public MonAnJFrame(String maMon){ 
         initComponents();

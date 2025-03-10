@@ -36,7 +36,7 @@ public class CTHNHJFrame extends javax.swing.JFrame {
             dtm.addRow(new Object[]{a.getMaNL(),a.getHsd(),a.getSoLuong(),a.getGia()});           
         }  
         bangNLNhap.setModel(dtm);
-        
+        setLocationRelativeTo(null);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

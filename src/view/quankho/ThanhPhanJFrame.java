@@ -46,6 +46,7 @@ public class ThanhPhanJFrame extends javax.swing.JFrame {
             }
         }
         setCongThuc();
+        setLocationRelativeTo(null);
     }
     private void setBangNL(){ 
         dsnl=new DSNguyenLieu();

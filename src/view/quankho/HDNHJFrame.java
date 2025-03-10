@@ -35,23 +35,24 @@ public class HDNHJFrame extends javax.swing.JFrame {
     KetNoiDataBase kn=new KetNoiDataBase();
     DSNCC dsncc ;
     DSNguyenLieu dsnl ;
-    String maNL="";
+    
     LICHSUNH lsnh;
     DefaultTableModel dtm =new DefaultTableModel();
     String dsmaNL[] =new String[100];
     ArrayList<NLNhap> dsnlnhap=new ArrayList();
     int index=0;
-    public HDNHJFrame(String maNL) throws SQLException {
+    public HDNHJFrame() throws SQLException {
         dsncc=new DSNCC();
         lsnh=new LICHSUNH();
         initComponents();
-        this.maNL=maNL;
+        
         kn.layNCC(dsncc);
         kn.layHDNH(lsnh);
         for(NHACUNGCAP a:dsncc.getDSNCC()){
         tenNCC.addItem(a.getTenNCC());
                 }  
         setData();
+        setLocationRelativeTo(null);
     }
     public void setData() throws SQLException{ 
         dsnl=new DSNguyenLieu();
