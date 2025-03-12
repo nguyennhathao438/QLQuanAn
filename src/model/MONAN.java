@@ -4,6 +4,7 @@ package model;
 public class MONAN {
     private String maMA;
     private String tenMA;
+    private String loaiMA;
     private String moTa;
     private Double gia;
     private int trangThai;
@@ -11,13 +12,24 @@ public class MONAN {
     public MONAN() {
     }
 
-    public MONAN(String maMA, String tenMA, String moTa, Double gia, int trangThai) {
+    public MONAN(String maMA, String tenMA, String loaiMA, String moTa, Double gia, int trangThai) {
         this.maMA = maMA;
         this.tenMA = tenMA;
+        this.loaiMA = loaiMA;
         this.moTa = moTa;
         this.gia = gia;
         this.trangThai = trangThai;
     }
+
+    public String getLoaiMA() {
+        return loaiMA;
+    }
+
+    public void setLoaiMA(String loaiMA) {
+        this.loaiMA = loaiMA;
+    }
+
+    
 
     public String getMaMA() {
         return maMA;

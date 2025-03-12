@@ -1,7 +1,7 @@
 
 package model;
 
-public class NGUYENLIEU {
+public class NGUYENLIEU{
     private String maNL;
     private String maLoaiNL;
     private String tenNL;
@@ -78,6 +78,8 @@ public class NGUYENLIEU {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+    
+
     
  
     

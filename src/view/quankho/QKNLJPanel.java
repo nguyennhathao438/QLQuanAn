@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
@@ -12,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -59,7 +59,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         bangNL = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        add = new javax.swing.JLabel();
+        addNL = new javax.swing.JLabel();
         delete = new javax.swing.JLabel();
         edit = new javax.swing.JLabel();
         refresh = new javax.swing.JLabel();
@@ -67,6 +67,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         search = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        locNL = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,10 +141,10 @@ public class QKNLJPanel extends javax.swing.JPanel {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
-        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconthem.png"))); // NOI18N
-        add.addMouseListener(new java.awt.event.MouseAdapter() {
+        addNL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconthem.png"))); // NOI18N
+        addNL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addMouseClicked(evt);
+                addNLMouseClicked(evt);
             }
         });
 
@@ -169,6 +170,11 @@ public class QKNLJPanel extends javax.swing.JPanel {
         });
 
         export.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/export-icon.png"))); // NOI18N
+        export.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exportMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -176,7 +182,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(add)
+                .addComponent(addNL)
                 .addGap(18, 18, 18)
                 .addComponent(delete)
                 .addGap(18, 18, 18)
@@ -196,7 +202,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
                     .addComponent(refresh, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(delete)
-                        .addComponent(add)
+                        .addComponent(addNL)
                         .addComponent(edit)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -210,6 +216,8 @@ public class QKNLJPanel extends javax.swing.JPanel {
             }
         });
 
+        locNL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không chọn", "Lọc theo loại nguyên liệu", "Nguyên liệu cận date", "Số lượng nguyên liệu" }));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -217,9 +225,10 @@ public class QKNLJPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(search)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(locNL, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addContainerGap())
         );
@@ -228,8 +237,13 @@ public class QKNLJPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(locNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -296,9 +310,9 @@ public class QKNLJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_editNLActionPerformed
 
-    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+    private void addNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addNLMouseClicked
         new NguyenLieuJFrame().setVisible(true);
-    }//GEN-LAST:event_addMouseClicked
+    }//GEN-LAST:event_addNLMouseClicked
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
         int row=bangNL.getSelectedRow();
@@ -349,7 +363,8 @@ public class QKNLJPanel extends javax.swing.JPanel {
         String text= search.getText();
      
         dtm.setRowCount(0);
-        for(NGUYENLIEU a:dsnl.getDSNL()){ 
+        DSNguyenLieu dssearch=boLoc();
+        for(NGUYENLIEU a:dssearch.getDSNL()){ 
             try {
                 if(a.getTenNL().toLowerCase().contains(text) ||  a.getMaNL().toLowerCase().contains(text) || a.getMoTa().toLowerCase().contains(text) ){
                     if(a.getTrangThai()==1)
@@ -362,10 +377,43 @@ public class QKNLJPanel extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void exportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportMouseClicked
+      
+    }//GEN-LAST:event_exportMouseClicked
+    private DSNguyenLieu boLoc(){ 
+        String select = (String) locNL.getSelectedItem();
+        DSNguyenLieu dscopy=new DSNguyenLieu(dsnl);
+        int n=dscopy.getDoDai();
+        if(select.equals("Lọc theo loại nguyên liệu")){ 
+             for(int i=0;i<n-1;i++){ 
+                 for(int j=i+1;j<n;j++){ 
+                     if(dscopy.getDSNL().get(i).getMaLoaiNL().compareTo(dscopy.getDSNL().get(j).getMaLoaiNL()) > 0){ 
+                         NGUYENLIEU temp=dscopy.getDSNL().get(i);
+                         dscopy.getDSNL().set(i, dscopy.getDSNL().get(j));
+                         dscopy.getDSNL().set(j, temp);
+                     }
+                 }
+             }              
+        }else if(select.equals("Nguyên liệu cận date")){ 
+            
+        }else if(select.equals("Số lượng nguyên liệu")){ 
+            for(int i=0;i<n-1;i++){ 
+                 for(int j=i+1;j<n;j++){ 
+                     if(dscopy.getDSNL().get(i).getTongSoLuong() < dscopy.getDSNL().get(j).getTongSoLuong()){ 
+                         NGUYENLIEU temp=dscopy.getDSNL().get(i);
+                         dscopy.getDSNL().set(i, dscopy.getDSNL().get(j));
+                         dscopy.getDSNL().set(j, temp);
+                     }
+                 }
+             } 
+        }
+        return dscopy;
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel add;
+    private javax.swing.JLabel addNL;
     private javax.swing.JTable bangNL;
     private javax.swing.JLabel delete;
     private javax.swing.JMenuItem deleteNL;
@@ -380,6 +428,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> locNL;
     private javax.swing.JPopupMenu putableNL;
     private javax.swing.JLabel refresh;
     private javax.swing.JTextField search;

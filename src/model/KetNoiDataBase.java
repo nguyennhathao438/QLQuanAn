@@ -264,7 +264,7 @@ public class KetNoiDataBase {
     //Mon An
     public void layMonAn(DSMonAn dsma){ 
         ketNoiDB();
-        String query="SELECT maMA,tenMA,moTa,gia,trangThai FROM MONAN";
+        String query="SELECT maMA,tenMA,loaiMA,moTa,gia,trangThai FROM MONAN";
         try(Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
@@ -272,6 +272,7 @@ public class KetNoiDataBase {
                   MONAN ma=new MONAN(
                           rs.getString("maMA"),
                   rs.getString("tenMA"),
+                          rs.getString("loaiMA"),
                   rs.getString("moTa"),
                   rs.getDouble("gia"),
                   rs.getInt("trangThai")
@@ -285,14 +286,15 @@ public class KetNoiDataBase {
     }
     public void themMonAn(MONAN ma){ 
         ketNoiDB();
-        String query="INSERT INTO MONAN(maMA,tenMA,moTa,gia,trangThai) VALUES (?,?,?,?,2)" ;
+        String query="INSERT INTO MONAN(maMA,tenMA,loaiMA,moTa,gia,trangThai) VALUES (?,?,?,?,?,2)" ;
         
         try(Connection conn = ds.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1,ma.getMaMA());
             stmt.setString(2,ma.getTenMA());
-            stmt.setString(3,ma.getMoTa());
-            stmt.setDouble(4,ma.getGia());
+            stmt.setString(3,ma.getLoaiMA());
+            stmt.setString(4,ma.getMoTa());
+            stmt.setDouble(5,ma.getGia());
              stmt.executeUpdate();
         }catch(SQLException ex){ 
             ex.printStackTrace();
@@ -311,13 +313,14 @@ public class KetNoiDataBase {
     }
     public void suaMonAn(MONAN ma){ 
         ketNoiDB();
-            String sql="UPDATE MONAN SET tenMA=?,moTa=?,gia=? WHERE maMA=?;";
+            String sql="UPDATE MONAN SET tenMA=?,loaiMA=?,moTa=?,gia=? WHERE maMA=?;";
         try(Connection conn =ds.getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){            
             stmt.setString(1,ma.getTenMA());
-            stmt.setString(2,ma.getMoTa());
-            stmt.setDouble(3,ma.getGia());
-            stmt.setString(4,ma.getMaMA());
+            stmt.setString(2,ma.getLoaiMA());
+            stmt.setString(3,ma.getMoTa());
+            stmt.setDouble(4,ma.getGia());
+            stmt.setString(5,ma.getMaMA());
             stmt.executeUpdate();
         }catch(SQLException e){ 
             e.printStackTrace();

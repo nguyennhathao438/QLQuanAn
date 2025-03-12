@@ -26,14 +26,15 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
     public void setTable(){ 
         //set độ rộng
         bangMA.getColumnModel().getColumn(0).setPreferredWidth(50);
-        bangMA.getColumnModel().getColumn(1).setPreferredWidth(150);
-        bangMA.getColumnModel().getColumn(2).setPreferredWidth(300);
-        bangMA.getColumnModel().getColumn(3).setPreferredWidth(100);
+        bangMA.getColumnModel().getColumn(1).setPreferredWidth(100);
+        bangMA.getColumnModel().getColumn(2).setPreferredWidth(130);
+        bangMA.getColumnModel().getColumn(3).setPreferredWidth(200);
+        bangMA.getColumnModel().getColumn(4).setPreferredWidth(100);
         //Can giua
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 //Can giữa tẽt
-for (int i = 0; i < 5; i++) {
+for (int i = 0; i < 6; i++) {
     bangMA.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 }
 //Can giua tieu de
@@ -48,6 +49,7 @@ for (int i = 0; i < 5; i++) {
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
         dtm.addColumn("Mã Món Ăn");
+        dtm.addColumn("Loại Món Ăn");
         dtm.addColumn("Tên Món Ăn");
         dtm.addColumn("Mô Tả");
         dtm.addColumn("Giá");
@@ -55,7 +57,7 @@ for (int i = 0; i < 5; i++) {
         }
         for(MONAN a:dsma.getDSMA()){ 
             if(a.getTrangThai()!=0){
-            dtm.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
+            dtm.addRow(new Object[]{a.getMaMA(),a.getLoaiMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
             
             }
         }     
@@ -338,7 +340,7 @@ for (int i = 0; i < 5; i++) {
             dtm.setRowCount(0);
             for(MONAN a:dsmasearch.getDSMA()){ 
                 if(a.getTrangThai()!=0){
-            dtm.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
+            dtm.addRow(new Object[]{a.getMaMA(),a.getLoaiMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
             
             }
             }
