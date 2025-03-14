@@ -81,6 +81,7 @@ for (int i = 0; i < 6; i++) {
         jPanel3 = new javax.swing.JPanel();
         searchText = new javax.swing.JTextField();
         search = new javax.swing.JLabel();
+        locMA = new javax.swing.JComboBox<>();
 
         editMA.setText("Sửa");
         editMA.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +206,8 @@ for (int i = 0; i < 6; i++) {
             }
         });
 
+        locMA.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không chọn", "Lọc theo loại nguyên liệu", "Giá tăng dần", "Giá giảm dần" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -212,6 +215,8 @@ for (int i = 0; i < 6; i++) {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(locMA, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(search)
                 .addContainerGap())
@@ -219,9 +224,12 @@ for (int i = 0; i < 6; i++) {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
+                    .addComponent(search)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(locMA)))
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
@@ -322,31 +330,22 @@ for (int i = 0; i < 6; i++) {
                     break;
                 }
             }
-            new ThanhPhanJFrame(hao,setTTtoInt((String) bangMA.getValueAt(row, 4))).setVisible(true);
+            new ThanhPhanJFrame(hao,setTTtoInt((String) bangMA.getValueAt(row, 5))).setVisible(true);
         }
     }//GEN-LAST:event_congthucMouseClicked
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
-        String stext=searchText.getText();
-        DSMonAn dsmasearch=new DSMonAn();
+        String stext=searchText.getText();     
         boolean kt =false;
-        for(MONAN a:dsma.getDSMA()){ 
-            if(a.getTenMA().toLowerCase().contains(stext.toLowerCase()) || a.getMaMA().toLowerCase().contains(stext.toLowerCase())){
-                dsmasearch.themMA(a);
-                kt=true;
+        DSMonAn dssearch=boLoc();
+        dtm.setRowCount(0);
+        for(MONAN a:dssearch.getDSMA()){ 
+            if((a.getTenMA().toLowerCase().contains(stext.toLowerCase()) || a.getMaMA().toLowerCase().contains(stext.toLowerCase())&& a.getTrangThai()!=0)){
+                dtm.addRow(new Object[]{a.getMaMA(),a.getLoaiMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
+                
                         }
         }
-        if(kt==true){ 
-            dtm.setRowCount(0);
-            for(MONAN a:dsmasearch.getDSMA()){ 
-                if(a.getTrangThai()!=0){
-            dtm.addRow(new Object[]{a.getMaMA(),a.getLoaiMA(),a.getTenMA(),a.getMoTa(),a.getGia(),setTT(a.getTrangThai())});
-            
-            }
-            }
-        }else{ 
-            JOptionPane.showMessageDialog(searchText, "Không tìm thấy");
-        }
+        
     }//GEN-LAST:event_searchMouseClicked
     private String setTT(int n){ 
         if(n==1){ 
@@ -359,7 +358,45 @@ for (int i = 0; i < 6; i++) {
             return 1;
         return 2;
     }
+    private DSMonAn boLoc(){ 
+        String text=(String) locMA.getSelectedItem();
+        DSMonAn dscopy =new DSMonAn(dsma);
+        int n=dscopy.getN();
+        if(text.equals("Lọc theo loại nguyên liệu")){ 
+            for(int i=0;i<n-1;i++){ 
+                for(int j=i+1;j<n;j++){ 
+                    if(dscopy.getDSMA().get(i).getLoaiMA().compareTo(dscopy.getDSMA().get(j).getLoaiMA())>0){ 
+                        MONAN temp = dscopy.getDSMA().get(i);
+                        dscopy.getDSMA().set(i, dscopy.getDSMA().get(j));
+                        dscopy.getDSMA().set(j, temp);
+                    }
+                }
+            }
+        }else if(text.equals("Giá tăng dần")){ 
+            for(int i=0;i<n-1;i++){ 
+                for(int j=i+1;j<n;j++){ 
+                    if(dscopy.getDSMA().get(i).getGia()> dscopy.getDSMA().get(j).getGia()){ 
+                       MONAN temp = dscopy.getDSMA().get(i);
+                        dscopy.getDSMA().set(i, dscopy.getDSMA().get(j));
+                        dscopy.getDSMA().set(j, temp); 
+                    }
+                }
+            }
+        }
+        else if(text.equals("Giá giảm dần "))  { 
+                for(int i=0;i<n-1;i++){ 
+                for(int j=i+1;j<n;j++){ 
+                    if(dscopy.getDSMA().get(i).getGia()<dscopy.getDSMA().get(j).getGia()){ 
+                       MONAN temp = dscopy.getDSMA().get(i);
+                        dscopy.getDSMA().set(i, dscopy.getDSMA().get(j));
+                        dscopy.getDSMA().set(j, temp); 
+                    }
+                }
+            }
+                }  
+        return dscopy;
 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel add;
     private javax.swing.JTable bangMA;
@@ -373,6 +410,7 @@ for (int i = 0; i < 6; i++) {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> locMA;
     private javax.swing.JPopupMenu pubangMA;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchText;

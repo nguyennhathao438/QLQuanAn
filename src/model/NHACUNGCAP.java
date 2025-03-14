@@ -50,10 +50,5 @@ public class NHACUNGCAP {
     @Override
     public String toString() {
         return tenNCC;
-    }
-
-    
-    
-    
-    
+    }   
 }

@@ -66,6 +66,7 @@ public class HDNHJFrame extends javax.swing.JFrame {
             
         }        
         for(NGUYENLIEU nl:dsnl.getDSNL()){ 
+            if(nl.getTrangThai()!=0)
             dtm.addRow(new Object[]{nl.getMaNL(),kn.layTenLoaiNL(nl.getMaLoaiNL()),nl.getTenNL()});
         }   
         

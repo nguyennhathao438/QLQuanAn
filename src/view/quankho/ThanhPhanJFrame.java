@@ -59,6 +59,7 @@ public class ThanhPhanJFrame extends javax.swing.JFrame {
         }
         int count =0;
         for(NGUYENLIEU a:dsnl.getDSNL()){ 
+            if(a.getTrangThai()!=0)
             dtm.addRow(new Object[]{a.getMaNL(),a.getTenNL(),a.getMoTa()});
             
         }

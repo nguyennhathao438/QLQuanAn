@@ -4,6 +4,10 @@ package view.quankho;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -18,6 +22,11 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import model.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 public class QKNLJPanel extends javax.swing.JPanel {
     DSNguyenLieu dsnl=new DSNguyenLieu();
@@ -42,7 +51,9 @@ public class QKNLJPanel extends javax.swing.JPanel {
             
         }        
         for(NGUYENLIEU nl:dsnl.getDSNL()){ 
+            if(nl.getTrangThai()!=0)
             dtm.addRow(new Object[]{nl.getMaNL(),kn.layTenLoaiNL(nl.getMaLoaiNL()),nl.getTenNL(),nl.getTongSoLuong(),nl.getMoTa()});
+
         }     
     }
     @SuppressWarnings("unchecked")
@@ -379,7 +390,52 @@ public class QKNLJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void exportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportMouseClicked
-      
+          int confirm = JOptionPane.showConfirmDialog(this, "Bạn có muốn xuất hoá đơn ");
+          if(confirm ==JOptionPane.YES_OPTION){
+        String filePath="C:\\Users\\ADMIN\\Documents\\oop\\QLQuanAn\\exportfile\\tonkho.xlsx";
+        Workbook workbook =new XSSFWorkbook();
+        Sheet sheet = (Sheet) workbook.createSheet("Danh sách tồn kho");
+        Row headerRow= sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Mã NL");
+        headerRow.createCell(1).setCellValue("Loại NL");
+        headerRow.createCell(2).setCellValue("Tên NL");
+        headerRow.createCell(3).setCellValue("Mô tả");
+        headerRow.createCell(4).setCellValue("Số lượng");
+        headerRow.createCell(5).setCellValue("Đơn vị");
+        int rowCount =1;
+        for(NGUYENLIEU nl :dsnl.getDSNL()){ 
+            if(nl.getTrangThai()!=0 && nl.getTongSoLuong()> 0){ 
+                Row dataRow = sheet.createRow(rowCount++);
+        dataRow.createCell(0).setCellValue(nl.getMaNL());
+                try {
+                    dataRow.createCell(1).setCellValue(kn.layTenLoaiNL(nl.getMaLoaiNL()));
+                } catch (SQLException ex) {
+                    Logger.getLogger(QKNLJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        dataRow.createCell(2).setCellValue(nl.getTenNL());
+        dataRow.createCell(3).setCellValue(nl.getMoTa());
+        dataRow.createCell(4).setCellValue(nl.getTongSoLuong());
+        dataRow.createCell(5).setCellValue(nl.getDonVi());
+
+            }
+        }
+        try (FileOutputStream output=new FileOutputStream(new File(filePath))){
+            workbook.write(output);
+            JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                    } catch (FileNotFoundException ex) {
+            Logger.getLogger(QKNLJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(QKNLJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            workbook.close();
+        } catch (IOException ex) {
+            Logger.getLogger(QKNLJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          }
+          else{ 
+              return ;
+          }
     }//GEN-LAST:event_exportMouseClicked
     private DSNguyenLieu boLoc(){ 
         String select = (String) locNL.getSelectedItem();
@@ -392,6 +448,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
                          NGUYENLIEU temp=dscopy.getDSNL().get(i);
                          dscopy.getDSNL().set(i, dscopy.getDSNL().get(j));
                          dscopy.getDSNL().set(j, temp);
+                         
                      }
                  }
              }              
