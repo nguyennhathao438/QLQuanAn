@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import view.quankho.QKHDNHJPanel;
-import view.quankho.QKMonAnJPanel;
-import view.quankho.QKNCCJPanel;
-import view.quankho.QKNLJPanel;
+import GUI.quankho.QKHDNHJPanel;
+import GUI.quankho.QKMonAnJPanel;
+import GUI.quankho.QKNCCJPanel;
+import GUI.quankho.QKNLJPanel;
 
 public class ChuyenTrangQK {
     private JPanel root;
