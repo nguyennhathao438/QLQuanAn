@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.quanlinhansu;
 
@@ -9,19 +9,27 @@ import DAO.NhanVienDAO;
 import DTO.ChamCongDTO;
 import DTO.NhanVienDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import util.Func_class;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-public class ChamCong extends javax.swing.JFrame {
+import javax.swing.SwingUtilities;
+import util.Func_class;
+
+/**
+ *
+ * @author kiman
+ */
+public class ChamCongPanel extends javax.swing.JPanel {
     private Func_class func = new Func_class();
     private ArrayList<ChamCongDTO> listChamCong;
     private ArrayList<NhanVienDTO> listNV;
@@ -29,16 +37,31 @@ public class ChamCong extends javax.swing.JFrame {
     private JPanel jpanel_title;
     private JPanel jpanel_chiTietNoiDung;
     private HashMap<String,Integer> mapNV;
-    public ChamCong() {
+    public ChamCongPanel() {
         initComponents();
-        this.setTitle("Bảng Chấm Công");
-        this.setLocationRelativeTo(null);
         setUpPanelThongTinChamCong();
         setIcon();
         setUpTable();
     }
     public JTable getTableChamCong(){
         return this.table_chamCong;
+    }
+    public void setUpPanelThongTinChamCong() {
+        jpanel_chiTietChamCong.setLayout(new BorderLayout());
+        jpanel_chiTietChamCong.setPreferredSize(new Dimension(600, 100));
+
+        // Tiêu đề
+        jpanel_title = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel label_title = new JLabel("THÔNG TIN CHI TIẾT");
+        label_title.setFont(new Font("Arial", Font.BOLD, 14));
+        jpanel_title.add(label_title);
+        jpanel_chiTietChamCong.add(jpanel_title, BorderLayout.NORTH);
+
+        // Panel chi tiết nội dung (khởi tạo rỗng)
+        jpanel_chiTietNoiDung = new JPanel();
+        jpanel_chiTietNoiDung.setLayout(new GridLayout(0, 4, 5, 5));
+        jpanel_chiTietNoiDung.setBackground(new Color(230, 230, 235));
+        jpanel_chiTietChamCong.add(jpanel_chiTietNoiDung, BorderLayout.CENTER);
     }
     public void setUpTable(){
         listChamCong=new ChamCongDAO().listChamCong();
@@ -50,9 +73,6 @@ public class ChamCong extends javax.swing.JFrame {
         jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.35f));
         btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.3f));
     }   
-    public void timKiem(){
-        
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -66,8 +86,6 @@ public class ChamCong extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jlabel_look = new javax.swing.JLabel();
         jtf_find = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         table_chamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,11 +114,11 @@ public class ChamCong extends javax.swing.JFrame {
         jpanel_chiTietChamCong.setLayout(jpanel_chiTietChamCongLayout);
         jpanel_chiTietChamCongLayout.setHorizontalGroup(
             jpanel_chiTietChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpanel_chiTietChamCongLayout.setVerticalGroup(
             jpanel_chiTietChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
+            .addGap(0, 183, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -162,43 +180,69 @@ public class ChamCong extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                    .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void table_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_chamCongMouseClicked
+        int vitriRow = table_chamCong.getSelectedRow();
+        if (vitriRow != -1) {
+            int maBCC = Integer.parseInt(table_chamCong.getValueAt(vitriRow, 0).toString());
+            ChamCongDTO cc = new ChamCongDAO().getChamCongTheoMaBCC(maBCC);
+
+            // Làm sạch panel nội dung cũ
+            jpanel_chiTietNoiDung.removeAll();
+
+            // Tách nội dung chi tiết theo ngày
+            String chiTiet = cc.getChiTiet(); // VD: "09/04/2025: Đi trễ 10/04/2025: Tăng ca ..."
+            String[] arrChiTiet = chiTiet.split("(?=\\d{2}/\\d{2}/\\d{4})");
+
+            for (String ct : arrChiTiet) {
+                if (!ct.trim().isEmpty()) {
+                    JLabel lbl = new JLabel(ct.trim());
+                    lbl.setFont(new Font("Arial", Font.PLAIN, 12));
+                    jpanel_chiTietNoiDung.add(lbl);
+                }
+            }
+
+            // Cập nhật lại giao diện
+            jpanel_chiTietNoiDung.revalidate();
+            jpanel_chiTietNoiDung.repaint();
+        }
+    }//GEN-LAST:event_table_chamCongMouseClicked
+
+    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new AddChamCongDialog((Frame) parentWindow,true,this).setVisible(true);
+    }//GEN-LAST:event_btn_them_chamCongMouseClicked
+
     private void jlabel_lookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_lookMouseClicked
         String text = jtf_find.getText().toLowerCase();
         listChamCong = new ChamCongDAO().listChamCong();
@@ -228,94 +272,7 @@ public class ChamCong extends javax.swing.JFrame {
         func.loadDataChamCong(listChamCongFilter, table_chamCong);
         func.centerTable(table_chamCong);
     }//GEN-LAST:event_jlabel_lookMouseClicked
-    public void setUpPanelThongTinChamCong() {
-        jpanel_chiTietChamCong.setLayout(new BorderLayout());
-        jpanel_chiTietChamCong.setPreferredSize(new Dimension(600, 100));
 
-        // Tiêu đề
-        jpanel_title = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel label_title = new JLabel("THÔNG TIN CHI TIẾT");
-        label_title.setFont(new Font("Arial", Font.BOLD, 14));
-        jpanel_title.add(label_title);
-        jpanel_chiTietChamCong.add(jpanel_title, BorderLayout.NORTH);
-
-        // Panel chi tiết nội dung (khởi tạo rỗng)
-        jpanel_chiTietNoiDung = new JPanel();
-        jpanel_chiTietNoiDung.setLayout(new GridLayout(0, 4, 5, 5));
-        jpanel_chiTietNoiDung.setBackground(new Color(230, 230, 235));
-        jpanel_chiTietChamCong.add(jpanel_chiTietNoiDung, BorderLayout.CENTER);
-    }
-    private void table_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_chamCongMouseClicked
-        int vitriRow = table_chamCong.getSelectedRow();
-        if (vitriRow != -1) {
-            int maBCC = Integer.parseInt(table_chamCong.getValueAt(vitriRow, 0).toString());
-            ChamCongDTO cc = new ChamCongDAO().getChamCongTheoMaBCC(maBCC);
-
-            // Làm sạch panel nội dung cũ
-            jpanel_chiTietNoiDung.removeAll();
-
-            // Tách nội dung chi tiết theo ngày
-            String chiTiet = cc.getChiTiet(); // VD: "09/04/2025: Đi trễ 10/04/2025: Tăng ca ..."
-            String[] arrChiTiet = chiTiet.split("(?=\\d{2}/\\d{2}/\\d{4})");
-
-            for (String ct : arrChiTiet) {
-                if (!ct.trim().isEmpty()) {
-                    JLabel lbl = new JLabel(ct.trim());
-                    lbl.setFont(new Font("Arial", Font.PLAIN, 12));
-                    jpanel_chiTietNoiDung.add(lbl);
-                }
-            }
-
-            // Cập nhật lại giao diện
-            jpanel_chiTietNoiDung.revalidate();
-            jpanel_chiTietNoiDung.repaint();
-        }
-    }//GEN-LAST:event_table_chamCongMouseClicked
-
-    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
-        ChamCongForm formChamCong=new ChamCongForm(this);
-       formChamCong.setVisible(true);
-    }//GEN-LAST:event_btn_them_chamCongMouseClicked
-
-    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChamCong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChamCong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChamCong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChamCong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChamCong().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_them_chamCong;

@@ -1,27 +1,33 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package GUI.quanlinhansu;
 
 import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
-import util.Func_class;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-public class AddNhanVien extends javax.swing.JFrame {
-    private NhanVien nvJFrame;
+import util.Func_class;
+
+/**
+ *
+ * @author kiman
+ */
+public class AddNhanVienDialog extends javax.swing.JDialog {
+    private NhanVienPanel nvPanel;
     private Func_class func=new Func_class();
     private HashMap<String,Integer> mapCV;
     private ArrayList<NhanVienDTO> listNV;
-    public AddNhanVien(NhanVien nvJFrame){
+    public AddNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienPanel nvPanel) {
+        super(parent, modal);
+        this.nvPanel=nvPanel;
         initComponents();
-        this.nvJFrame=nvJFrame;
         this.setLocationRelativeTo(null);
         khoiTaoButtuonGroup();
         khoiTaoComboboxCongViec();
@@ -58,7 +64,7 @@ public class AddNhanVien extends javax.swing.JFrame {
         jradio_nu = new javax.swing.JRadioButton();
         jdatechooser_ngaySinh = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -69,10 +75,10 @@ public class AddNhanVien extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(123, 123, 123)
                 .addComponent(jLabel1)
-                .addGap(103, 103, 103))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,8 +170,8 @@ public class AddNhanVien extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jdatechooser_ngaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jdatechooser_ngaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,10 +186,6 @@ public class AddNhanVien extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_exit_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_nvMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_btn_exit_nvMouseClicked
     public int check_add_nhanVien(){
         if(jtf_name_nv.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Bạn chưa nhập tên nhân viên","Error",0);
@@ -217,15 +219,20 @@ public class AddNhanVien extends javax.swing.JFrame {
             java.sql.Date ngaySinhSQL=new java.sql.Date(ngaySinh.getTime());
             String gioiTinh=null;
             if(jradio_nam.isSelected())
-                gioiTinh=jradio_nam.getText();
+            gioiTinh=jradio_nam.getText();
             else
-                gioiTinh=jradio_nu.getText();
+            gioiTinh=jradio_nu.getText();
             new NhanVienDAO().insertNhanVien(new NhanVienDTO(tenNV,ngaySinhSQL,gioiTinh,sdt,maCV));
             listNV=new NhanVienDAO().listNV();
-            func.loadDataNV(listNV,nvJFrame.getTableNhanVien());
-            func.centerTable(nvJFrame.getTableNhanVien());
+            func.loadDataNV(listNV,nvPanel.getTableNhanVien());
+            func.centerTable(nvPanel.getTableNhanVien());
         }
     }//GEN-LAST:event_btn_add_nvMouseClicked
+
+    private void btn_exit_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_nvMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btn_exit_nvMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_nv;

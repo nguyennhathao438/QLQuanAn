@@ -1,27 +1,34 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package GUI.quanlinhansu;
+
 import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
-import util.Func_class;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-public class EditNhanVien extends javax.swing.JFrame {
-    private NhanVien nvJFrame;
+import util.Func_class;
+
+/**
+ *
+ * @author kiman
+ */
+public class EditNhanVienDialog extends javax.swing.JDialog {
+    private NhanVienPanel nvPanel;
     private Func_class func=new Func_class();
     private ArrayList<NhanVienDTO> listNV;
     private HashMap<String,Integer> mapCV;
     private NhanVienDTO nv;
-    public EditNhanVien(NhanVienDTO nv,NhanVien nvJFrame){
+    public EditNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienPanel nvPanel,NhanVienDTO nv) {
+        super(parent, modal);
         initComponents();
-        this.nvJFrame=nvJFrame;
+        this.nvPanel=nvPanel;
         this.nv=nv;
         fillCbb();
         khoiTaoButtonGroup();
@@ -42,15 +49,37 @@ public class EditNhanVien extends javax.swing.JFrame {
         btnGrp.add(jradio_nam);
         btnGrp.add(jradio_nu);
     }
+    public void fillCbb(){
+        mapCV=new CongViecDAO().mapCV();
+        combobox_cv.setBackground(Color.WHITE);
+        for(String cv: mapCV.keySet()){
+            combobox_cv.addItem(cv);
+        }
+    }
+    public int check_edit_NhanVien(){
+        if(jtf_name_nv.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Vui lòng nhập tên nhân viên","Erorr",0);
+            return 0;
+        }
+        else if(jtf_sdt_nv.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Vui lòng nhập số điện thoại","Erorr",0);
+            return 0;
+        }
+        else if(jdatechooser_ngaySinh==null){
+            JOptionPane.showMessageDialog(null,"Vui lòng chọn ngày sinh","Erorr",0);
+            return 0;
+        }
+        return 1;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jtf_name_nv = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jtf_name_nv = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jtf_sdt_nv = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -62,7 +91,7 @@ public class EditNhanVien extends javax.swing.JFrame {
         jradio_nu = new javax.swing.JRadioButton();
         jdatechooser_ngaySinh = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -73,21 +102,21 @@ public class EditNhanVien extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(116, 116, 116)
                 .addComponent(jLabel1)
-                .addGap(86, 86, 86))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Họ tên ");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Ngày sinh");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Họ tên ");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Giới tính");
@@ -138,7 +167,7 @@ public class EditNhanVien extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addComponent(btn_exit_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(combobox_cv, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 81, Short.MAX_VALUE))
+                        .addGap(0, 136, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_name_nv, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -174,7 +203,7 @@ public class EditNhanVien extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jdatechooser_ngaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,32 +219,6 @@ public class EditNhanVien extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_exit_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_nvMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_btn_exit_nvMouseClicked
-
-    public void fillCbb(){
-        mapCV=new CongViecDAO().mapCV();
-        combobox_cv.setBackground(Color.WHITE);
-        for(String cv: mapCV.keySet()){
-            combobox_cv.addItem(cv);
-        }
-    }
-    public int check_edit_NhanVien(){
-        if(jtf_name_nv.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Vui lòng nhập tên nhân viên","Erorr",0);
-            return 0;
-        }
-        else if(jtf_sdt_nv.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Vui lòng nhập số điện thoại","Erorr",0);
-            return 0;
-        }
-        else if(jdatechooser_ngaySinh==null){
-            JOptionPane.showMessageDialog(null,"Vui lòng chọn ngày sinh","Erorr",0);
-            return 0;
-        }
-        return 1;
-    }
     private void btn_update_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_update_nvMouseClicked
         if(check_edit_NhanVien()==1){
             int maNV=nv.getMaNV();
@@ -230,16 +233,21 @@ public class EditNhanVien extends javax.swing.JFrame {
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
             String gioiTinh=null;
             if(jradio_nam.isSelected())
-                gioiTinh=jradio_nam.getText();
+            gioiTinh=jradio_nam.getText();
             else
-                gioiTinh=jradio_nu.getText();
+            gioiTinh=jradio_nu.getText();
             nv=new NhanVienDTO(maNV,tenNV,ngaySinhSQL,gioiTinh,sdt,maCV);
             new NhanVienDAO().updateNhanVien(nv);
             listNV=new NhanVienDAO().listNV();
-            func.loadDataNV(listNV, nvJFrame.getTableNhanVien());
-            func.centerTable(nvJFrame.getTableNhanVien());
+            func.loadDataNV(listNV, nvPanel.getTableNhanVien());
+            func.centerTable(nvPanel.getTableNhanVien());
         }
     }//GEN-LAST:event_btn_update_nvMouseClicked
+
+    private void btn_exit_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_nvMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btn_exit_nvMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_exit_nv;
