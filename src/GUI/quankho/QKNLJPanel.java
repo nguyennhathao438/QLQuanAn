@@ -266,7 +266,7 @@ public class QKNLJPanel extends javax.swing.JPanel {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm Kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
-        locNL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không chọn", "Lọc theo loại nguyên liệu", "Nguyên liệu cận date", "Số lượng nguyên liệu" }));
+        locNL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không chọn", "Lọc theo loại nguyên liệu", "Số lượng nguyên liệu" }));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search-icon.png"))); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -462,8 +462,6 @@ public class QKNLJPanel extends javax.swing.JPanel {
                      }
                  }
              }              
-        }else if(select.equals("Nguyên liệu cận date")){ 
-            
         }else if(select.equals("Số lượng nguyên liệu")){ 
             for(int i=0;i<n-1;i++){ 
                  for(int j=i+1;j<n;j++){ 
