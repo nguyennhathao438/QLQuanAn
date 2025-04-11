@@ -3,30 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/NLNhap.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/HOADONNHAPHANG.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/CTHOADONNH.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/HDNHDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/THANHPHAN.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/LICHSUNH.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/NGUYENLIEU.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/DSNCC.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/NHACUNGCAP.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/MONAN.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/MonAnDiaLog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/QKMainJFrame.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/DSMonAn.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/QKNCCJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/controller/Bean.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/HDNHJFrame.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/CTHDNHDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/QKNLJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/ThanhPhanJFrame.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/NguyenLieuDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/model/KetNoiDataBase.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/controller/ChuyenTrangQK.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/QKMonAnJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/view/quankho/QKHDNHJPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/AddNhanVien.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/ChamCong.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/CongViec.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/ChamCongForm.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/NhanVien.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/AddCongViec.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/EditCongViec.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/qlqa/src/GUI/quanlinhansu/EditNhanVien.java</file>
         </group>
     </open-files>
 </project-private>
