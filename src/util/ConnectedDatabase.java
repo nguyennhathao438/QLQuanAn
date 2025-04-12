@@ -15,7 +15,6 @@ public class ConnectedDatabase {
 			String username="sa";
 			String password="quencmnr";
 			c=DriverManager.getConnection(url,username,password);
-			System.out.println("Ket noi thanh cong ");
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Ket noi co so du lieu that bai");

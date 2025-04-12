@@ -14,6 +14,7 @@ import GUI.quankho.QKHDNHJPanel;
 import GUI.quankho.QKMonAnJPanel;
 import GUI.quankho.QKNCCJPanel;
 import GUI.quankho.QKNLJPanel;
+import GUI.quankho.ThongKeJPanel;
 
 public class ChuyenTrangQK {
     private JPanel root;
@@ -67,6 +68,9 @@ public class ChuyenTrangQK {
                       break;
                   case "NCC":
                       node = new QKNCCJPanel();
+                      break;
+                      case "ThongKe":
+                      node = new ThongKeJPanel();
                       break;
                   default:
                       break;

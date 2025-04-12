@@ -21,6 +21,7 @@ public class QKMainJFrame extends javax.swing.JFrame {
         menu.add(new Bean("NguyenLieu",jpnNguyenLieu,jlbNL));
         menu.add(new Bean("HDNH",jpnHDNH,jlbHDNH));
         menu.add(new Bean("NCC",jpnNCC,jlbNCC));
+        menu.add(new Bean("ThongKe",jpnThongKe,jlbThongKe));
         ct.setEvent(menu);
         setLocationRelativeTo(null);
     }
@@ -40,8 +41,8 @@ public class QKMainJFrame extends javax.swing.JFrame {
         jlbHDNH = new javax.swing.JLabel();
         jpnNCC = new javax.swing.JPanel();
         jlbNCC = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jpnThongKe = new javax.swing.JPanel();
+        jlbThongKe = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jpnView = new javax.swing.JPanel();
 
@@ -166,26 +167,26 @@ public class QKMainJFrame extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(247, 118, 4));
+        jpnThongKe.setBackground(new java.awt.Color(247, 118, 4));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 255, 255));
-        jLabel2.setText("Thống kê");
+        jlbThongKe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlbThongKe.setForeground(new java.awt.Color(204, 255, 255));
+        jlbThongKe.setText("Thống kê");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnThongKeLayout = new javax.swing.GroupLayout(jpnThongKe);
+        jpnThongKe.setLayout(jpnThongKeLayout);
+        jpnThongKeLayout.setHorizontalGroup(
+            jpnThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnThongKeLayout.createSequentialGroup()
                 .addGap(94, 94, 94)
-                .addComponent(jLabel2)
+                .addComponent(jlbThongKe)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpnThongKeLayout.setVerticalGroup(
+            jpnThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnThongKeLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel2)
+                .addComponent(jlbThongKe)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -207,7 +208,7 @@ public class QKMainJFrame extends javax.swing.JFrame {
                             .addComponent(jpnMonAn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jpnHDNH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jpnNCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jpnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jpnRootLayout.createSequentialGroup()
@@ -229,7 +230,7 @@ public class QKMainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpnNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -304,18 +305,18 @@ public class QKMainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel jlbHDNH;
     private javax.swing.JLabel jlbMonAn;
     private javax.swing.JLabel jlbNCC;
     private javax.swing.JLabel jlbNL;
+    private javax.swing.JLabel jlbThongKe;
     private javax.swing.JPanel jpnHDNH;
     private javax.swing.JPanel jpnMonAn;
     private javax.swing.JPanel jpnNCC;
     private javax.swing.JPanel jpnNguyenLieu;
     private javax.swing.JPanel jpnRoot;
+    private javax.swing.JPanel jpnThongKe;
     private javax.swing.JPanel jpnView;
     // End of variables declaration//GEN-END:variables
 }

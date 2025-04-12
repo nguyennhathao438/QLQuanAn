@@ -22,26 +22,15 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.ConnectedDatabase;
 public class QuanKhoDAO {
-    SQLServerDataSource ds=new SQLServerDataSource();
-    public void ketNoiDB(){ 
-        var server = "DESKTOP-SAC9NS5";
-        var user = "sa";
-        var password = "quencmnr";
-        var db = "QLQuanAn";
-        var port = 1433;
-
-        ds.setUser(user);
-        ds.setPassword(password);
-        ds.setDatabaseName(db);
-        ds.setServerName(server);
-        ds.setPortNumber(port);
-        ds.setTrustServerCertificate(true);
+    ConnectedDatabase kn = new ConnectedDatabase();
+    public Connection getConnection(){ 
+        return ConnectedDatabase.getConnectedDB();
     }
     public void layNL(DSNguyenLieu dsnl){ 
-        ketNoiDB();
         String query ="SELECT maNL,LOAINL.maLoaiNL,tenNL,tongSoLuong,moTa,LOAINL.donVi,trangThai FROM NGUYENLIEU,LOAINL WHERE NGUYENLIEU.maLoaiNL=LOAINL.maLoaiNL";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
             while(rs.next()){ 
@@ -59,10 +48,9 @@ public class QuanKhoDAO {
         } 
     }
     public void themNL(NGUYENLIEU nl) throws SQLException{ 
-        ketNoiDB();
         String query="INSERT INTO NGUYENLIEU(maNL,maLoaiNL,tenNL,tongSoLuong,moTa,trangThai) VALUES (?,?,?,0,?,1)" ; 
         
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)
                 ) {
             stmt.setString(1,nl.getMaNL());
@@ -75,9 +63,9 @@ public class QuanKhoDAO {
         }         
     }  
     public void xoaNL(String maNL) throws SQLException{ 
-        ketNoiDB();
+      
         String sql="UPDATE NGUYENLIEU SET trangThai = 0 WHERE maNL = ?;";
-        try(Connection conn =ds.getConnection();
+        try(Connection conn =getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){ 
             stmt.setString(1,maNL);
             stmt.executeUpdate();
@@ -86,9 +74,8 @@ public class QuanKhoDAO {
         }
     }
     public void suaNL(NGUYENLIEU nl) throws SQLException{ 
-        ketNoiDB();
             String sql="UPDATE NGUYENLIEU SET maLoaiNL=?,tenNL=?,moTa=? WHERE maNL=?;";
-        try(Connection conn =ds.getConnection();
+        try(Connection conn =getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){            
             stmt.setString(1,nl.getMaLoaiNL());
             stmt.setString(2,nl.getTenNL());
@@ -100,11 +87,10 @@ public class QuanKhoDAO {
         }
     }
     public String layTenLoaiNL(String ma){ 
-        ketNoiDB();
         String query="SELECT loaiNL FROM LOAINL WHERE maLoaiNL=?";
         String tenLoaiNL = "";
         try(
-        Connection conn=ds.getConnection();
+        Connection conn=getConnection();
         PreparedStatement stmt = conn.prepareStatement(query);){
         stmt.setString(1,ma);
              ResultSet rs = stmt.executeQuery();
@@ -118,10 +104,9 @@ public class QuanKhoDAO {
         return tenLoaiNL ;
     }
     public String layMaLoaiNL(String loaiNL){ 
-        ketNoiDB();
         String query=" SELECT maLoaiNL FROM LOAINL WHERE loaiNL=?";
         String maLoaiNL="";
-        try(Connection conn=ds.getConnection();
+        try(Connection conn=getConnection();
         PreparedStatement stmt = conn.prepareStatement(query);){
         
         stmt.setString(1,loaiNL);
@@ -137,9 +122,8 @@ public class QuanKhoDAO {
     }
     //Nha cung cap
     public void layNCC(DSNCC dsncc){ 
-        ketNoiDB();
         String query="SELECT NHACUNGCAP.maNCC, NHACUNGCAP.tenNCC, STUFF((SELECT ', ' + NCC_SDT.soDienThoai FROM NCC_SDT WHERE NCC_SDT.maNCC = NHACUNGCAP.maNCC FOR XML PATH('')), 1, 2, '') AS soDienThoai FROM NHACUNGCAP WHERE trangThai=1;";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
             while(rs.next()){ 
@@ -154,10 +138,9 @@ public class QuanKhoDAO {
         } 
     }
     public void themNCC(NHACUNGCAP ncc){ 
-        ketNoiDB();
          String queryNCC = "INSERT INTO NHACUNGCAP (maNCC, tenNCC, trangThai) VALUES (?, ?, 1)"; 
          String querySDT = "INSERT INTO NCC_SDT (maNCC, soDienThoai) VALUES (?, ?)";
-         try(Connection conn = ds.getConnection();
+         try(Connection conn = getConnection();
             PreparedStatement stmtncc = conn.prepareStatement(queryNCC);
                  PreparedStatement stmtsdt = conn.prepareStatement(querySDT)) {
             stmtncc.setString(1,ncc.getMaNCC());
@@ -174,9 +157,8 @@ public class QuanKhoDAO {
         }
     }
     public void xoaNCC(String mancc) throws SQLException{ 
-        ketNoiDB();
         String query ="UPDATE NHACUNGCAP SET trangThai = 0 WHERE maNCC = ?;";   
-        try(Connection conn= ds.getConnection();
+        try(Connection conn= getConnection();
                 PreparedStatement stmt=conn.prepareStatement(query)){ 
          stmt.setString(1,mancc);
             stmt.executeUpdate();
@@ -185,12 +167,11 @@ public class QuanKhoDAO {
         }
     }
     public void suaNCC(NHACUNGCAP ncc) throws SQLException{ 
-        ketNoiDB();
         String query="UPDATE NHACUNGCAP SET tenNCC = ? WHERE maNCC = ?";
         String queryxoasdt="DELETE FROM NCC_SDT WHERE maNCC = ?";
         String querythemsdt="INSERT INTO NCC_SDT (maNCC, soDienThoai) VALUES (?, ?)";
         try(
-        Connection conn=ds.getConnection();
+        Connection conn=getConnection();
         PreparedStatement stmt=conn.prepareStatement(query);
         PreparedStatement stmtxsdt=conn.prepareStatement(queryxoasdt);
         PreparedStatement stmttsdt=conn.prepareStatement(querythemsdt);){
@@ -212,9 +193,8 @@ public class QuanKhoDAO {
     }
     //Hoa Don Nhap Hang
     public void layHDNH(LICHSUNH lsnh){ 
-        ketNoiDB();
        String query="SELECT hd.maHDNH, hd.ngayNhap, ncc.tenNCC, SUM(cthd.soLuong * cthd.gia) AS tongThanhTien FROM HOADONNH hd JOIN NHACUNGCAP ncc ON hd.maNCC = ncc.maNCC JOIN CTHOADONNH cthd ON hd.maHDNH = cthd.maHDNH WHERE hd.trangThai = 1 GROUP BY hd.maHDNH, hd.ngayNhap, ncc.tenNCC ORDER BY hd.maHDNH;";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
             while (rs.next()) {
@@ -232,10 +212,9 @@ public class QuanKhoDAO {
         } 
     }
     public CTHOADONNH chitietHDNH(String mahd){ 
-        ketNoiDB();
         CTHOADONNH cthd =new CTHOADONNH();
         String query="SELECT hd.maHDNH, hd.ngayNhap, ncc.tenNCC, nl.tenNL, cthd.soLuong, cthd.gia, cthd.hsd, (cthd.soLuong * cthd.gia) AS thanhTien FROM HOADONNH hd JOIN NHACUNGCAP ncc ON hd.maNCC = ncc.maNCC JOIN CTHOADONNH cthd ON hd.maHDNH = cthd.maHDNH JOIN NGUYENLIEU nl ON cthd.maNL = nl.maNL WHERE hd.maHDNH = ?;";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ){
             stmt.setString(1,mahd);
@@ -266,10 +245,9 @@ public class QuanKhoDAO {
         return cthd;
     }
     public void themHDNH(CTHOADONNH hdnh,String maNCC,String[] maNL){ 
-        ketNoiDB();
          String queryHD = "INSERT INTO HOADONNH (maHDNH,ngayNhap,trangThai,maNCC) VALUES(?,?,1,?) "; 
          String queryCTHD = "INSERT INTO CTHOADONNH (maHDNH,maNL,soLuong,gia,hsd) VALUES(?,?,?,?,?)";
-         try(Connection conn = ds.getConnection();
+         try(Connection conn = getConnection();
             PreparedStatement stmthd = conn.prepareStatement(queryHD);
                  PreparedStatement stmtcthd = conn.prepareStatement(queryCTHD)) {
             stmthd.setString(1,hdnh.getMaHDNH());
@@ -293,9 +271,8 @@ public class QuanKhoDAO {
     }
     //Mon An
     public void layMonAn(DSMonAn dsma){ 
-        ketNoiDB();
         String query="SELECT maMA,tenMA,loaiMA,moTa,gia,trangThai FROM MONAN";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
             while (rs.next()) {
@@ -315,10 +292,9 @@ public class QuanKhoDAO {
         }        
     }
     public void themMonAn(MONAN ma){ 
-        ketNoiDB();
         String query="INSERT INTO MONAN(maMA,tenMA,loaiMA,moTa,gia,trangThai) VALUES (?,?,?,?,?,2)" ;
         
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1,ma.getMaMA());
             stmt.setString(2,ma.getTenMA());
@@ -331,9 +307,8 @@ public class QuanKhoDAO {
         }  
     }
     public void xoaMonAn(String maMA){ 
-        ketNoiDB();
         String sql="UPDATE MONAN SET trangThai = 0 WHERE maMA = ?;";
-        try(Connection conn =ds.getConnection();
+        try(Connection conn =getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){ 
             stmt.setString(1,maMA);
             stmt.executeUpdate();
@@ -342,9 +317,8 @@ public class QuanKhoDAO {
         }
     }
     public void suaMonAn(MONAN ma){ 
-        ketNoiDB();
             String sql="UPDATE MONAN SET tenMA=?,loaiMA=?,moTa=?,gia=? WHERE maMA=?;";
-        try(Connection conn =ds.getConnection();
+        try(Connection conn =getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){            
             stmt.setString(1,ma.getTenMA());
             stmt.setString(2,ma.getLoaiMA());
@@ -358,9 +332,8 @@ public class QuanKhoDAO {
     }
     //THANH PHAN
     public void layTP(String maMonAn,THANHPHAN tp){ 
-        ketNoiDB();
         String query="SELECT maNL,soLuongNL FROM THANHPHAN WHERE maMA=?";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn =getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ){
             stmt.setString(1,maMonAn);
@@ -382,10 +355,9 @@ public class QuanKhoDAO {
         }   
     }
     public void themTP(THANHPHAN tp){ 
-        ketNoiDB();
         String query="INSERT INTO THANHPHAN(maMA,maNL,soLuongNL) VALUES (?,?,?)" ;
         String queryU="UPDATE MONAN SET trangThai = 1 WHERE maMA = ?;";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query);
                 PreparedStatement stmtU = conn.prepareStatement(queryU)) {
             stmtU.setString(1,tp.getMaMA());
@@ -402,10 +374,9 @@ public class QuanKhoDAO {
         } 
     }
     public void suaTP(THANHPHAN tp){ 
-        ketNoiDB();
         String queryd = "DELETE FROM THANHPHAN WHERE maMA = ?";
         String querya="INSERT INTO THANHPHAN(maMA,maNL,soLuongNL) VALUES (?,?,?)";
-        try(Connection conn = ds.getConnection();
+        try(Connection conn =getConnection();
             PreparedStatement stmta = conn.prepareStatement(querya);
                PreparedStatement stmtd = conn.prepareStatement(queryd) ) {
             conn.setAutoCommit(false); 
@@ -424,7 +395,7 @@ public class QuanKhoDAO {
             conn.commit();
         }catch(SQLException ex){ 
             ex.printStackTrace();
-            try (Connection conn = ds.getConnection()) {
+            try (Connection conn = getConnection()) {
             conn.rollback(); // Hủy bỏ nếu có lỗi
         } catch (SQLException rollbackEx) {
             rollbackEx.printStackTrace();
@@ -432,9 +403,8 @@ public class QuanKhoDAO {
         } 
     }
     public void setTTTP(String maMA){ 
-        ketNoiDB();
             String sql="UPDATE MONAN SET trangThai=2 WHERE maMA=?;";
-        try(Connection conn =ds.getConnection();
+        try(Connection conn =getConnection();
                 PreparedStatement stmt =conn.prepareStatement(sql)){                      
             stmt.setString(1,maMA);
             stmt.executeUpdate();
