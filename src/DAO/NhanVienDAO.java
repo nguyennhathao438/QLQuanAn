@@ -101,7 +101,7 @@ public class NhanVienDAO {
     }
     public HashMap<String, Integer> mapNV() {
         HashMap<String, Integer> mapNV = new HashMap<>();
-        String sql = "SELECT * FROM NhanVien";
+        String sql = "SELECT * FROM NhanVien where trangThai=1";
         PreparedStatement ps;
         ResultSet rs;
         try {

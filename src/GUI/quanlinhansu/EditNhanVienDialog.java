@@ -35,9 +35,15 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
         jdatechooser_ngaySinh.setDate(nv.getNgaySinh());
-        mapCV=new CongViecDAO().mapCV();
+        if(nv.getmaCongViec()==0){
+            combobox_cv.removeAllItems();
+            fillCbb();
+        }
+        else{
+            mapCV=new CongViecDAO().mapCV();
         String tenCV=func.getKey(mapCV,nv.getmaCongViec());
         combobox_cv.setSelectedItem(tenCV);
+        }
         if(nv.getGioiTinh().equals("Nam"))
             jradio_nam.setSelected(true);
         if(nv.getGioiTinh().equals("Nữ"))
