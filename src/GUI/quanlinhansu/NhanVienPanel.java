@@ -309,11 +309,17 @@ public class NhanVienPanel extends javax.swing.JPanel {
         Date ngaySinh=(Date) table_nv.getValueAt(vitriRow,2);
         String gioiTinh = table_nv.getValueAt(vitriRow, 3).toString();
         String sdt = table_nv.getValueAt(vitriRow, 4).toString();
-        mapCV=new CongViecDAO().mapCV();
-        int maCV=mapCV.get(table_nv.getValueAt(vitriRow,5).toString());
-        NhanVienDTO nv=new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+        Object tenCV = table_nv.getValueAt(vitriRow, 5);
+        NhanVienDTO nv;
+        if (tenCV == null) {
+            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, 0);
+        } else {
+            mapCV = new CongViecDAO().mapCV();
+            int maCV = mapCV.get(tenCV);
+            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+        }
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new EditNhanVienDialog((Frame) parentWindow,true,this,nv).setVisible(true);
+        new EditNhanVienDialog((Frame) parentWindow, true, this,nv).setVisible(true);
     }//GEN-LAST:event_jlabel_updateMouseClicked
 
     private void jlabel_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_addMouseClicked
@@ -359,7 +365,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jlabel_look_nvMouseClicked
 
     private void jlabel_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_refreshMouseClicked
-        listNV=new NhanVienDAO().listNV();
+        listNV = new NhanVienDAO().listNV();
         func.loadDataNV(listNV, table_nv);
         func.centerTable(table_nv);
     }//GEN-LAST:event_jlabel_refreshMouseClicked
@@ -370,16 +376,22 @@ public class NhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Bạn chưa chọn nhân viên để chỉnh sửa", "Error", 0);
             return;
         }
-        int maNV =Integer.parseInt(table_nv.getValueAt(vitriRow, 0).toString());
+        int maNV = Integer.parseInt(table_nv.getValueAt(vitriRow, 0).toString());
         String hoTen = table_nv.getValueAt(vitriRow, 1).toString();
-        Date ngaySinh=(Date) table_nv.getValueAt(vitriRow,2);
+        Date ngaySinh = (Date) table_nv.getValueAt(vitriRow, 2);
         String gioiTinh = table_nv.getValueAt(vitriRow, 3).toString();
         String sdt = table_nv.getValueAt(vitriRow, 4).toString();
-        mapCV=new CongViecDAO().mapCV();
-        int maCV=mapCV.get(table_nv.getValueAt(vitriRow,5).toString());
-        NhanVienDTO nv=new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+        Object tenCV = table_nv.getValueAt(vitriRow, 5);
+        NhanVienDTO nv;
+        if (tenCV == null) {
+            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, 0);
+        } else {
+            mapCV = new CongViecDAO().mapCV();
+            int maCV = mapCV.get(tenCV);
+            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+        }
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new DetailsNhanVienDialog((Frame) parentWindow,true,nv).setVisible(true);
+        new DetailsNhanVienDialog((Frame) parentWindow, true, nv).setVisible(true);
     }//GEN-LAST:event_jlabel_chiTiet_nvMouseClicked
 
 

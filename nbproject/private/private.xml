@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/DSMonAn.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DAO/LuongDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/ThongKeThuChi.java</file>
@@ -53,6 +54,14 @@
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/LuongPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKNCCJPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/ThongKeJPanel.java</file>
+=======
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/QLMainFrame.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/DetailsNhanVienDialog.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/DAO/CongViecDAO.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/DAO/NhanVienDAO.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/EditNhanVienDialog.java</file>
+>>>>>>> 62ecce298ee69a51f8c03e25c15e7090b8e36bf9
         </group>
     </open-files>
 </project-private>

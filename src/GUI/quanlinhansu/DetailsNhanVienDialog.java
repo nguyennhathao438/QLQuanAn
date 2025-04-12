@@ -17,7 +17,7 @@ import util.Func_class;
 public class DetailsNhanVienDialog extends javax.swing.JDialog {
     private Func_class func=new Func_class();
     private HashMap<String,Integer> mapCV;
-    public DetailsNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienDTO nv) {
+    public DetailsNhanVienDialog(java.awt.Frame parent, boolean modal, NhanVienDTO nv) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -25,13 +25,18 @@ public class DetailsNhanVienDialog extends javax.swing.JDialog {
         setEditToFalse();
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
-        mapCV=new CongViecDAO().mapCV();
-        String tenCV=func.getKey(mapCV,nv.getMaNV());
-        combobox_congviec.setSelectedItem(tenCV);
-        if(nv.getGioiTinh().equals("Nam"))
+        if (nv.getmaCongViec() == 0) {
+            combobox_congviec.removeAllItems();
+        } else {
+            mapCV = new CongViecDAO().mapCV();
+            String tenCV = func.getKey(mapCV, nv.getmaCongViec());
+            combobox_congviec.setSelectedItem(tenCV);
+        }
+        if (nv.getGioiTinh().equals("Nam")) {
             jradio_nam.setSelected(true);
-        else
+        } else {
             jradio_nu.setSelected(true);
+        }
         jdateChooser_ngaySinh.setDate(nv.getNgaySinh());
     }
     public void fillComBoBoxCongViec(){

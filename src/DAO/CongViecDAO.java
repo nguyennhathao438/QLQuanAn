@@ -156,7 +156,7 @@ public class CongViecDAO {
     }
     public HashMap<String, Integer> mapCV() {
         HashMap<String, Integer> mapCV = new HashMap<>();
-        String sql = "SELECT * FROM CongViec";
+        String sql = "SELECT * FROM CongViec WHERE trangThai=1";
         PreparedStatement ps;
         ResultSet rs;
         try {
