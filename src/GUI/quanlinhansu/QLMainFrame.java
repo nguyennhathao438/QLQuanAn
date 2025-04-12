@@ -5,7 +5,6 @@
 package GUI.quanlinhansu;
 
 import controller.Bean;
-import controller.ChuyenTrangQK;
 import controller.ChuyenTrangQL;
 import java.util.ArrayList;
 

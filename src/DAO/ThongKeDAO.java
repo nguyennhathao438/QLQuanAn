@@ -91,5 +91,23 @@ public class ThongKeDAO {
         }
         return dstk;
     }
-    
+    public ArrayList<ThongKeThuChi> thongKeLuongThang(String nam){ 
+        ArrayList<ThongKeThuChi> dstk = new ArrayList();
+        String query = "SELECT thangChamCong as thang,SUM(Luong.ThucLanh) AS tong_tien FROM ChamCong JOIN LUONG ON Luong.maBCC=ChamCong.maBCC WHERE namChamCong = ? GROUP BY thangChamCong ORDER BY thangChamCong ASC";
+        try(Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)){ 
+            stmt.setString(1,nam);
+            ResultSet rs = stmt.executeQuery();
+            ThongKeThuChi tk ;
+            while(rs.next()){ 
+                tk= new ThongKeThuChi();
+                tk.setThoiGian(rs.getInt("thang"));
+                tk.setSoTien(rs.getDouble("tong_tien"));
+                dstk.add(tk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dstk;
+    }
 }

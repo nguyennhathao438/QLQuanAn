@@ -94,12 +94,13 @@ public class Func_class {
         table.setModel(model);
     }
     public void loadDataCongViec(ArrayList<CongViecDTO> list,JTable table){
+        DecimalFormat df = new DecimalFormat("#,###.##");
         String[] colNames={"Mã công việc","Tên công việc","Lương cơ bản","Phụ cấp","Hệ số lương"};
         Object[][] rows=new Object[list.size()][colNames.length];
         for(int i=0;i<list.size();i++){
             rows[i][0]=list.get(i).getMaCV();
             rows[i][1]=list.get(i).getTenCV();
-            rows[i][2]=(list.get(i).getLuongCoBan());
+            rows[i][2]=df.format(list.get(i).getLuongCoBan());
             rows[i][3]=(list.get(i).getPhuCap());
             rows[i][4]=list.get(i).getHeSoLuong();
         }

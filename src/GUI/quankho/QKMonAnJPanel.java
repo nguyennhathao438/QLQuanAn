@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import util.Func_class;
 
 public class QKMonAnJPanel extends javax.swing.JPanel {
     QuanKhoDAO kn =new QuanKhoDAO();
@@ -31,7 +32,6 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
         setTable();
     }
     public void setTable(){ 
-        //set độ rộng
         bangMA.getColumnModel().getColumn(0).setPreferredWidth(50);
         bangMA.getColumnModel().getColumn(1).setPreferredWidth(100);
         bangMA.getColumnModel().getColumn(2).setPreferredWidth(130);

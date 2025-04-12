@@ -49,7 +49,7 @@ public class QKNCCJPanel extends javax.swing.JPanel {
              
     }
     public void setTable(){ 
-        //set độ rộng
+        
         bangNCC.getColumnModel().getColumn(0).setPreferredWidth(80);
         bangNCC.getColumnModel().getColumn(1).setPreferredWidth(200);
         bangNCC.getColumnModel().getColumn(2).setPreferredWidth(300);
