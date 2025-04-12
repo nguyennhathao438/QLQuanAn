@@ -3,38 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/NguyenLieuDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/CongViec.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/DSMonAn.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/NGUYENLIEU.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/CTHDNHDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKNLJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/ThanhPhanJFrame.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/ChamCongForm.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/controller/Bean.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/Luong.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/EditNhanVien.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/NLNhap.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/controller/ChuyenTrangQK.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/LICHSUNH.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/NHACUNGCAP.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/ChamCong.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/NhanVien.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKMonAnJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/MONAN.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/export_file/XuatPhieuNhap.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/AddNhanVien.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/util/ConnectedDatabase.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/HOADONNHAPHANG.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/CTHOADONNH.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKMainJFrame.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/MonAnDiaLog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKHDNHJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/HDNHDialog.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/THANHPHAN.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/DSNCC.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKNCCJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DAO/QuanKhoDAO.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/QLMainFrame.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/CongViecPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/DetailsNhanVienDialog.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/testFrame.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
         </group>
     </open-files>
 </project-private>
