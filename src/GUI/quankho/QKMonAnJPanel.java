@@ -337,8 +337,7 @@ for (int i = 0; i < 6; i++) {
                 String maMA=String.valueOf(bangMA.getValueAt(row, 0));
                 
                 kn.xoaMonAn(maMA);
-                    setData();                    
-                
+                    setData();                
             }
     }//GEN-LAST:event_deleteMAActionPerformed
 

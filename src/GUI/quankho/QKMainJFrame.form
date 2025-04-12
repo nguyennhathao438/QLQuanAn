@@ -64,7 +64,7 @@
                               <Component id="jpnMonAn" max="32767" attributes="0"/>
                               <Component id="jpnHDNH" alignment="0" max="32767" attributes="0"/>
                               <Component id="jpnNCC" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jpnThongKe" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
                       </Group>
@@ -92,7 +92,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jpnNCC" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jpnThongKe" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
@@ -309,7 +309,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="jpnThongKe">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4" green="76" red="f7" type="rgb"/>
@@ -321,7 +321,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlbThongKe" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -330,14 +330,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlbThongKe" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="jlbThongKe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
