@@ -14,8 +14,10 @@
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DAO/CongViecDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/ThanhPhanJFrame.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/CongViecPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/HoaDon.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/EditNhanVienDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DAO/NhanVienDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/resources/icon/details.svg</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/ChamCongPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/AddNhanVienDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/controller/Bean.java</file>
@@ -35,11 +37,13 @@
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/AddCongViecDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKMainJFrame.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/EditCongViecDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/CTHOADON.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/MonAnDiaLog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/QLMainFrame.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/QKHDNHJPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/HDNHDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/MonAnBan.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/THANHPHAN.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DTO/DSNCC.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlinhansu/LuongPanel.java</file>
