@@ -15,10 +15,6 @@ import GUI.quankho.QKMonAnJPanel;
 import GUI.quankho.QKNCCJPanel;
 import GUI.quankho.QKNLJPanel;
 import GUI.quankho.ThongKeJPanel;
-import GUI.quanlinhansu.ChamCongPanel;
-import GUI.quanlinhansu.CongViecPanel;
-import GUI.quanlinhansu.LuongPanel;
-import GUI.quanlinhansu.NhanVienPanel;
 
 public class ChuyenTrangQK {
     private JPanel root;
@@ -73,21 +69,9 @@ public class ChuyenTrangQK {
                   case "NCC":
                       node = new QKNCCJPanel();
                       break;
-                  case "ThongKe":
+                      case "ThongKe":
                       node = new ThongKeJPanel();
                       break;
-                  case "NhanVien":
-                  node = new NhanVienPanel();
-                  break;
-                  case "Luong":
-                  node = new LuongPanel();
-                  break;
-              case "CongViec":
-                  node = new CongViecPanel();
-                  break;
-              case "ChamCong":
-                  node = new ChamCongPanel();
-                  break;
                   default:
                       break;
               }
