@@ -6,7 +6,6 @@ package GUI.quanlinhansu;
 
 import DAO.CongViecDAO;
 import DTO.CongViecDTO;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Func_class;
 
@@ -15,12 +14,13 @@ import util.Func_class;
  * @author kiman
  */
 public class AddCongViecDialog extends javax.swing.JDialog {
-    private CongViecPanel cvPanel;
-    private ArrayList<CongViecDTO> listCV;
-    private Func_class func=new Func_class();
+    CongViecPanel cvPanel;
+    Func_class func=new Func_class();
+    CongViecDAO cvDao=new CongViecDAO();
     public AddCongViecDialog(java.awt.Frame parent, boolean modal,CongViecPanel cvPanel) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Thêm mới công việc");
         this.cvPanel=cvPanel;
         this.setLocationRelativeTo(null);
     }                             
@@ -179,10 +179,8 @@ public class AddCongViecDialog extends javax.swing.JDialog {
             double phuCap=Double.parseDouble(jtf_phuCap.getText());
             double heSoLuong=Double.parseDouble(jtf_heSoluong.getText());
             CongViecDTO cv=new CongViecDTO(tenCV,luongCoBan,phuCap,heSoLuong);
-            new CongViecDAO().insertCongViec(cv);
-            listCV=new CongViecDAO().listCV();
-            func.loadDataCongViec(listCV,cvPanel.getTableCongViec());
-            func.centerTable(cvPanel.getTableCongViec());
+            cvDao.insertCongViec(cv);
+            cvPanel.resetTableCongViec();
         }
     }//GEN-LAST:event_btn_addMouseClicked
 

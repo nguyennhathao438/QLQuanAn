@@ -8,46 +8,45 @@ import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import util.Func_class;
-
-/**
- *
- * @author kiman
- */
 public class EditNhanVienDialog extends javax.swing.JDialog {
-    private NhanVienPanel nvPanel;
-    private Func_class func=new Func_class();
-    private ArrayList<NhanVienDTO> listNV;
-    private HashMap<String,Integer> mapCV;
-    private NhanVienDTO nv;
+    NhanVienPanel nvPanel;
+    Func_class func=new Func_class();
+    HashMap<String,Integer> mapCV;
+    NhanVienDAO nvDao=new NhanVienDAO();
+    NhanVienDTO nv;
     public EditNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienPanel nvPanel,NhanVienDTO nv) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Chỉnh sửa thông tin nhân viên");
         this.nvPanel=nvPanel;
         this.nv=nv;
+        khoiTao();
+    }
+    public void khoiTao() {
         fillCbb();
         khoiTaoButtonGroup();
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
         jdatechooser_ngaySinh.setDate(nv.getNgaySinh());
-        if(nv.getmaCongViec()==0){
+        if (nv.getmaCongViec() == 0) {
             combobox_cv.removeAllItems();
             fillCbb();
+        } else {
+            mapCV = new CongViecDAO().mapCV();
+            String tenCV = func.getKey(mapCV, nv.getmaCongViec());
+            combobox_cv.setSelectedItem(tenCV);
         }
-        else{
-            mapCV=new CongViecDAO().mapCV();
-        String tenCV=func.getKey(mapCV,nv.getmaCongViec());
-        combobox_cv.setSelectedItem(tenCV);
-        }
-        if(nv.getGioiTinh().equals("Nam"))
+        if (nv.getGioiTinh().equals("Nam")) {
             jradio_nam.setSelected(true);
-        if(nv.getGioiTinh().equals("Nữ"))
+        }
+        if (nv.getGioiTinh().equals("Nữ")) {
             jradio_nu.setSelected(true);
+        }
         this.setLocationRelativeTo(null);
     }
     public void khoiTaoButtonGroup(){
@@ -243,10 +242,9 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
             else
             gioiTinh=jradio_nu.getText();
             nv=new NhanVienDTO(maNV,tenNV,ngaySinhSQL,gioiTinh,sdt,maCV);
-            new NhanVienDAO().updateNhanVien(nv);
-            listNV=new NhanVienDAO().listNV();
-            func.loadDataNV(listNV, nvPanel.getTableNhanVien());
-            func.centerTable(nvPanel.getTableNhanVien());
+            nvDao.updateNhanVien(nv);
+            nvPanel.resetTableNhanVien();
+            this.dispose();
         }
     }//GEN-LAST:event_btn_update_nvMouseClicked
 

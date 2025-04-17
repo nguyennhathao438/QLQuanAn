@@ -6,27 +6,26 @@ package GUI.quanlinhansu;
 
 import DAO.CongViecDAO;
 import DTO.CongViecDTO;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import util.Func_class;
-
 /**
  *
  * @author kiman
  */
 public class EditCongViecDialog extends javax.swing.JDialog {
-    private CongViecPanel cvPanel;
-    private Func_class func=new Func_class();
-    private ArrayList<CongViecDTO> listCV;
-    private CongViecDTO cv;
+    CongViecPanel cvPanel;
+    Func_class func=new Func_class();
+    CongViecDAO cvDao=new CongViecDAO();
+    CongViecDTO cv;
     public EditCongViecDialog(java.awt.Frame parent, boolean modal,CongViecPanel cvPanel,CongViecDTO cv) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Chỉnh sửa công việc");
         this.cvPanel=cvPanel;
         this.cv=cv;
         jtf_name_edit_cv.setText(cv.getTenCV());
-        jtf_luongCoBan.setText(String.valueOf(cv.getLuongCoBan()));
-        jtf_phuCap.setText(String.valueOf(cv.getPhuCap()));
+        jtf_luongCoBan.setText(String.format("%,.0f", cv.getLuongCoBan()));
+        jtf_phuCap.setText(String.format("%,.0f", cv.getPhuCap()));
         jtf_heSoluong_edit.setText(String.valueOf(cv.getHeSoLuong()));
         this.setLocationRelativeTo(null);
     }
@@ -78,10 +77,10 @@ public class EditCongViecDialog extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(209, 209, 209)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(229, 229, 229))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +127,6 @@ public class EditCongViecDialog extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtf_luongCoBan, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,8 +136,12 @@ public class EditCongViecDialog extends javax.swing.JDialog {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_phuCap, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_heSoluong_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120)))
                 .addGap(0, 53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -176,14 +178,12 @@ public class EditCongViecDialog extends javax.swing.JDialog {
         if (check_edit_CongViec() == 1) {
             int maCV=cv.getMaCV();
             String tenCV = jtf_name_edit_cv.getText();
-            double luongCoBan=Double.parseDouble(jtf_luongCoBan.getText());
-            double phuCap=Double.parseDouble(jtf_phuCap.getText());
+            double luongCoBan=Double.parseDouble(jtf_luongCoBan.getText().replaceAll(",",""));
+            double phuCap=Double.parseDouble(jtf_phuCap.getText().replaceAll(",",""));
             double heSoLuong = Double.parseDouble(jtf_heSoluong_edit.getText());
             cv = new CongViecDTO(maCV,tenCV,luongCoBan,phuCap, heSoLuong);
-            new CongViecDAO().updateCongViec(cv);
-            listCV=new CongViecDAO().listCV();
-            func.loadDataCongViec(listCV,cvPanel.getTableCongViec());
-            func.centerTable(cvPanel.getTableCongViec());
+            cvDao.updateCongViec(cv);
+            cvPanel.resetTableCongViec();
         }
     }//GEN-LAST:event_btn_editMouseClicked
 

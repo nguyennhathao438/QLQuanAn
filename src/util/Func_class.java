@@ -4,41 +4,39 @@
  */
 package util;
 
-import DAO.CongViecDAO;
-import DAO.NhanVienDAO;
-import DTO.ChamCongDTO;
-import DTO.CongViecDTO;
 import DTO.LuongDTO;
-import DTO.NhanVienDTO;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author kiman
  */
 public class Func_class {
-    public void disPlayImage(int width,int height,String linkImage,JLabel jlabel){
-        ImageIcon imageIcon=new ImageIcon(getClass().getResource(linkImage));
-        Image image=imageIcon.getImage().getScaledInstance(width,height,Image.SCALE_SMOOTH);
-        jlabel.setIcon(new ImageIcon(image));
-    }
-    public void disPlayImageBtn(int width,int height,String linkImage,JButton btn){
-        ImageIcon imageIcon=new ImageIcon(getClass().getResource(linkImage));
-        Image image=imageIcon.getImage().getScaledInstance(width,height,Image.SCALE_SMOOTH);
-        btn.setIcon(new ImageIcon(image));
-    }
     public void centerTable(JTable table){
         DefaultTableCellRenderer center=new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
@@ -49,6 +47,32 @@ public class Func_class {
         DefaultTableCellRenderer centerHeader=(DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
         //Gán center cho các jlabel của header table
         centerHeader.setHorizontalAlignment(JLabel.CENTER);
+    }
+    public void cursorPointer(JLabel label){
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR) {
+        });
+    }
+    //Hàm ngăn chặn không cho nhập phím chữ
+    public void notAllowText(JTextField jtf){
+        jtf.addKeyListener(new KeyAdapter(){
+           public void keyTyped(KeyEvent e){
+               char c=e.getKeyChar();
+               if(!Character.isDigit(c) && c!='.'){
+                   e.consume(); 
+               }
+           }
+        });
+    }
+    //Hàm ngăn chặn không cho nhập phím số
+    public void notAllowNumber(JTextField jtf){
+        jtf.addKeyListener(new KeyAdapter(){
+           public void keyTyped(KeyEvent e){
+               char c=e.getKeyChar();
+               if(Character.isDigit(c)){
+                   e.consume(); 
+               }
+           }
+        });
     }
     public void setUpTable(JTable table){
         table.setRowHeight(25);
@@ -72,62 +96,10 @@ public class Func_class {
         int keyInt=-1;
         for(Map.Entry<Integer,Integer> entry : map.entrySet()){
             if(entry.getValue().equals(value)){
-                keyInt=entry.getKey();
+                return entry.getKey();
             }
         }
         return keyInt;
-    }
-    public void loadDataNV(ArrayList<NhanVienDTO> list,JTable table){
-        String[] colNames={"Mã NV","Họ tên","Ngày sinh","Giới tính","Số điện thoại","Công việc"};
-        Object[][] rows=new Object[list.size()][colNames.length];
-        HashMap<String,Integer> mapCV=new CongViecDAO().mapCV();
-        for(int i=0;i<list.size();i++){
-            rows[i][0]=list.get(i).getMaNV();
-            rows[i][1]=list.get(i).getHoTen();
-            rows[i][2]=list.get(i).getNgaySinh();
-            rows[i][3]=list.get(i).getGioiTinh();
-            rows[i][4]=list.get(i).getSDT();
-            int maCV=list.get(i).getmaCongViec();
-            rows[i][5]=getKey(mapCV, maCV);
-        }
-        DefaultTableModel model=new DefaultTableModel(rows,colNames);
-        table.setModel(model);
-    }
-    public void loadDataCongViec(ArrayList<CongViecDTO> list,JTable table){
-        String[] colNames={"Mã công việc","Tên công việc","Lương cơ bản","Phụ cấp","Hệ số lương"};
-        Object[][] rows=new Object[list.size()][colNames.length];
-        for(int i=0;i<list.size();i++){
-            rows[i][0]=list.get(i).getMaCV();
-            rows[i][1]=list.get(i).getTenCV();
-            rows[i][2]=(list.get(i).getLuongCoBan());
-            rows[i][3]=(list.get(i).getPhuCap());
-            rows[i][4]=list.get(i).getHeSoLuong();
-        }
-        DefaultTableModel model=new DefaultTableModel(rows,colNames);
-        table.setModel(model);
-    }
-    public void loadDataChamCong(ArrayList<ChamCongDTO> listCC, JTable table) {
-        String[] colNames = {"Mã BCC", "Nhân viên", "Tháng Năm", "Ngày làm", "Ngày nghỉ", "Ngày trễ", "Số giờ tăng ca"};
-        Object[][] rows = new Object[listCC.size()][colNames.length];
-        ArrayList<NhanVienDTO> listNV = new NhanVienDAO().listNV();
-        for (int i = 0; i < listCC.size(); i++) {
-            rows[i][0] = listCC.get(i).getMaBCC();
-            int maNV = listCC.get(i).getMaNV();
-            String tenNV = null;
-            for (int j = 0; j < listNV.size(); j++) {
-                if (maNV == listNV.get(j).getMaNV()) {
-                    tenNV = listNV.get(j).getHoTen();
-                }
-            }
-            rows[i][1] = maNV + "-" + tenNV;
-            rows[i][2] = listCC.get(i).getThangChamCong() + "/" + listCC.get(i).getNamChamCong();
-            rows[i][3] = listCC.get(i).getSoNgayLamViec();
-            rows[i][4] = listCC.get(i).getSoNgayNghi();
-            rows[i][5] = listCC.get(i).getSoNgayTre();
-            rows[i][6] = listCC.get(i).getSoGioLamThem();
-        }
-        DefaultTableModel model = new DefaultTableModel(rows, colNames);
-        table.setModel(model);
     }
     public void loadDataTableLuong(ArrayList<LuongDTO> list, JTable table) {
         String[] colNames = {"Mã lương", "Mã BCC", "Lương thưởng", "Lương thực tế", "Các khoản trừ", "Thực lãnh"};
@@ -143,5 +115,48 @@ public class Func_class {
         }
         DefaultTableModel model = new DefaultTableModel(rows, colNames);
         table.setModel(model);
+    }
+    public static void exportJTableToExcel(JTable table) throws IOException {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int userChoice = fileChooser.showSaveDialog(null);
+        if (userChoice == JFileChooser.APPROVE_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                filePath += ".xlsx";
+            }
+            TableModel model = table.getModel();
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Sheet1");
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                org.apache.poi.ss.usermodel.Cell headerCell = headerRow.createCell(i);
+                headerCell.setCellValue(model.getColumnName(i));
+            }
+            // Create data rows
+            for (int i = 0; i < model.getRowCount(); i++) {
+                Row dataRow = sheet.createRow(i + 1);
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    org.apache.poi.ss.usermodel.Cell dataCell = dataRow.createCell(j);
+                    Object value = model.getValueAt(i, j);
+                    if (value != null) {
+                        dataCell.setCellValue(value.toString());
+                    }
+                }
+            }
+            // Resize all columns to fit the content size
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+            // Write the output to a file
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+            workbook.close();
+        }
     }
 }

@@ -132,4 +132,27 @@ public class NhanVienDAO {
         }
         return heSoLuong;
     }
+    
+    public NhanVienDTO getNhanVienByMaNV(int maNV) {
+        NhanVienDTO nhanVien = null; 
+        String sql = "SELECT * FROM NhanVien WHERE maNV = ? ";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = ConnectedDatabase.getConnectedDB().prepareStatement(sql);
+            ps.setInt(1, maNV); 
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String hoTen = rs.getString("hoTen");
+                Date ngaySinh = rs.getDate("ngaySinh");
+                String gioiTinh = rs.getString("gioiTinh");
+                String sdt = rs.getString("sdt");
+                int maCV = rs.getInt("maCV");
+                nhanVien = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nhanVien;
+    }
 }

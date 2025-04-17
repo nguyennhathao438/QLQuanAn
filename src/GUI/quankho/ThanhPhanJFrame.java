@@ -9,8 +9,6 @@ import DTO.MONAN;
 import DAO.QuanKhoDAO;
 import DTO.THANHPHAN;
 import DTO.DSNguyenLieu;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

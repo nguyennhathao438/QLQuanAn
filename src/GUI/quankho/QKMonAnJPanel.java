@@ -6,18 +6,12 @@ import DTO.DSMonAn;
 import DAO.QuanKhoDAO;
 import java.awt.Frame;
 import java.awt.Window;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 
 public class QKMonAnJPanel extends javax.swing.JPanel {
     QuanKhoDAO kn =new QuanKhoDAO();

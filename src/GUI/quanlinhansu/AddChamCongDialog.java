@@ -16,8 +16,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.time.DayOfWeek;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.MONDAY;
@@ -36,7 +34,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -241,6 +238,10 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         btnDiTre = new JButton("Đi trễ");
         btnTangCa = new JButton("Tăng ca");
         btnXoa = new JButton("Xóa");
+        btnNghi.setFocusPainted(false);
+        btnDiTre.setFocusPainted(false);
+        btnTangCa.setFocusPainted(false);
+        btnXoa.setFocusPainted(false);
         jpanel_option = new JPanel();
         jpanel_option.setLayout(new BorderLayout());
         jpanel_buttons_chamCong = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
@@ -331,6 +332,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         jpanel_calendar = new JPanel(new GridLayout(6, 7, 5, 5));
         for (int i = 0; i < 42; i++) {
             JButton btn = new JButton();
+            btn.setFocusPainted(false);
             btn.setFont(new Font("Arial", Font.PLAIN, 10));  // Font nhỏ
             btn.setBackground(Color.WHITE);
             btn.setOpaque(true);
@@ -377,6 +379,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 int selectMonth = combobox_months.getSelectedIndex()+1;
                 int selectYear=(int) combobox_years.getSelectedItem();
+                currentStatus="";
                 check_chamCong();
                 hienThiLichThang(selectMonth,selectYear);
             }
@@ -409,9 +412,11 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         JPanel panel_bottom=new JPanel(new FlowLayout());
         btnThem=new JButton("Thêm chấm công");
         btnThongKe=new JButton("Thống kê");
+        btnThongKe.setFocusPainted(false);
+        btnThem.setFocusPainted(false);
         btnThem.setBackground(Color.WHITE);
         btnThongKe.setBackground(Color.WHITE);
-        btnThem.setPreferredSize(new Dimension(130,40));
+        btnThem.setPreferredSize(new Dimension(150,40));
         btnThongKe.setPreferredSize(new Dimension(130,40));
         panel_bottom.add(btnThem);
         panel_bottom.add(btnThongKe);
@@ -481,9 +486,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
                 if (thanhCong == 1) {
                     table_NV.setValueAt("Đã chấm công", vitriRow, 2);
                 }
-                listChamCong = new ChamCongDAO().listChamCong();
-                func.loadDataChamCong(listChamCong, chamcongPanel.getTableChamCong());
-                func.centerTable(chamcongPanel.getTableChamCong());
+                chamcongPanel.resetTableChamCong();
             }
         });
     }

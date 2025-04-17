@@ -30,18 +30,21 @@ import util.Func_class;
 
 
 public class LuongPanel extends javax.swing.JPanel {
-    private Func_class func=new Func_class();
-    private JPanel jpanel_combobox_thangNam;
-    private JPanel jpanel_title;
-    private JPanel jpanel_top;
-    private JComboBox<String> combobox_months;
-    private JComboBox<Integer> combobox_years;
-    private JLabel label_title;
-    private ArrayList<NhanVienDTO> listNV;
-    private ArrayList<ChamCongDTO> listCC;
-    private ArrayList<LuongDTO> listLuong;
-    private HashMap<String,String> listMapCV;
-    private JTable table_luong;
+    Func_class func=new Func_class();
+    LuongDAO luongDao=new LuongDAO();
+    CongViecDAO cvDao=new CongViecDAO();
+    NhanVienDAO nvDao=new NhanVienDAO();
+    ChamCongDAO chamcongDao=new ChamCongDAO();
+    HashMap<Integer,Integer> mapChamCong;
+    JPanel jpanel_combobox_thangNam;
+    JPanel jpanel_title;
+    JPanel jpanel_top;
+    JComboBox<String> combobox_months;
+    JComboBox<Integer> combobox_years;
+    JLabel label_title;
+    ArrayList<ChamCongDTO> listCC;
+    ArrayList<LuongDTO> listLuong;
+    JTable table_luong;
     public LuongPanel() {
         initComponents();
         createComBoBoxThangNam();
@@ -91,22 +94,22 @@ public class LuongPanel extends javax.swing.JPanel {
     public void tinhLuong() {
         int selectmonth = getMonthCombobox();
         int selectyear = getYearCombobox();
-        listCC = new ChamCongDAO().listChamCongTheoThangNam(selectmonth, selectyear);
-        for (ChamCongDTO chamcong : listCC) {
+        listCC = chamcongDao.listChamCongTheoThangNam(selectmonth, selectyear);
+        for (ChamCongDTO chamcong : listCC ) {
             int maBCC = chamcong.getMaBCC();
-            if (new LuongDAO().checkLuongExists(maBCC)) {
+            if (luongDao.checkLuongExists(maBCC)) {
                 continue; // Nếu có, bỏ qua và không tính lại lương
             }
             int maNV = chamcong.getMaNV();
-            double luongCoBan = new CongViecDAO().getLuongCoBanByMaNV(maNV);
-            double phuCap = new CongViecDAO().getPhuCap(maNV);
-            double heSoLuong = new CongViecDAO().getHeSoLuong(maNV);
+            double luongCoBan = cvDao.getLuongCoBanByMaNV(maNV);
+            double phuCap = cvDao.getPhuCap(maNV);
+            double heSoLuong = cvDao.getHeSoLuong(maNV);
             double luongThucTe = luongCoBan * heSoLuong;
             double luongThuong = chamcong.getSoGioLamThem() * 45000 + phuCap;
             double cacKhoanTru = chamcong.getSoNgayTre() * 45000;
             double luongThucLanh = luongThucTe + luongThuong - cacKhoanTru;
             LuongDTO luong = new LuongDTO(maBCC, luongThuong, luongThucTe, cacKhoanTru, luongThucLanh);
-            new LuongDAO().insertLuong(luong);
+            luongDao.insertLuong(luong);
         }
         loadDataLuong();
         func.centerTable(table_luong);
@@ -118,20 +121,19 @@ public class LuongPanel extends javax.swing.JPanel {
         this.add(jpanel_top, BorderLayout.NORTH); // 
         int selectMonth = getMonthCombobox();
         int selectYear = getYearCombobox();
-        listLuong = new LuongDAO().listLuong(selectMonth, selectYear);
-        listNV = new NhanVienDAO().listNV();
+        listLuong = luongDao.listLuong(selectMonth, selectYear);
         String[] colNames = {"Mã Lương", "Nhân viên", "Lương cơ bản", "Lương thực tế", "Lương thưởng", "Các khoản trừ", "Thực lãnh"};
         Object[][] rows = new Object[listLuong.size()][colNames.length];
         DecimalFormat df = new DecimalFormat("#,###");
         for (int i = 0; i < listLuong.size(); i++) {
             rows[i][0] = listLuong.get(i).getMaLuong();
-            HashMap<Integer, Integer> mapChamCong = new ChamCongDAO().mapChamCong();
+            mapChamCong = chamcongDao.mapChamCong();
             int maBCC = listLuong.get(i).getMaBCC();
-            int maNV = func.getKeyInt(mapChamCong, maBCC);
+            int maNV = mapChamCong.get(maBCC);
             String tenNV = null;
-            for (int j = 0; j < listNV.size(); j++) {
-                if (maNV == listNV.get(j).getMaNV()) {
-                    tenNV = listNV.get(j).getHoTen();
+            for (NhanVienDTO nv : nvDao.listNV()) {
+                if (maNV == nv.getMaNV()) {
+                    tenNV = nv.getHoTen();
                 }
             }
             rows[i][1] = maNV + "-" + tenNV;

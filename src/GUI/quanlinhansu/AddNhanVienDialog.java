@@ -8,7 +8,6 @@ import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
@@ -20,15 +19,20 @@ import util.Func_class;
  * @author kiman
  */
 public class AddNhanVienDialog extends javax.swing.JDialog {
-    private NhanVienPanel nvPanel;
-    private Func_class func=new Func_class();
-    private HashMap<String,Integer> mapCV;
-    private ArrayList<NhanVienDTO> listNV;
+    NhanVienPanel nvPanel;
+    Func_class func=new Func_class();
+    HashMap<String,Integer> mapCV;
+    NhanVienDAO nvDao=new NhanVienDAO();
+    CongViecDAO cvDao=new CongViecDAO();
     public AddNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienPanel nvPanel) {
         super(parent, modal);
         this.nvPanel=nvPanel;
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Thêm mới nhân viên");
+        khoiTao();
+    }
+    public void khoiTao(){
         khoiTaoButtuonGroup();
         khoiTaoComboboxCongViec();
     }
@@ -38,11 +42,30 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
         btnGr.add(jradio_nu);
     }
     public void khoiTaoComboboxCongViec(){
-        mapCV=new CongViecDAO().mapCV();
+        mapCV=cvDao.mapCV();
         combobox_cv.setBackground(Color.WHITE);
         for(String cv : mapCV.keySet()){
             combobox_cv.addItem(cv);
         }
+    }
+    public int check_add_nhanVien(){
+        if(jtf_name_nv.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Bạn chưa nhập tên nhân viên","Error",0);
+            return 0;
+        }
+        if(jtf_sdt_nv.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Bạn chưa nhập số điện thoại nhân viên","Error",0);
+            return 0;
+        }
+        if(jdatechooser_ngaySinh==null){
+            JOptionPane.showMessageDialog(null,"Bạn chưa chọn ngày sinh","Error",0);
+            return 0;
+        }
+        if(!jradio_nam.isSelected()&&!jradio_nu.isSelected()){
+            JOptionPane.showMessageDialog(null,"Bạn chưa chọn giới tính","Error",0);
+            return 0;
+        }
+        return 1;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -186,25 +209,7 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public int check_add_nhanVien(){
-        if(jtf_name_nv.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Bạn chưa nhập tên nhân viên","Error",0);
-            return 0;
-        }
-        if(jtf_sdt_nv.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Bạn chưa nhập số điện thoại nhân viên","Error",0);
-            return 0;
-        }
-        if(jdatechooser_ngaySinh==null){
-            JOptionPane.showMessageDialog(null,"Bạn chưa chọn ngày sinh","Error",0);
-            return 0;
-        }
-        if(!jradio_nam.isSelected()&&!jradio_nu.isSelected()){
-            JOptionPane.showMessageDialog(null,"Bạn chưa chọn giới tính","Error",0);
-            return 0;
-        }
-        return 1;
-    }
+
     private void btn_add_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_add_nvMouseClicked
         if (check_add_nhanVien() == 1) {
             String tenNV = jtf_name_nv.getText();
@@ -213,19 +218,19 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Error", 0);
                 return;
             }
-            mapCV=new CongViecDAO().mapCV();
+            mapCV = cvDao.mapCV();
             int maCV = mapCV.get(combobox_cv.getSelectedItem().toString());
-            Date ngaySinh=jdatechooser_ngaySinh.getDate();
-            java.sql.Date ngaySinhSQL=new java.sql.Date(ngaySinh.getTime());
-            String gioiTinh=null;
-            if(jradio_nam.isSelected())
-            gioiTinh=jradio_nam.getText();
-            else
-            gioiTinh=jradio_nu.getText();
-            new NhanVienDAO().insertNhanVien(new NhanVienDTO(tenNV,ngaySinhSQL,gioiTinh,sdt,maCV));
-            listNV=new NhanVienDAO().listNV();
-            func.loadDataNV(listNV,nvPanel.getTableNhanVien());
-            func.centerTable(nvPanel.getTableNhanVien());
+            Date ngaySinh = jdatechooser_ngaySinh.getDate();
+            java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
+            String gioiTinh = null;
+            if (jradio_nam.isSelected()) {
+                gioiTinh = jradio_nam.getText();
+            } else {
+                gioiTinh = jradio_nu.getText();
+            }
+            nvDao.insertNhanVien(new NhanVienDTO(tenNV, ngaySinhSQL, gioiTinh, sdt, maCV));
+            nvPanel.resetTableNhanVien();
+            this.dispose();
         }
     }//GEN-LAST:event_btn_add_nvMouseClicked
 

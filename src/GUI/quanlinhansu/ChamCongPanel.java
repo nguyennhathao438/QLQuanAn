@@ -18,44 +18,61 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import util.DropShadowBorder;
 import util.Func_class;
+import org.jdesktop.swingx.prompt.PromptSupport;
 
 /**
  *
  * @author kiman
  */
 public class ChamCongPanel extends javax.swing.JPanel {
-    private Func_class func = new Func_class();
-    private ArrayList<ChamCongDTO> listChamCong;
-    private ArrayList<NhanVienDTO> listNV;
-    private ArrayList<ChamCongDTO> listChamCongFilter=new ArrayList<>();
-    private JPanel jpanel_title;
-    private JPanel jpanel_chiTietNoiDung;
-    private HashMap<String,Integer> mapNV;
+    Func_class func = new Func_class();
+    ChamCongDAO chamcongDao=new ChamCongDAO();
+    NhanVienDAO nvDao=new NhanVienDAO();
+    ArrayList<ChamCongDTO> listChamCongFilter=new ArrayList<>();
+    JPanel jpanel_title;
+    JPanel jpanel_chiTietNoiDung;
     public ChamCongPanel() {
         initComponents();
+        khoiTao();
+    }
+    public void khoiTao(){
         setUpPanelThongTinChamCong();
         setIconForJLabel();
         setUpTable();
         BorderForJPanel();
+        setFocusForButton();
+        setCursorPointer();
+        setTextHidden();
+    }
+    public void setCursorPointer(){
+        func.cursorPointer(jlabel_look);
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", jtf_find);
+        PromptSupport.setForeground(Color.GRAY, jtf_find);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, jtf_find);
     }
     public JTable getTableChamCong(){
         return this.table_chamCong;
     }
+    public void setFocusForButton(){
+        btn_them_chamCong.setFocusPainted(false);
+        btn_refresh.setFocusPainted(false);
+    }
     public void BorderForJPanel(){
-        jpanel_chucNang1.setBorder(new DropShadowBorder(1,Color.BLACK));
         jpanel_chucNang2.setBorder(new DropShadowBorder(1,Color.BLACK));
     }
     public void setIconForJLabel(){
-        jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.35f));
-        btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.3f));
-        jlabel_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg",0.4f));
+        jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.25f));
+        btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.25f));
+        btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg",0.2f));
     }
     public void setUpPanelThongTinChamCong() {
         jpanel_chiTietChamCong.setLayout(new BorderLayout());
@@ -75,10 +92,35 @@ public class ChamCongPanel extends javax.swing.JPanel {
         jpanel_chiTietChamCong.add(jpanel_chiTietNoiDung, BorderLayout.CENTER);
     }
     public void setUpTable(){
-        listChamCong=new ChamCongDAO().listChamCong();
-        func.loadDataChamCong(listChamCong,table_chamCong);
-        func.centerTable(table_chamCong);
+        resetTableChamCong();
         func.setUpTable(table_chamCong);
+    }
+    public void loadDataChamCong(ArrayList<ChamCongDTO> listCC) {
+        String[] colNames = {"Mã BCC", "Nhân viên", "Tháng Năm", "Ngày làm", "Ngày nghỉ", "Ngày trễ", "Số giờ tăng ca"};
+        Object[][] rows = new Object[listCC.size()][colNames.length];
+        ArrayList<NhanVienDTO> listNV = nvDao.listNV();
+        for (int i = 0; i < listCC.size(); i++) {
+            rows[i][0] = listCC.get(i).getMaBCC();
+            int maNV = listCC.get(i).getMaNV();
+            String tenNV = null;
+            for (int j = 0; j < listNV.size(); j++) {
+                if (maNV == listNV.get(j).getMaNV()) {
+                    tenNV = listNV.get(j).getHoTen();
+                }
+            }
+            rows[i][1] = maNV + "-" + tenNV;
+            rows[i][2] = listCC.get(i).getThangChamCong() + "/" + listCC.get(i).getNamChamCong();
+            rows[i][3] = listCC.get(i).getSoNgayLamViec();
+            rows[i][4] = listCC.get(i).getSoNgayNghi();
+            rows[i][5] = listCC.get(i).getSoNgayTre();
+            rows[i][6] = listCC.get(i).getSoGioLamThem();
+        }
+        DefaultTableModel model = new DefaultTableModel(rows, colNames);
+        table_chamCong.setModel(model);
+    }
+    public void resetTableChamCong(){
+        loadDataChamCong(chamcongDao.listChamCong());
+        func.centerTable(table_chamCong);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,16 +130,13 @@ public class ChamCongPanel extends javax.swing.JPanel {
         table_chamCong = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jpanel_chiTietChamCong = new javax.swing.JPanel();
-        jpanel_chucNang1 = new javax.swing.JPanel();
-        btn_them_chamCong = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jpanel_chucNang2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jlabel_look = new javax.swing.JLabel();
+        btn_them_chamCong = new javax.swing.JButton();
         jtf_find = new javax.swing.JTextField();
-        jlabel_refresh = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jlabel_look = new javax.swing.JLabel();
+        btn_refresh = new javax.swing.JButton();
 
         table_chamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,7 +156,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(table_chamCong);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("DANH SÁCH BẢNG CHẤM CÔNG");
 
         jpanel_chiTietChamCong.setBackground(new java.awt.Color(230, 230, 235));
@@ -131,32 +170,6 @@ public class ChamCongPanel extends javax.swing.JPanel {
         jpanel_chiTietChamCongLayout.setVerticalGroup(
             jpanel_chiTietChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jpanel_chucNang1.setBackground(new java.awt.Color(255, 255, 255));
-
-        btn_them_chamCong.setText("Thêm Chấm Công");
-        btn_them_chamCong.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_them_chamCongMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpanel_chucNang1Layout = new javax.swing.GroupLayout(jpanel_chucNang1);
-        jpanel_chucNang1.setLayout(jpanel_chucNang1Layout);
-        jpanel_chucNang1Layout.setHorizontalGroup(
-            jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanel_chucNang1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(btn_them_chamCong)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        jpanel_chucNang1Layout.setVerticalGroup(
-            jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel_chucNang1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
         );
 
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
@@ -181,7 +194,13 @@ public class ChamCongPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        jPanel4.setBackground(new java.awt.Color(211, 217, 211));
+        btn_them_chamCong.setText("Chấm Công");
+        btn_them_chamCong.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_them_chamCong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_them_chamCongMouseClicked(evt);
+            }
+        });
 
         jlabel_look.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -189,99 +208,76 @@ public class ChamCongPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jtf_find, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlabel_look, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtf_find, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jlabel_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlabel_refreshMouseClicked(evt);
+        btn_refresh.setText("Làm mới");
+        btn_refresh.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
             }
         });
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel2.setText("Làm mới");
 
         javax.swing.GroupLayout jpanel_chucNang2Layout = new javax.swing.GroupLayout(jpanel_chucNang2);
         jpanel_chucNang2.setLayout(jpanel_chucNang2Layout);
         jpanel_chucNang2Layout.setHorizontalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(jlabel_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         jpanel_chucNang2Layout.setVerticalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel_chucNang2Layout.createSequentialGroup()
-                        .addComponent(jlabel_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel_chucNang2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpanel_chucNang2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpanel_chucNang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(230, 230, 230))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpanel_chucNang1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(574, 574, 574))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -312,24 +308,17 @@ public class ChamCongPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_table_chamCongMouseClicked
 
-    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
-        Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new AddChamCongDialog((Frame) parentWindow,true,this).setVisible(true);
-    }//GEN-LAST:event_btn_them_chamCongMouseClicked
-
     private void jlabel_lookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_lookMouseClicked
         String text = jtf_find.getText().toLowerCase();
-        listChamCong = new ChamCongDAO().listChamCong();
-        listNV = new NhanVienDAO().listNV();
         listChamCongFilter.clear();
-        for (ChamCongDTO chamcong : listChamCong) {
+        for (ChamCongDTO chamcong : chamcongDao.listChamCong()) {
             String maBCC = String.valueOf(chamcong.getMaBCC()).toLowerCase();
             int maNV = chamcong.getMaNV();
             String maNVStr = String.valueOf(maNV).toLowerCase();
             String tenNV = null;
-            for (int i = 0; i < listNV.size(); i++) {
-                if (maNV == listNV.get(i).getMaNV()) {
-                    tenNV = listNV.get(i).getHoTen().toLowerCase();
+            for (NhanVienDTO nv: nvDao.listNV()) {
+                if (maNV == nv.getMaNV()) {
+                    tenNV = nv.getHoTen().toLowerCase();
                 }
             }
             String thang = String.valueOf(chamcong.getThangChamCong()).toLowerCase();
@@ -342,30 +331,30 @@ public class ChamCongPanel extends javax.swing.JPanel {
                 listChamCongFilter.add(chamcong);
             }
         }
-
-        func.loadDataChamCong(listChamCongFilter, table_chamCong);
+        loadDataChamCong(listChamCongFilter);
         func.centerTable(table_chamCong);
     }//GEN-LAST:event_jlabel_lookMouseClicked
 
-    private void jlabel_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_refreshMouseClicked
-        listChamCong=new ChamCongDAO().listChamCong();
-        func.loadDataChamCong(listChamCong, table_chamCong);
-        func.centerTable(table_chamCong);
-    }//GEN-LAST:event_jlabel_refreshMouseClicked
+    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new AddChamCongDialog((Frame) parentWindow,true,this).setVisible(true);
+    }//GEN-LAST:event_btn_them_chamCongMouseClicked
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        jtf_find.setText("");
+        resetTableChamCong();
+    }//GEN-LAST:event_btn_refreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_them_chamCong;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jlabel_look;
-    private javax.swing.JLabel jlabel_refresh;
     private javax.swing.JPanel jpanel_chiTietChamCong;
-    private javax.swing.JPanel jpanel_chucNang1;
     private javax.swing.JPanel jpanel_chucNang2;
     private javax.swing.JTextField jtf_find;
     private javax.swing.JTable table_chamCong;

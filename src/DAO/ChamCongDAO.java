@@ -229,7 +229,7 @@ public class ChamCongDAO {
             while (rs.next()) {
                 int maBCC = rs.getInt("maBCC");
                 int maNV = rs.getInt("maNV");
-                mapChamCong.put(maNV,maBCC);
+                mapChamCong.put(maBCC,maNV);
             }
         } catch (Exception e) {
             e.printStackTrace();
