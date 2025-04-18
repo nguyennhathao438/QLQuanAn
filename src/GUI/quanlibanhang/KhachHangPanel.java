@@ -1,9 +1,9 @@
 
 package GUI.quanlibanhang;
 
-public class KH_Panel extends javax.swing.JPanel {
+public class KhachHangPanel extends javax.swing.JPanel {
 
-    public KH_Panel() {
+    public KhachHangPanel() {
         initComponents();
     }
 

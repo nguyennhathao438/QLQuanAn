@@ -15,6 +15,13 @@ import GUI.quankho.QKMonAnJPanel;
 import GUI.quankho.QKNCCJPanel;
 import GUI.quankho.QKNLJPanel;
 import GUI.quankho.ThongKeJPanel;
+import GUI.quanlibanhang.BanJPanel;
+import GUI.quanlibanhang.HoaDonPanel;
+import GUI.quanlibanhang.KhachHangPanel;
+import GUI.quanlinhansu.ChamCongPanel;
+import GUI.quanlinhansu.CongViecPanel;
+import GUI.quanlinhansu.LuongPanel;
+import GUI.quanlinhansu.NhanVienPanel;
 
 public class ChuyenTrangQK {
     private JPanel root;
@@ -52,7 +59,6 @@ public class ChuyenTrangQK {
            this.jpnItem = jpnItem;
            this.jlbItem = jlbItem;
       }
-
       @Override
       public void mouseClicked(MouseEvent e) {
           try {
@@ -69,8 +75,29 @@ public class ChuyenTrangQK {
                   case "NCC":
                       node = new QKNCCJPanel();
                       break;
-                      case "ThongKe":
+                  case "ThongKe":
                       node = new ThongKeJPanel();
+                      break;
+                  case "Luong":
+                      node = new LuongPanel();
+                      break;
+                  case "ChamCong":
+                      node = new ChamCongPanel();
+                      break;
+                  case "NhanVien":
+                      node = new NhanVienPanel();
+                      break;
+                  case "CongViec":
+                      node = new CongViecPanel();
+                      break;
+                  case "Ban":
+                      node = new BanJPanel();
+                      break;
+                  case "HoaDon":
+                      node = new HoaDonPanel();
+                      break;
+                  case "KhachHang":
+                      node = new KhachHangPanel();
                       break;
                   default:
                       break;

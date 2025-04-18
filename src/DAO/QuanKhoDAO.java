@@ -12,7 +12,6 @@ import DTO.NHACUNGCAP;
 import DTO.NLNhap;
 import DTO.THANHPHAN;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -96,9 +95,7 @@ public class QuanKhoDAO {
              ResultSet rs = stmt.executeQuery();
              rs.next();
              tenLoaiNL = rs.getString("loaiNL");
-             } catch (SQLServerException ex) {
-            Logger.getLogger(QuanKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+             } catch (SQLException ex) { 
             Logger.getLogger(QuanKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tenLoaiNL ;
