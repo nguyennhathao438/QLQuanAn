@@ -110,4 +110,23 @@ public class ThongKeDAO {
         }
         return dstk;
     }
+    public ArrayList<ThongKeThuChi> thongKeDoanhThuThang(String nam){ 
+        ArrayList<ThongKeThuChi> dstk = new ArrayList();
+        String query = "SELECT thangChamCong as thang , ( ISNULL((SELECT SUM(thanhTien) FROM HOADON WHERE MONTH(thoiGian) = cc.thangChamCong AND YEAR(thoiGian)= cc.namChamCong ),0 ) - ISNULL((SELECT SUM(gia) FROM CTHOADONNH JOIN HOADONNH ON CTHOADONNH.maHDNH=HOADONNH.maHDNH WHERE MONTH(HOADONNH.ngayNhap) = cc.thangChamCong AND YEAR(HOADONNH.ngayNhap)= cc.namChamCong ),0) -ISNULL((SELECT SUM(thucLanh) FROM Luong JOIN ChamCong cc1 ON Luong.maBCC =cc1.maBCC WHERE cc1.thangChamCong = cc.thangChamCong AND cc1.namChamCong=cc.namChamCong),0) )as doanh_thu FROM ChamCong cc WHERE namChamCong = ? ORDER BY thang ASC";
+        try(Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)){ 
+            stmt.setString(1,nam);
+            ResultSet rs = stmt.executeQuery();
+            ThongKeThuChi tk ;
+            while(rs.next()){ 
+                tk= new ThongKeThuChi();
+                tk.setThoiGian(rs.getInt("thang"));
+                tk.setSoTien(rs.getDouble("doanh_thu"));
+                dstk.add(tk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dstk;
+    }
 }

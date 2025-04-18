@@ -13,8 +13,6 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 public class QLMainFrame extends javax.swing.JFrame {
-
-
     public QLMainFrame() {
         initComponents();
         setTitle("Quản Kho Quán Ăn");

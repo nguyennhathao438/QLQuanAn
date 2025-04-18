@@ -105,6 +105,32 @@ public class ThongKeJPanel extends javax.swing.JPanel {
       pnThongKe.add(chartPanel, BorderLayout.CENTER);
     pnThongKe.validate();
     }
+    public void setThongKeDoanhThuThang(String year){ 
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        ArrayList<ThongKeThuChi> dstkdt = kn.thongKeDoanhThuThang(year);
+        for(ThongKeThuChi a:dstkdt){ 
+            dataset.addValue(a.getSoTien(), "Doanh thu", String.valueOf(a.getThoiGian()));
+        }
+
+    JFreeChart chart = ChartFactory.createBarChart(
+            "Thống kê tổng doanh thu quán ăn", 
+            "Tháng",              
+            "Số tiền",           
+            dataset
+    );
+    CategoryPlot plot = chart.getCategoryPlot();
+    BarRenderer renderer = (BarRenderer) plot.getRenderer();
+    renderer.setItemMargin(0.05); 
+    
+
+    ChartPanel chartPanel = new ChartPanel(chart);
+    chartPanel.setPreferredSize(new Dimension(678, 441));
+
+    pnThongKe.removeAll();
+    pnThongKe.setLayout(new BorderLayout());
+      pnThongKe.add(chartPanel, BorderLayout.CENTER);
+    pnThongKe.validate();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -138,7 +164,12 @@ public class ThongKeJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Thống kê theo");
 
-        loaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập bán hàng", "Lương nhân viên" }));
+        loaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập bán hàng", "Lương nhân viên", "Doanh thu" }));
+        loaiThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loaiThongKeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,11 +247,17 @@ public class ThongKeJPanel extends javax.swing.JPanel {
          }else{ 
              setThongKeQuy(year);
          }
-         }else{ 
+         }else if(lThongKe.equals("Nhập bán hàng")){ 
              setThongKeLuongThang(year);
+         }else{ 
+             setThongKeDoanhThuThang(year);
          }
          
     }//GEN-LAST:event_seenBDActionPerformed
+
+    private void loaiThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaiThongKeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loaiThongKeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

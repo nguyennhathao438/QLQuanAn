@@ -14,19 +14,31 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.prompt.PromptSupport;
 import util.DropShadowBorder;
 import util.Func_class;
 
 
 public class CongViecPanel extends javax.swing.JPanel {
-    private Func_class func=new Func_class();
-    private ArrayList<CongViecDTO> listCV;
-    private ArrayList<CongViecDTO> listCVFilter = new ArrayList<>();
+    Func_class func=new Func_class();
+    CongViecDAO cvDao=new CongViecDAO();
+    ArrayList<CongViecDTO> listCVFilter = new ArrayList<>();
     public CongViecPanel() {
         initComponents();
+        khoiTao();
+    }
+    public void khoiTao() {
         setIcon();
         setUpJPanelChucNang();
         setUpTable();
+        setCursorPointer();
+        setTextHidden();
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", jtf_find_congViec);
+        PromptSupport.setForeground(Color.GRAY, jtf_find_congViec);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, jtf_find_congViec);
     }
     public JTable getTableCongViec(){
         return table_cv;
@@ -41,14 +53,38 @@ public class CongViecPanel extends javax.swing.JPanel {
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg",0.06f));
         jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg",0.85f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg",0.75f));
-
+        jlabel_chiTietCV.setIcon(new FlatSVGIcon("./resources/icon/details.svg",0.45f));
+    }
+    public void setCursorPointer(){
+        func.cursorPointer(jlabel_add);
+        func.cursorPointer(jlabel_chiTietCV);
+        func.cursorPointer(jlabel_delete);
+        func.cursorPointer(jlabel_update);
+        func.cursorPointer(jlabel_refresh);
+        func.cursorPointer(jlabel_look_congViec);
     }
     public void setUpTable(){
-        listCV=new CongViecDAO().listCV();
-        func.loadDataCongViec(listCV, table_cv);
-        func.centerTable(table_cv);
+        resetTableCongViec();
         func.setUpTable(table_cv);
     }
+    public void loadDataCongViec(ArrayList<CongViecDTO> list){
+        String[] colNames={"Mã công việc","Tên công việc","Lương cơ bản","Phụ cấp","Hệ số lương"};
+        Object[][] rows=new Object[list.size()][colNames.length];
+        for(int i=0;i<list.size();i++){
+            rows[i][0]=list.get(i).getMaCV();
+            rows[i][1]=list.get(i).getTenCV();
+            rows[i][2]=String.format("%,.0f",list.get(i).getLuongCoBan());
+            rows[i][3]=String.format("%,.0f",list.get(i).getPhuCap());
+            rows[i][4]=list.get(i).getHeSoLuong();
+        }
+        DefaultTableModel model=new DefaultTableModel(rows,colNames);
+        table_cv.setModel(model);
+    }
+    public void resetTableCongViec(){
+        loadDataCongViec(cvDao.listCV());
+        func.centerTable(table_cv);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,11 +100,12 @@ public class CongViecPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jlabel_chiTietCV = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jpanel_chucNang2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jtf_find_congViec = new javax.swing.JTextField();
         jlabel_look_congViec = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jlabel_refresh = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -109,8 +146,6 @@ public class CongViecPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table_cv);
 
-        jpanel_chucNang1.setBackground(new java.awt.Color(255, 255, 255));
-
         jlabel_delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlabel_deleteMouseClicked(evt);
@@ -135,6 +170,14 @@ public class CongViecPanel extends javax.swing.JPanel {
 
         jLabel5.setText("    Xóa");
 
+        jlabel_chiTietCV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlabel_chiTietCVMouseClicked(evt);
+            }
+        });
+
+        jLabel8.setText(" Chi tiết");
+
         javax.swing.GroupLayout jpanel_chucNang1Layout = new javax.swing.GroupLayout(jpanel_chucNang1);
         jpanel_chucNang1.setLayout(jpanel_chucNang1Layout);
         jpanel_chucNang1Layout.setHorizontalGroup(
@@ -149,24 +192,32 @@ public class CongViecPanel extends javax.swing.JPanel {
                     .addComponent(jlabel_update, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabel_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jpanel_chucNang1Layout.createSequentialGroup()
+                        .addComponent(jlabel_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlabel_chiTietCV, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpanel_chucNang1Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jpanel_chucNang1Layout.setVerticalGroup(
             jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabel_add, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlabel_update, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlabel_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlabel_add, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(jlabel_update, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(jlabel_delete, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(jlabel_chiTietCV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpanel_chucNang1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -178,27 +229,21 @@ public class CongViecPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Tìm kiếm tại đây");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlabel_look_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlabel_look_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlabel_look_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,7 +282,7 @@ public class CongViecPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -251,7 +296,7 @@ public class CongViecPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpanel_chucNang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
+                        .addGap(18, 18, 18)
                         .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -283,10 +328,8 @@ public class CongViecPanel extends javax.swing.JPanel {
         int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa", "Xóa công việc",
             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (confirm == JOptionPane.YES_OPTION) {
-            new CongViecDAO().deleteCongViec(maCV);
-            listCV = new CongViecDAO().listCV();
-            func.loadDataCongViec(listCV, table_cv);
-            func.centerTable(table_cv);
+            cvDao.deleteCongViec(maCV);
+            resetTableCongViec();
         }
     }//GEN-LAST:event_jlabel_deleteMouseClicked
 
@@ -303,8 +346,8 @@ public class CongViecPanel extends javax.swing.JPanel {
         }
         int maCV=Integer.parseInt(table_cv.getValueAt(vitriRow,0).toString());
         String tenCV=table_cv.getValueAt(vitriRow,1).toString();
-        double luongCoBan=Double.parseDouble(table_cv.getValueAt(vitriRow,2).toString());
-        double phuCap=Double.parseDouble(table_cv.getValueAt(vitriRow,3).toString());
+        double luongCoBan=Double.parseDouble(table_cv.getValueAt(vitriRow,2).toString().replaceAll(",",""));
+        double phuCap=Double.parseDouble(table_cv.getValueAt(vitriRow,3).toString().replaceAll(",",""));
         double heSoLuong=Double.parseDouble(table_cv.getValueAt(vitriRow,4).toString());
         CongViecDTO cv=new CongViecDTO(maCV,tenCV,luongCoBan,phuCap, heSoLuong);
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
@@ -312,41 +355,56 @@ public class CongViecPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jlabel_updateMouseClicked
 
     private void jlabel_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_refreshMouseClicked
-        listCV=new CongViecDAO().listCV();
-        func.loadDataCongViec(listCV, table_cv);
-        func.centerTable(table_cv);
+        jtf_find_congViec.setText("");
+        resetTableCongViec();
     }//GEN-LAST:event_jlabel_refreshMouseClicked
 
     private void jlabel_look_congViecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_look_congViecMouseClicked
-        listCV=new CongViecDAO().listCV();
-        String text=jtf_find_congViec.getText().toLowerCase();
+        String text = jtf_find_congViec.getText().toLowerCase();
         listCVFilter.clear();
-        for(CongViecDTO cv:listCV){
-            String maCV=String.valueOf(cv.getMaCV());
-            String tenCV=cv.getTenCV().toLowerCase();
-            String luongCoBan=String.valueOf(cv.getLuongCoBan()).toLowerCase();
-            String phuCap=String.valueOf(cv.getPhuCap()).toLowerCase();
-            String heSoLuong=String.valueOf(cv.getHeSoLuong()).toLowerCase();
-            if(maCV.contains(text)||tenCV.contains(text)||luongCoBan.contains(text)||phuCap.contains(text)||heSoLuong.contains(text)){
+        for (CongViecDTO cv : cvDao.listCV()) {
+            String maCV = String.valueOf(cv.getMaCV());
+            String tenCV = cv.getTenCV().toLowerCase();
+            String luongCoBan = String.valueOf(cv.getLuongCoBan()).toLowerCase();
+            String phuCap = String.valueOf(cv.getPhuCap()).toLowerCase();
+            String heSoLuong = String.valueOf(cv.getHeSoLuong()).toLowerCase();
+            if (maCV.contains(text) || tenCV.contains(text) || luongCoBan.contains(text) || phuCap.contains(text) || heSoLuong.contains(text)) {
                 listCVFilter.add(cv);
             }
         }
-        func.loadDataCongViec(listCVFilter, table_cv);
+        loadDataCongViec(listCVFilter);
         func.centerTable(table_cv);
     }//GEN-LAST:event_jlabel_look_congViecMouseClicked
+
+    private void jlabel_chiTietCVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_chiTietCVMouseClicked
+        int vitriRow=table_cv.getSelectedRow();
+        if(vitriRow==-1){
+            JOptionPane.showMessageDialog(null,"Bạn chưa chọn công việc","Error",0);
+            return;
+        }
+        int maCV=Integer.parseInt(table_cv.getValueAt(vitriRow,0).toString());
+        String tenCV=table_cv.getValueAt(vitriRow,1).toString();
+        double luongCoBan=Double.parseDouble(table_cv.getValueAt(vitriRow,2).toString().replaceAll(",",""));
+        double phuCap=Double.parseDouble(table_cv.getValueAt(vitriRow,3).toString().replaceAll(",",""));
+        double heSoLuong=Double.parseDouble(table_cv.getValueAt(vitriRow, 4).toString());
+        CongViecDTO cv=new CongViecDTO(tenCV, luongCoBan, phuCap, heSoLuong);
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new DetailsCongViecDialog((Frame) parentWindow,true,cv).setVisible(true);
+    }//GEN-LAST:event_jlabel_chiTietCVMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabel_add;
+    private javax.swing.JLabel jlabel_chiTietCV;
     private javax.swing.JLabel jlabel_delete;
     private javax.swing.JLabel jlabel_look_congViec;
     private javax.swing.JLabel jlabel_refresh;

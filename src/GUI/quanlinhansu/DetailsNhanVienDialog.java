@@ -15,14 +15,14 @@ import util.Func_class;
  * @author kiman
  */
 public class DetailsNhanVienDialog extends javax.swing.JDialog {
-    private Func_class func=new Func_class();
-    private HashMap<String,Integer> mapCV;
+    Func_class func=new Func_class();
+    HashMap<String,Integer> mapCV;
     public DetailsNhanVienDialog(java.awt.Frame parent, boolean modal, NhanVienDTO nv) {
         super(parent, modal);
         initComponents();
+        this.setTitle("Xem chi tiết nhân viên");
         this.setLocationRelativeTo(null);
-        fillComBoBoxCongViec();
-        setEditToFalse();
+        khoiTao();
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
         if (nv.getmaCongViec() == 0) {
@@ -38,6 +38,10 @@ public class DetailsNhanVienDialog extends javax.swing.JDialog {
             jradio_nu.setSelected(true);
         }
         jdateChooser_ngaySinh.setDate(nv.getNgaySinh());
+    }
+    public void khoiTao(){
+        fillComBoBoxCongViec();
+        setEditToFalse();
     }
     public void fillComBoBoxCongViec(){
         mapCV=new CongViecDAO().mapCV();
