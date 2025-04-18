@@ -10,12 +10,21 @@ import DTO.HOADONNHAPHANG;
 import export_file.XuatPhieuNhap;
 import java.awt.Frame;
 import java.awt.Window;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.text.SimpleDateFormat;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
 import util.Func_class;
 
 public class QKHDNHJPanel extends javax.swing.JPanel {
@@ -40,10 +49,11 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
             dtm.addColumn("Ngày Nhập");
             dtm.addColumn("Giá ");
         }
-        for(HOADONNHAPHANG a:dshd.getLSNH()){ 
+         for(HOADONNHAPHANG a:dshd.getLSNH()){ 
             String formattedGia = df.format(a.getThanhTien());
             dtm.addRow(new Object[]{a.getMaHDNH(),a.getTenNCC(),a.getNgayNhap(),formattedGia});
-        }
+        }   
+
     }
     public void setTable(){ 
         //set độ rộng
@@ -62,6 +72,7 @@ for (int i = 0; i < 4; i++) {
         func.setUpTable(bangLSHDNH);
     }
     @SuppressWarnings("unchecked")
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -145,35 +156,36 @@ for (int i = 0; i < 4; i++) {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(114, 114, 114)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addGap(112, 112, 112)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(98, 98, 98)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel2))
-                .addGap(98, 98, 98)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3))
-                    .addComponent(jButton3))
-                .addGap(179, 179, 179))
+                        .addGap(112, 112, 112)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18))
         );
 
@@ -183,11 +195,12 @@ for (int i = 0; i < 4; i++) {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -210,38 +223,92 @@ for (int i = 0; i < 4; i++) {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new HDNHDialog((Frame) parentWindow,true).setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+                Window parentWindow = SwingUtilities.getWindowAncestor(this);
+                new HDNHDialog((Frame) parentWindow, true).setVisible(true);
+        }// GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int row = bangLSHDNH.getSelectedRow();
-        if(row == -1){ 
-            JOptionPane.showMessageDialog(this, "Click vào hoá đơn ");
-        }else{ 
-            String a= (String) bangLSHDNH.getValueAt(row, 0);
-            Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new CTHDNHDialog((Frame) parentWindow,true,a).setVisible(true);
+        private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
+                int row = bangLSHDNH.getSelectedRow();
+                if (row == -1) {
+                        JOptionPane.showMessageDialog(this, "Click vào hoá đơn ");
+                } else {
+                        String a = (String) bangLSHDNH.getValueAt(row, 0);
+                        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+                        new CTHDNHDialog((Frame) parentWindow, true, a).setVisible(true);
+                }
+        }// GEN-LAST:event_jButton2ActionPerformed
+
+        private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
+                int row = bangLSHDNH.getSelectedRow();
+                if (row == -1) {
+                        JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
+                        return;
+                } else {
+                        XuatPhieuNhap export = new XuatPhieuNhap();
+                        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc xuất lại hoá đơn ");
+                        if (confirm == JOptionPane.YES_OPTION) {
+                                export.XuatPDF((String) bangLSHDNH.getValueAt(row, 0));
+                        } else {
+                                return;
+                        }
+                }
+        }// GEN-LAST:event_jButton3ActionPerformed
+        private JTextField txtQuy;
+        private JTextField txtNam;
+
+
+        private boolean isThangSelected = false;
+        private boolean isQuySelected = false;
+
+        private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
+
+       
+    }
+
+        // GEN-LAST
+        public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
+                ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+
+                // Khởi tạo thời gian bắt đầu (đầu tháng from)
+                Calendar calFrom = Calendar.getInstance();
+                calFrom.set(namfrom, thangfrom - 1, 1); // Lưu ý: tháng tính từ 0
+
+                // Khởi tạo thời gian kết thúc (cuối tháng to)
+                Calendar calTo = Calendar.getInstance();
+                calTo.set(namto, thangto - 1, 1);
+                calTo.set(Calendar.DAY_OF_MONTH, calTo.getActualMaximum(Calendar.DAY_OF_MONTH)); // Lấy ngày cuối cùng
+                                                                                                 // của tháng
+
+                for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
+                        java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
+                        if (ngayNhap != null && !ngayNhap.before(calFrom.getTime())
+                                        && !ngayNhap.after(calTo.getTime())) {
+                                result.add(cthd);
+                        }
+                }
+
+                return result;
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int row= bangLSHDNH.getSelectedRow();
-        if(row == -1 ){ 
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
-            return;
-        }else{ 
-            XuatPhieuNhap export =new XuatPhieuNhap();
-            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc xuất lại hoá đơn ");
-            if(confirm == JOptionPane.YES_OPTION){
-            export.XuatPDF((String) bangLSHDNH.getValueAt(row, 0));}
-            else { 
-                return;
-            }
+        public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
+
+                ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+                for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
+                        String maHDNH;
+                        java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(ngayNhap);
+                        int month = cal.get(Calendar.MONTH) + 1;
+                        int year = cal.get(Calendar.YEAR);
+
+                        if (year == nam && ((quy - 1) * 3 + 1 <= month && month <= quy * 3)) {
+                                result.add(cthd);
+                        }
+
+                }
+                return result;
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangLSHDNH;
