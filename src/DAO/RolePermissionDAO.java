@@ -4,61 +4,126 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import DTO.PermissionDTO;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import util.ConnectedDatabase;
 
 public class RolePermissionDAO {
-    public Connection getConnection() {
-        return ConnectedDatabase.getConnectedDB();
+    private Connection conn = ConnectedDatabase.getConnectedDB();
+
+    public boolean isRoleExists(String maVT) {
+        String sql = "SELECT 1 FROM ROLES WHERE maVT = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, maVT);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public List<PermissionDTO> getAllPermissionsWithRole(String maVT) {
-        List<PermissionDTO> list = new ArrayList<>();
-        String sql = "SELECT p.maQuyen, p.tenQuyen, " +
-                     "CASE WHEN rp.maVT IS NULL THEN 0 ELSE 1 END AS duocCap " +
-                     "FROM PERMISSION p " +
-                     "LEFT JOIN ROLEPERMISSION rp ON p.maQuyen = rp.maQuyen AND rp.maVT = ?";
+    public void insertRole(String maVT, String tenVT) {
+        String sql = "INSERT INTO ROLES(maVT, tenVT) VALUES (?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, maVT);
+            ps.setString(2, tenVT);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, maVT);
-            ResultSet rs = stmt.executeQuery();
+    public void insert(PermissionDTO dto) {
+        String sql = "INSERT INTO ROLEPERMISSION(maVT, maQuyen) " +
+                     "SELECT ?, maQuyen FROM PERMISSION WHERE tenQuyen = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, dto.getMaVT());
+            ps.setString(2, dto.getTenQuyen());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteByRole(String maVT) {
+        String sql = "DELETE FROM ROLEPERMISSION WHERE maVT = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, maVT);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<String> getPermissionsByRole(String maVT) {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT tenQuyen FROM ROLEPERMISSION rp JOIN PERMISSION p ON rp.maQuyen = p.maQuyen WHERE maVT = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, maVT);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String maQuyen = rs.getString("maQuyen");
-                String tenQuyen = rs.getString("tenQuyen");
-                boolean duocCap = rs.getInt("duocCap") == 1;
-                list.add(new PermissionDTO(maQuyen, tenQuyen, duocCap));
+                list.add(rs.getString("tenQuyen"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
-    public void capQuyen(String maVT, String maQuyen) {
-        String sql = "IF NOT EXISTS (SELECT * FROM ROLEPERMISSION WHERE maVT = ? AND maQuyen = ?) " +
-                     "INSERT INTO ROLEPERMISSION (maVT, maQuyen) VALUES (?, ?)";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, maVT);
-            stmt.setString(2, maQuyen);
-            stmt.setString(3, maVT);
-            stmt.setString(4, maQuyen);
-            stmt.executeUpdate();
+    public Map<String, List<String>> getAllPermissions() {
+        Map<String, List<String>> map = new LinkedHashMap<>();
+        String sql = "SELECT r.maVT, r.tenVT, p.tenQuyen FROM ROLEPERMISSION rp " +
+                     "JOIN ROLES r ON r.maVT = rp.maVT " +
+                     "JOIN PERMISSION p ON p.maQuyen = rp.maQuyen " +
+                     "ORDER BY r.maVT";
+        try (Statement st = conn.createStatement()) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String maVT = rs.getString("maVT");
+                String tenVT = rs.getString("tenVT");
+                String tenQuyen = rs.getString("tenQuyen");
+                map.putIfAbsent(maVT + " - " + tenVT, new ArrayList<>());
+map.get(maVT + " - " + tenVT).add(tenQuyen);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public void deleteRole(String maVT) {
+        String sql1 = "DELETE FROM ROLEPERMISSION WHERE maVT = ?";
+        String sql2 = "DELETE FROM ROLES WHERE maVT = ?";
+        try (PreparedStatement ps1 = conn.prepareStatement(sql1);
+             PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+            ps1.setString(1, maVT);
+            ps1.executeUpdate();
+            ps2.setString(1, maVT);
+            ps2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void xoaQuyen(String maVT, String maQuyen) {
-        String sql = "DELETE FROM ROLEPERMISSION WHERE maVT = ? AND maQuyen = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, maVT);
-            stmt.setString(2, maQuyen);
-            stmt.executeUpdate();
+    public List<String> getAllTenQuyen() {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT tenQuyen FROM PERMISSION";
+        try (Statement st = conn.createStatement()) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                list.add(rs.getString("tenQuyen"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return list;
     }
 }
+
+
+
+
+
+

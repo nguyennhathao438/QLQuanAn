@@ -14,7 +14,7 @@ private static SQLServerDataSource ds = new SQLServerDataSource();
 		var server = "localhost";  
         var user = "sa";                 
         var password = "161105";          
-        var db = "QLTEST";              
+        var db = "TESST";              
         var port = 1433;                  
 
         ds.setUser(user);

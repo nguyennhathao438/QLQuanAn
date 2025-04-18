@@ -9,17 +9,27 @@ package DTO;
  * @author THANH HIEU
  */
 public class PermissionDTO {
-    private String maQuyen;
+    private String maVT;
     private String tenQuyen;
-    private boolean duocCap;
 
-    public PermissionDTO(String maQuyen, String tenQuyen, boolean duocCap) {
-        this.maQuyen = maQuyen;
+    public PermissionDTO(String maVT, String tenQuyen) {
+        this.maVT = maVT;
         this.tenQuyen = tenQuyen;
-        this.duocCap = duocCap;
     }
 
-    public String getMaQuyen() { return maQuyen; }
-    public String getTenQuyen() { return tenQuyen; }
-    public boolean isDuocCap() { return duocCap; }
+    public String getMaVT() {
+        return maVT;
+    }
+
+    public void setMaVT(String maVT) {
+        this.maVT = maVT;
+    }
+
+    public String getTenQuyen() {
+        return tenQuyen;
+    }
+
+    public void setTenQuyen(String tenQuyen) {
+        this.tenQuyen = tenQuyen;
+    }
 }

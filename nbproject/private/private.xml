@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PQuyen.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/LoginGUI/PhanQuyenDialog.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/LoginGUI/AddPermissionDialog.java</file>
             <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/LoginGUI/Login.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/LoginGUI/TestPhanQuyen.java</file>
             <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DAO/UserDAO.java</file>
             <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DTO/PermissionDTO.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PQuyenDialog.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PhanQuyenDialog.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PhanQuyenManagerGUI.java</file>
             <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DAO/RolePermissionDAO.java</file>
         </group>
     </open-files>
