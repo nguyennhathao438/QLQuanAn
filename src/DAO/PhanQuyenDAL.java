@@ -34,4 +34,5 @@ public class PhanQuyenDAL {
         }
         return dsq;
     }
+    
 }
