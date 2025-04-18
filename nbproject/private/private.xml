@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/util/Func_class.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/QLMainFrame.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/ChamCongPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/LuongPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QuanAnPTTKHTTT/QLQuanAn/src/GUI/quanlinhansu/DetailsCongViecDialog.java</file>
         </group>
     </open-files>
 </project-private>
