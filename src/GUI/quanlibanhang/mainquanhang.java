@@ -7,8 +7,9 @@ public class mainquanhang {
         // Tạo frame
         JFrame frame = new JFrame("Quản lý Bàn");
         // Gắn JPanel của bạn vào frame
-//        frame.setContentPane(new BanJPanel());
-        frame.setContentPane(new HoaDonPanel());
+    //  frame.setContentPane(new BanJPanel());
+    //     frame.setContentPane(new HoaDonPanel());
+       frame.setContentPane(new KH_Panel());
 
         // Cấu hình frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

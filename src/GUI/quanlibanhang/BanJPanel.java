@@ -58,7 +58,7 @@ public class BanJPanel extends javax.swing.JPanel {
         for(MonAnBan mab:BanManager.dsmab[bandangchon].getDSMAB()){
             Tong += mab.getThanhtien();
         }
-        jLabel4.setText(""+Tong+" VNĐ");
+        jLabel4.setText(df.format(Tong)+ " VNĐ");
         
         try{
           double tiendu;
@@ -224,7 +224,7 @@ public class BanJPanel extends javax.swing.JPanel {
         jLabel5.setText("Tiền khách:");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Tiền Thối:");
+        jLabel7.setText("Tiền Trả:");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -343,10 +343,13 @@ public class BanJPanel extends javax.swing.JPanel {
         if("Trống".equals(trangthai)){
         JOptionPane.showMessageDialog(null, "Bàn đang trống không thể thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
         return;
-        } else if(!qh.kiemTraTonTaiKH(makhach)){
-            JOptionPane.showMessageDialog(null, "Khách hàng không tồn tại", "Errol", JOptionPane.ERROR_MESSAGE);
         } 
+//        else if(!qh.kiemTraTonTaiKH(makhach)){
+//            JOptionPane.showMessageDialog(null, "Khách hàng không tồn tại", "Errol", JOptionPane.ERROR_MESSAGE);
+//        }
         else if("Đang Dùng".equals(trangthai)){
+        String cthdMaKH = cthdbn.getMaKH();
+        boolean ktkhach = makhach != null;
         int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn Thanh toán không? (Nếu đã thanh toán hãy Reset)", "Thông báo", JOptionPane.YES_NO_OPTION);
         if(chon == JOptionPane.YES_OPTION){
         double Tong = 0;
@@ -355,12 +358,15 @@ public class BanJPanel extends javax.swing.JPanel {
         }
         cthdbn.setMaHoaDon(mamoi);
         cthdbn.setThoiGian(new Date());
-        cthdbn.setThanhTien(Tong);
-        cthdbn.setMaKH(mamoi);
-        cthdbn.setMaKH(makhach);
+        cthdbn.setThanhTien(Tong);        
         cthdbn.setDsma(BanManager.dsmab[bandangchon].getDSMAB());
-        qh.themHDBH(cthdbn,makhach);
-        
+        if(ktkhach && qh.kiemTraTonTaiKH(makhach)){
+            cthdbn.setMaKH(makhach);
+            qh.themHDBH(cthdbn, makhach);
+        }else {
+            cthdbn.setMaKH(null);
+        qh.themHDBH(cthdbn,null);
+        }
         JOptionPane.showMessageDialog(null,"Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         BanManager.thanhtoan(bandangchon);}
         }
