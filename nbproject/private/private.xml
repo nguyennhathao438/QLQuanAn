@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/NguyenLieuDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/Layout/ChamCongPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/Layout/Menu.java</file>
@@ -49,6 +50,14 @@
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quankho/ThongKeJPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/DAO/QuanKhoDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QLQuanAn/src/GUI/quanlibanhang/AddKhachHangDialog.java</file>
+=======
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/LoginGUI/Login.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DAO/UserDAO.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DTO/PermissionDTO.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PhanQuyenDialog.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/GUIADM/PhanQuyenManagerGUI.java</file>
+            <file>file:/C:/Users/THANH%20HIEU/QLQuanAn/src/DAO/RolePermissionDAO.java</file>
+>>>>>>> 22463b89f84371eec5ca4729248c2c6372087071
         </group>
     </open-files>
 </project-private>
