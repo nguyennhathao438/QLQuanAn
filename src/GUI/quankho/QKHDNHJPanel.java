@@ -10,21 +10,19 @@ import DTO.HOADONNHAPHANG;
 import export_file.XuatPhieuNhap;
 import java.awt.Frame;
 import java.awt.Window;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+import util.Func_class;
 
 public class QKHDNHJPanel extends javax.swing.JPanel {
     QuanKhoDAO kn=new QuanKhoDAO();
     LICHSUNH dshd ;
     DefaultTableModel dtm=new DefaultTableModel();
+    Func_class func = new Func_class();
     public QKHDNHJPanel() {
         initComponents();
         bangLSHDNH.setModel(dtm);
@@ -60,11 +58,8 @@ centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 for (int i = 0; i < 4; i++) {
     bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 }
-//Can giua tieu de
- JTableHeader header = bangLSHDNH.getTableHeader();
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setDefaultRenderer(headerRenderer);
+         func.centerTable(bangLSHDNH);
+        func.setUpTable(bangLSHDNH);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -4,7 +4,9 @@ package GUI.quankho;
 import DTO.NGUYENLIEU;
 import DAO.QuanKhoDAO;
 import DTO.DSNguyenLieu;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -31,17 +33,31 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 
 public class QKNLJPanel extends javax.swing.JPanel {
     DSNguyenLieu dsnl=new DSNguyenLieu();
    QuanKhoDAO kn=new QuanKhoDAO();
+   Func_class func = new Func_class();
    DefaultTableModel dtm=new DefaultTableModel(); ;
     public QKNLJPanel() throws SQLException {
         initComponents();
         setData();
         bangNL.setModel(dtm);
         bangNL.setComponentPopupMenu(putableNL);
+        locNL.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+locNL.setBackground(new Color(230, 230, 250)); // màu nền nhạt
+locNL.setForeground(Color.DARK_GRAY); // màu chữ
+        setTextHidden();
+         func.centerTable(bangNL);
+        func.setUpTable(bangNL);
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", search);
+        PromptSupport.setForeground(Color.GRAY, search);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT,search);
     }
     public void setData() throws SQLException{ 
         dsnl=new DSNguyenLieu();

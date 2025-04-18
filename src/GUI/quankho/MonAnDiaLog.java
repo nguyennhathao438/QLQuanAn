@@ -177,6 +177,14 @@ QuanKhoDAO kn=new QuanKhoDAO();
         ma.setGia(Double.parseDouble(gia.getText()));
         boolean kt=false;
         if(maMonAn.isEmpty()){
+            if(maMA.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn"); 
+                return ;
+            }
+            if(tenMA.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn");
+                return ;
+            }
         for(MONAN a: dsma.getDSMA()){ 
             if(a.getMaMA().equals(text)){ 
                 JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");

@@ -4,14 +4,19 @@ package GUI.quankho;
 import DTO.MONAN;
 import DTO.DSMonAn;
 import DAO.QuanKhoDAO;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Window;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 
 
@@ -19,12 +24,24 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
     QuanKhoDAO kn =new QuanKhoDAO();
     DSMonAn dsma;
     DefaultTableModel dtm =new DefaultTableModel();
+    Func_class func=new Func_class();
     public QKMonAnJPanel() {
         initComponents();
         bangMA.setModel(dtm);
         bangMA.setComponentPopupMenu(pubangMA);
+        setTextHidden();
         setData();
         setTable();
+        locMA.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+locMA.setBackground(new Color(230, 230, 250)); // màu nền nhạt
+locMA.setForeground(Color.DARK_GRAY); // màu chữ
+    
+
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", searchText);
+        PromptSupport.setForeground(Color.GRAY, searchText);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT,searchText);
     }
     public void setTable(){ 
         bangMA.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -39,18 +56,15 @@ centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 for (int i = 0; i < 6; i++) {
     bangMA.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 }
-//Can giua tieu de
- JTableHeader header = bangMA.getTableHeader();
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setDefaultRenderer(headerRenderer);
+           func.centerTable(bangMA);
+        func.setUpTable(bangMA);
     }
     public void setData(){ 
         dsma =new DSMonAn();
         kn.layMonAn(dsma);
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
-        dtm.addColumn("Mã Món Ăn");
+        dtm.addColumn("Mã");
         dtm.addColumn("Loại Món Ăn");
         dtm.addColumn("Tên Món Ăn");
         dtm.addColumn("Mô Tả");
@@ -138,7 +152,7 @@ for (int i = 0; i < 6; i++) {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức Năng"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức Năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconthem.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -246,7 +260,7 @@ for (int i = 0; i < 6; i++) {
                 .addGap(56, 56, 56))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm Kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         searchText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 

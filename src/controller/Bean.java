@@ -7,24 +7,18 @@ import javax.swing.JPanel;
 public class Bean {
     private String kind;
     private JPanel jpn;
-    private JLabel jlb;
 
-    public Bean(String kind, JPanel jpn, JLabel jlb) {
+    public Bean(String kind, JPanel jpn) {
         this.kind = kind;
         this.jpn = jpn;
-        this.jlb = jlb;
     }
-
+    
     public String getKind() {
         return kind;
     }
 
     public JPanel getJpn() {
         return jpn;
-    }
-
-    public JLabel getJlb() {
-        return jlb;
     }
 
     public void setKind(String kind) {
@@ -35,8 +29,6 @@ public class Bean {
         this.jpn = jpn;
     }
 
-    public void setJlb(JLabel jlb) {
-        this.jlb = jlb;
-    }
+    
     
 }
