@@ -7,18 +7,20 @@ public class MONAN {
     private String loaiMA;
     private String moTa;
     private Double gia;
+    private int soLuongConLai;
     private int trangThai;
 
     public MONAN() {
     }
 
-    public MONAN(String maMA, String tenMA, String loaiMA, String moTa, Double gia, int trangThai) {
+    public MONAN(String maMA, String tenMA, String loaiMA, String moTa, Double gia, int trangThai,int soLuongConLai) {
         this.maMA = maMA;
         this.tenMA = tenMA;
         this.loaiMA = loaiMA;
         this.moTa = moTa;
         this.gia = gia;
         this.trangThai = trangThai;
+                this.soLuongConLai = soLuongConLai;
     }
 
     public String getLoaiMA() {
@@ -69,6 +71,14 @@ public class MONAN {
 
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public int getSoLuongConLai() {
+        return soLuongConLai;
+    }
+
+    public void setSoLuongConLai(int soLuongConLai) {
+        this.soLuongConLai = soLuongConLai;
     }
     
 }

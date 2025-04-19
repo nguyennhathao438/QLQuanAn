@@ -4,22 +4,18 @@ package GUI.quanlibanhang;
 import DAO.QuanHangDAO;
 import DTO.DSKhach;
 import DTO.khachDTO;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class AddKhachHangDialog extends javax.swing.JDialog {
 
     DSKhach dsk = new DSKhach();
     QuanHangDAO qh = new QuanHangDAO();
-    String maKhachHang ="";
     public AddKhachHangDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    }
-    public AddKhachHangDialog(java.awt.Frame parent, boolean modal,String maKhachhang) {
-        super(parent, modal);
-        initComponents();
         qh.LayKH(dsk);
-        this.maKhachHang = maKhachhang;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -163,7 +159,13 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
     private void Text_loaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Text_loaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Text_loaiActionPerformed
-
+    public int ktSDT(String SDT){
+        if(SDT.matches("0\\d{9}")) // kt số 0 ở đầu và có 9 số sau
+        {
+            return 1;
+        }
+        return 0;
+    }
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         String makhach = text_khach.getText().trim();
         String tenkhach = text_ten.getText().trim();
@@ -175,9 +177,13 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        else if(ktSDT(SDT) == 1){
+            JOptionPane.showMessageDialog(null, "Định dạng sai Số điện thoại", "Errol", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         else {
             for(khachDTO kh:dsk.getDSK()){
-               if(kh.getMaKH().equalsIgnoreCase(makhach)){
+               if(kh.getMaKH().equals(makhach)){
                    JOptionPane.showMessageDialog(null, "Mã bị trùng vui lòng nhập mã khác", "Error", JOptionPane.ERROR_MESSAGE);
                    return;
                }
@@ -190,7 +196,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             kh.setDiachi(diachi);
             
             qh.themKH(kh);
-            JOptionPane.showMessageDialog(null,"Add Access");
+            JOptionPane.showMessageDialog(null,"Thêm Thành công");
             
             dispose();
         }

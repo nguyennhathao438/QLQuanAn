@@ -17,7 +17,7 @@ import GUI.quankho.QKNLJPanel;
 import GUI.quankho.ThongKeJPanel;
 import GUI.quanlibanhang.BanJPanel;
 import GUI.quanlibanhang.HoaDonPanel;
-import GUI.quanlibanhang.KhachHangPanel;
+import GUI.quanlibanhang.KH_Panel;
 import GUI.quanlinhansu.ChamCongPanel;
 import GUI.quanlinhansu.CongViecPanel;
 import GUI.quanlinhansu.LuongPanel;
@@ -94,7 +94,7 @@ public class ChuyenTrang {
                       node = new HoaDonPanel();
                       break;
                   case "Q08":
-                      node = new KhachHangPanel();
+                      node = new KH_Panel();
                       break;
                   case "Q12":
                       node = new PhanQuyenManagerPanel();

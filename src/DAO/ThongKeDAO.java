@@ -130,11 +130,5 @@ public class ThongKeDAO {
         }
         return dstk;
     }
-    public int soLuongMonAn(){ 
-        DSMonAn dsma = new DSMonAn();
-       QuanKhoDAO qkdao=new QuanKhoDAO();
-       qkdao.layMonAn(dsma);
-       int soluong = dsma.getDSMA().size();
-       return soluong ;   
-    }
+    
 }

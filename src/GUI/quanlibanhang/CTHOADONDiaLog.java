@@ -19,6 +19,7 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
         this.maHD = maHD;
         bangCTHD.setModel(dtm);
         setData();
+        setLocationRelativeTo(null);
     }
     public void setData(){
         DecimalFormat df = new DecimalFormat("#,###");
@@ -64,23 +65,13 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
 
         jLabel1.setText("Mã HĐ:");
 
-        jLabel2.setText("jlabel6");
-
         jLabel3.setText("Tên món ăn:");
 
         jLabel4.setText("Số lượng:");
 
-        jLabel5.setText("Giá");
+        jLabel5.setText("Giá:");
 
-        jLabel6.setText("Thành tiền");
-
-        jLabel7.setText("jLabel7");
-
-        jLabel8.setText("jLabel8");
-
-        jLabel9.setText("jLabel9");
-
-        jLabel10.setText("jLabel10");
+        jLabel6.setText("Thành tiền:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,14 +85,14 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(80, 80, 80)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                .addGap(64, 64, 64)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(87, 87, 87)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -138,6 +129,11 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        bangCTHD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bangCTHDMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(bangCTHD);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,6 +153,23 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bangCTHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bangCTHDMouseClicked
+        int rows = bangCTHD.getSelectedRow();
+        if(rows != -1){
+            String maHD = bangCTHD.getValueAt(rows, 0).toString();
+            String TenMA = bangCTHD.getValueAt(rows, 1).toString();
+            String soluong = bangCTHD.getValueAt(rows, 2).toString();
+            String gia = bangCTHD.getValueAt(rows, 3).toString();
+            String thanhtien = bangCTHD.getValueAt(rows, 4).toString();
+            
+            jLabel2.setText(maHD);
+            jLabel7.setText(TenMA);
+            jLabel8.setText(soluong);
+            jLabel9.setText(gia);
+            jLabel10.setText(thanhtien);
+        }
+    }//GEN-LAST:event_bangCTHDMouseClicked
 
 //    public static void main(String args[]) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {

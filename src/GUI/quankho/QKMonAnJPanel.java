@@ -61,7 +61,7 @@ for (int i = 0; i < 6; i++) {
     }
     public void setData(){ 
         dsma =new DSMonAn();
-        kn.layMonAn(dsma);
+        kn.layDSMonAn(dsma);
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
         dtm.addColumn("Mã");
@@ -402,7 +402,8 @@ for (int i = 0; i < 6; i++) {
                     break;
                 }
             }
-            new ThanhPhanJFrame(hao,setTTtoInt((String) bangMA.getValueAt(row, 5))).setVisible(true);
+            Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new ThanhPhanDialog((Frame) parentWindow,true,hao,setTTtoInt((String) bangMA.getValueAt(row, 5))).setVisible(true);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 

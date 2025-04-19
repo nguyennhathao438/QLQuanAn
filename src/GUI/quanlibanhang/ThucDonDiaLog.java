@@ -4,6 +4,7 @@
  */
 package GUI.quanlibanhang;
 
+import DAO.QuanHangDAO;
 import DAO.QuanKhoDAO;
 import DTO.BanManager;
 import DTO.DSMonAn;
@@ -26,6 +27,7 @@ import javax.swing.table.JTableHeader;
  */
 public class ThucDonDiaLog extends javax.swing.JDialog {
     QuanKhoDAO qk = new QuanKhoDAO();
+    QuanHangDAO qh = new QuanHangDAO();
     DSMonAn dsma;
     DSMonAnBan dsmab = new DSMonAnBan();
     DefaultTableModel dtm =new DefaultTableModel();
@@ -64,17 +66,18 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
     }
     public void setData(){
         dsma =new DSMonAn();
-        qk.layMonAn(dsma);
+        qk.layMonAnDcBan(dsma);
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
             dtm.addColumn("Mã món ăn");
             dtm.addColumn("Tên món ăn");
             dtm.addColumn("Loại món ăn");
             dtm.addColumn("Giá");
+            dtm.addColumn("Có thể bán");
         }
         for(MONAN a:dsma.getDSMA()) {
             if(a.getTrangThai() != 0) {
-                dtm.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getLoaiMA(),a.getGia()});
+                dtm.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getLoaiMA(),a.getGia(),a.getSoLuongConLai()});
             }
         }
     }
@@ -327,6 +330,9 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
         int result = checksanpham();
         int selectedrows = bangMenu.getSelectedRow();
         if(result == 1){
+            if(Integer.parseInt(jTextField1.getText()) > (int) bangMenu.getValueAt(selectedrows, 4)){ 
+                JOptionPane.showMessageDialog(this, "Số lượng không thể lớn hơn hiện có");
+            }
             String maMA = bangMenu.getValueAt(selectedrows, 0).toString();
             String tenMA = bangMenu.getValueAt(selectedrows, 1).toString();
             double gia = Double.parseDouble(bangMenu.getValueAt(selectedrows, 3).toString());
@@ -361,12 +367,18 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
             dtmCT.addColumn("Số lượng");
             dtmCT.addColumn("Giá");
             dtmCT.addColumn("Thành tiền");
-        }
+           }
         for(MonAnBan a:dsmab.getDSMAB()) {
                 dtmCT.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getSoluong(),a.getGia(),a.getThanhtien()});
                 }
-            }
-        jTextField1.setText("");
+        }
+        MonAnBan mab=new MonAnBan();
+        mab.setMaMA((String) bangMenu.getValueAt(selectedrows,0));
+        mab.setSoluong(Integer.parseInt(jTextField1.getText()));
+        qh.themCTHDBH(mab,String.valueOf(soban));
+        qk.layMonAnDcBan(dsma);
+        setData();
+        
     }//GEN-LAST:event_addMAActionPerformed
 
     private void bangCTMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bangCTMenuMouseClicked
