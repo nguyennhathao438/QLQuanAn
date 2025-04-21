@@ -74,12 +74,32 @@ public class QuanHangDAO {
         }
     }
     // Hoa Don
-    public void themHDBH(CTHOADON hdbh,String maKH){
+    public void themCTHDBH(MonAnBan mab,String soban){ 
+        String maHDtam ="HDBAN"+soban;
+        String query ="INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
+        try(Connection conn = getConnection();
+             PreparedStatement pscthd = conn.prepareStatement(query);
+                ){ 
+                pscthd.setString(1, maHDtam);
+                pscthd.setString(2, mab.getMaMA());
+                pscthd.setInt(3, mab.getSoluong());
+                pscthd.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+    // 700 -`100 -100 +200 -100 600 -100 
+    public void themHDBH(CTHOADON hdbh,String maKH,String soban){
+        String maHDtam ="HDBAN"+soban;
+        String query = "DELETE FROM CTHOADON WHERE maHD=?";
         String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH) VALUES(?,?,?,?) "; 
         String queryCTHD = "INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
         try(Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement(query);
             PreparedStatement pshd = con.prepareStatement(queryHD);
             PreparedStatement pscthd = con.prepareStatement(queryCTHD)) {
+            stmt.setString(1,maHDtam);
+            stmt.executeUpdate();
             pshd.setString(1, hdbh.getMaHoaDon());
             pshd.setDate(2, new java.sql.Date(hdbh.getThoiGian().getTime()));
             pshd.setDouble(3, hdbh.getThanhTien());
@@ -97,9 +117,10 @@ public class QuanHangDAO {
         } catch(SQLException ex){
             ex.printStackTrace();
         }
+        
     }
     public void LayHDBH(LICHSUBAN lsb){
-        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON";
+        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON WHERE maHD <> 'HD001'";
         try(Connection con = getConnection();
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -153,7 +174,7 @@ public class QuanHangDAO {
     }
     public String taoMaHoaDonMoi() {
     String prefix = "HD";
-    String query = "SELECT MAX(maHD) as maxMa FROM HOADON";
+    String query = "SELECT MAX(maHD) as maxMa FROM HOADON WHERE maHD LIKE 'HD___'";
     try (Connection con = getConnection();
          PreparedStatement ps = con.prepareStatement(query);
          ResultSet rs = ps.executeQuery()) {

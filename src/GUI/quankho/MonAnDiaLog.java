@@ -23,7 +23,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
     public MonAnDiaLog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        kn.layMonAn(dsma);
+        kn.layDSMonAn(dsma);
         setLocationRelativeTo(null);
          setLocationRelativeTo(null);
     }
@@ -31,7 +31,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
         super(parent, modal);
         initComponents();
         this.maMonAn=maMon;
-        kn.layMonAn(dsma);
+        kn.layDSMonAn(dsma);
         for(MONAN a:dsma.getDSMA()){ 
             if(maMonAn.equals(a.getMaMA())){ 
                 maMA.setText(a.getMaMA());
@@ -177,6 +177,14 @@ QuanKhoDAO kn=new QuanKhoDAO();
         ma.setGia(Double.parseDouble(gia.getText()));
         boolean kt=false;
         if(maMonAn.isEmpty()){
+            if(maMA.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn"); 
+                return ;
+            }
+            if(tenMA.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn");
+                return ;
+            }
         for(MONAN a: dsma.getDSMA()){ 
             if(a.getMaMA().equals(text)){ 
                 JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");

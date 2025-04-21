@@ -12,7 +12,6 @@ import DTO.NHACUNGCAP;
 import DTO.NLNhap;
 import DTO.THANHPHAN;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -96,9 +95,7 @@ public class QuanKhoDAO {
              ResultSet rs = stmt.executeQuery();
              rs.next();
              tenLoaiNL = rs.getString("loaiNL");
-             } catch (SQLServerException ex) {
-            Logger.getLogger(QuanKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+             } catch (SQLException ex) { 
             Logger.getLogger(QuanKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tenLoaiNL ;
@@ -270,8 +267,32 @@ public class QuanKhoDAO {
         }
     }
     //Mon An
-    public void layMonAn(DSMonAn dsma){ 
-        String query="SELECT maMA,tenMA,loaiMA,moTa,gia,trangThai FROM MONAN";
+    public void layDSMonAn(DSMonAn dsma){ 
+        String query="SELECT *FROM MONAN";
+        try(Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)){ 
+            while (rs.next()) {
+                  MONAN ma=new MONAN();
+                         ma.setMaMA(rs.getString("maMA"));
+                    ma.setTenMA(rs.getString("tenMA"));
+                          ma.setLoaiMA(rs.getString("loaiMA"));
+                  ma.setMoTa(rs.getString("moTa"));
+                  ma.setGia(rs.getDouble("gia"));
+                  ma.setTrangThai(rs.getInt("trangThai"));         
+            dsma.themMA(ma);  
+           
+        }            
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }        
+    }
+    public void layMonAnDcBan(DSMonAn dsma){ 
+        String query="SELECT MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ,MIN(FLOOR(NGUYENLIEU.tongSoLuong / THANHPHAN.soLuongNL)) AS soLuongCoTheBan\n" +
+"FROM MONAN \n" +
+"JOIN THANHPHAN ON MONAN.maMA= THANHPHAN.maMA\n" +
+"JOIN NGUYENLIEU ON THANHPHAN.maNL = NGUYENLIEU.maNL\n" +
+"GROUP BY MONAN.maMA ,MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ";
         try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
@@ -282,7 +303,8 @@ public class QuanKhoDAO {
                           rs.getString("loaiMA"),
                   rs.getString("moTa"),
                   rs.getDouble("gia"),
-                  rs.getInt("trangThai")
+                  rs.getInt("trangThai"),
+                 rs.getInt("soLuongCoTheBan")
                   );
             dsma.themMA(ma);  
            

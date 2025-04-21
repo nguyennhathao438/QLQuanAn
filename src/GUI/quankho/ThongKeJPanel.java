@@ -247,12 +247,12 @@ public class ThongKeJPanel extends javax.swing.JPanel {
          }else{ 
              setThongKeQuy(year);
          }
-         }else if(lThongKe.equals("Nhập bán hàng")){ 
+         }else if(lThongKe.equals("Lương nhân viên")){ 
              setThongKeLuongThang(year);
          }else{ 
              setThongKeDoanhThuThang(year);
          }
-         
+         System.out.println();
     }//GEN-LAST:event_seenBDActionPerformed
 
     private void loaiThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaiThongKeActionPerformed

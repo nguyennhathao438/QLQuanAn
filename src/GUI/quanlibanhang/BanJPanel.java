@@ -362,10 +362,10 @@ public class BanJPanel extends javax.swing.JPanel {
         cthdbn.setDsma(BanManager.dsmab[bandangchon].getDSMAB());
         if(ktkhach && qh.kiemTraTonTaiKH(makhach)){
             cthdbn.setMaKH(makhach);
-            qh.themHDBH(cthdbn, makhach);
+            qh.themHDBH(cthdbn, makhach,String.valueOf(bandangchon));
         }else {
             cthdbn.setMaKH(null);
-        qh.themHDBH(cthdbn,null);
+        qh.themHDBH(cthdbn,null,String.valueOf(bandangchon));
         }
         JOptionPane.showMessageDialog(null,"Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         BanManager.thanhtoan(bandangchon);}

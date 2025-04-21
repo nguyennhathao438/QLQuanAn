@@ -2,7 +2,6 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -20,6 +19,7 @@ public class PhanQuyenDAL {
         String query = "SELECT maQuyen FROM ROLEPERMISSION \n" +
 "JOIN ROLES ON ROLEPERMISSION.maVT=ROLES.maVT\n" +
 "WHERE ROLEPERMISSION.maVT = ? ";
+
         try(Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query) ){ 
             stmt.setString(1,role_id);
@@ -34,5 +34,5 @@ public class PhanQuyenDAL {
         }
         return dsq;
     }
-    
+
 }

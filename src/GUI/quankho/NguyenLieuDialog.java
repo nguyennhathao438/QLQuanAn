@@ -160,7 +160,8 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
         pack();
     }// </editor-fold>                        
 
-    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {
+        kn.layNL(dsnl);
         String text=maNL.getText();
         NGUYENLIEU nl=new NGUYENLIEU();
         nl.setMaNL(maNL.getText());
@@ -170,8 +171,17 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
         nl.setTenNL(tenNL.getText());
         nl.setMoTa(moTa.getText());
         if(maNguyenLieu.isEmpty()){
+            if(maNL.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập thông tin");
+                return;
+            }
+            if(tenNL.getText().equals("")){ 
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập thông tin");
+                return;
+            }
             try {
                 for(NGUYENLIEU a: dsnl.getDSNL()){
+                    System.out.println(a.getMaNL());
                     if(a.getMaNL().equals(text)){
                         JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");
                         return ;

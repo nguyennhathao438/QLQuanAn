@@ -7,6 +7,7 @@ package GUI.quankho;
 import DTO.NHACUNGCAP;
 import DTO.DSNCC;
 import DAO.QuanKhoDAO;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,17 +18,20 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 public class QKNCCJPanel extends javax.swing.JPanel {
     QuanKhoDAO kn=new QuanKhoDAO();
     DSNCC dsncc ;
     DefaultTableModel dtm =new DefaultTableModel();
-    
+    Func_class func = new Func_class();
     public QKNCCJPanel() {
         initComponents();
         bangNCC.setModel(dtm);
         setData();
         setTable();
+        setTextHidden();
     }
     public void setData (){ 
         dsncc=new DSNCC();
@@ -48,6 +52,11 @@ public class QKNCCJPanel extends javax.swing.JPanel {
         }
              
     }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", search);
+        PromptSupport.setForeground(Color.GRAY, search);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT,search);
+    }
     public void setTable(){ 
         
         bangNCC.getColumnModel().getColumn(0).setPreferredWidth(80);
@@ -60,11 +69,8 @@ centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 for (int i = 0; i < 3; i++) {
     bangNCC.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 }
-//Can giua tieu de
- JTableHeader header = bangNCC.getTableHeader();
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setDefaultRenderer(headerRenderer);
+            func.centerTable(bangNCC);
+        func.setUpTable(bangNCC);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
