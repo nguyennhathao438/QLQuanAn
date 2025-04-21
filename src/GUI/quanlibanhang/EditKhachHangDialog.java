@@ -4,6 +4,7 @@ package GUI.quanlibanhang;
 import DAO.QuanHangDAO;
 import DTO.DSKhach;
 import DTO.khachDTO;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.JOptionPane;
 
 public class EditKhachHangDialog extends javax.swing.JDialog {
@@ -17,7 +18,11 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
         initComponents();
         qh.LayKH(dsk);
         laydulieu();
+        setIcon();
         setLocationRelativeTo(null);
+    }
+    public void setIcon(){
+        jButton1.setIcon(new FlatSVGIcon("./resources/icon/update_customer.svg",0.05f));
     }
     public void laydulieu(){
         for(khachDTO a:dsk.getDSK()){
@@ -105,7 +110,6 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Cập nhật");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -127,8 +131,8 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

@@ -26,52 +26,63 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author THANH HIEU
+ */
 public class PhanQuyenDialog extends JDialog {
     private JTextField txtMaVT, txtTenVT;
     private JPanel checkboxPanel;
     private JButton btnSave;
     private boolean isEdit;
+
     private RolePermissionDAO dao = new RolePermissionDAO();
-    private List<String> allPermissions;
     private List<JCheckBox> checkBoxes = new ArrayList<>();
 
     public PhanQuyenDialog(Frame parent, boolean isEdit, String maVTEdit, String tenVTEdit) {
         super(parent, isEdit ? "Sửa phân quyền" : "Thêm phân quyền", true);
         this.isEdit = isEdit;
 
+        // --- Init input fields
         txtMaVT = new JTextField(20);
         txtTenVT = new JTextField(20);
 
         if (isEdit) {
             txtMaVT.setText(maVTEdit);
-            txtMaVT.setEditable(false);
             txtTenVT.setText(tenVTEdit);
+            txtMaVT.setEditable(false);
             txtTenVT.setEditable(false);
         }
 
-        allPermissions = dao.getAllTenQuyen();
+        // --- Lấy danh sách tất cả quyền
+        List<String> allPermissions = dao.getAllTenQuyen();
 
-        checkboxPanel = new JPanel(new GridLayout(0, 2));
-        for (String perm : allPermissions) {
-            JCheckBox cb = new JCheckBox(perm);
+        // --- Tạo checkbox cho mỗi quyền
+        checkboxPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+        for (String tenQuyen : allPermissions) {
+            JCheckBox cb = new JCheckBox(tenQuyen);
             checkBoxes.add(cb);
             checkboxPanel.add(cb);
         }
 
+        // --- Nút Lưu
         btnSave = new JButton("Lưu");
         btnSave.addActionListener(e -> savePermissions());
 
-        JPanel top = new JPanel(new GridLayout(2, 2));
-        top.add(new JLabel("Mã vai trò:"));
-        top.add(txtMaVT);
-        top.add(new JLabel("Tên vai trò:"));
-        top.add(txtTenVT);
+        // --- Panel trên: nhập mã và tên vai trò
+        JPanel inputPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+        inputPanel.add(new JLabel("Mã vai trò:"));
+        inputPanel.add(txtMaVT);
+        inputPanel.add(new JLabel("Tên vai trò:"));
+        inputPanel.add(txtTenVT);
 
-        setLayout(new BorderLayout());
-        add(top, BorderLayout.NORTH);
+        // --- Layout chính
+        setLayout(new BorderLayout(10, 10));
+        add(inputPanel, BorderLayout.NORTH);
         add(new JScrollPane(checkboxPanel), BorderLayout.CENTER);
         add(btnSave, BorderLayout.SOUTH);
 
+        // --- Nếu là sửa thì load quyền đã phân
         if (isEdit) {
             loadPermissions(maVTEdit);
         }
@@ -90,7 +101,8 @@ public class PhanQuyenDialog extends JDialog {
     private void savePermissions() {
         String maVT = txtMaVT.getText().trim();
         String tenVT = txtTenVT.getText().trim();
-        if (maVT.isEmpty() || tenVT.isEmpty()) {
+
+        if (maVT.isEmpty() || (!isEdit && tenVT.isEmpty())) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mã và tên vai trò.");
             return;
         }
@@ -103,7 +115,7 @@ public class PhanQuyenDialog extends JDialog {
         if (!isEdit) {
             dao.insertRole(maVT, tenVT);
         } else {
-            dao.deleteByRole(maVT);
+            dao.deleteByRole(maVT); // xoá toàn bộ quyền cũ
         }
 
         for (JCheckBox cb : checkBoxes) {
@@ -116,6 +128,7 @@ public class PhanQuyenDialog extends JDialog {
         dispose();
     }
 }
+
 
 
 

@@ -4,9 +4,12 @@ package GUI.quanlibanhang;
 import DAO.QuanHangDAO;
 import DTO.DSKhach;
 import DTO.khachDTO;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.prompt.PromptSupport;
 
 public class AddKhachHangDialog extends javax.swing.JDialog {
 
@@ -16,6 +19,28 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         qh.LayKH(dsk);
+        setIcon();
+        setTextHidden();
+    }
+    public void setIcon(){
+        btn_them.setIcon(new FlatSVGIcon("./resources/icon/Customer.svg",0.05f));
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Nhập Mã khách", text_khach);
+        PromptSupport.setForeground(Color.GRAY, text_khach);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, text_khach);
+        PromptSupport.setPrompt("Nhập tên khách hàng", text_ten);
+        PromptSupport.setForeground(Color.GRAY, text_ten);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, text_ten);
+        PromptSupport.setPrompt("Nhập loại khách", Text_loai);
+        PromptSupport.setForeground(Color.GRAY, Text_loai);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, Text_loai);
+        PromptSupport.setPrompt("Nhập số điện thoại", Text_SDT);
+        PromptSupport.setForeground(Color.GRAY, Text_SDT);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, Text_SDT);
+        PromptSupport.setPrompt("Nhập địa chỉ", Text_DiaChi);
+        PromptSupport.setForeground(Color.GRAY, Text_DiaChi);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, Text_DiaChi);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -160,7 +185,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_Text_loaiActionPerformed
     public int ktSDT(String SDT){
-        if(SDT.matches("0\\d{9}")) // kt số 0 ở đầu và có 9 số sau
+        if(SDT.matches("0\\d{8}")) // kt số 0 ở đầu và có 9 số sau
         {
             return 1;
         }

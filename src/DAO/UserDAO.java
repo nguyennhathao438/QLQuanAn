@@ -26,19 +26,20 @@ public class UserDAO {
     String sql = "SELECT USERS.id, USERS.matKhau, ROLES.maVT " +
                  "FROM USERS " +
                  "JOIN ROLES ON ROLES.maVT = USERS.maVT " +
-                 "WHERE USERS.taiKhoan = ?";
+                 "WHERE USERS.taiKhoan = ? AND USERS.matKhau = ?";
 
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         stmt.setString(1, taiKhoan);
+        stmt.setString(2, matKhauNhap);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
-            int id = rs.getInt("id");
-            String mklayra = rs.getString("matKhau");
+      //      int id = rs.getInt("id");
+      //      String mklayra = rs.getString("matKhau");
             String vaiTro = rs.getString("maVT");
-       
+            
                 return vaiTro;
         }
 

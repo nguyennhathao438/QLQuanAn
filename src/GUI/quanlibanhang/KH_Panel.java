@@ -6,25 +6,42 @@ package GUI.quanlibanhang;
 import DAO.QuanHangDAO;
 import DTO.DSKhach;
 import DTO.khachDTO;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Window;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.prompt.PromptSupport;
 
 public class KH_Panel extends javax.swing.JPanel {
 
     QuanHangDAO qh = new QuanHangDAO();
     DefaultTableModel dtm = new DefaultTableModel();
-    DSKhach dskh = new DSKhach();
+    DSKhach dsk = new DSKhach();
     public KH_Panel() {
         initComponents();
         BangKh.setModel(dtm);
         setData();
+        setTextHidden();
+        setIcon();
+    }
+    public void setTextHidden(){
+        PromptSupport.setPrompt("Tìm kiếm nhanh", search);
+        PromptSupport.setForeground(Color.GRAY, search);
+        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, search);
+    }
+    public void setIcon(){
+        btnThem.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg",0.05f));
+        btnSua.setIcon(new FlatSVGIcon("./resources/icon/update_1.svg",0.05f));
+        btn_Refresh.setIcon(new FlatSVGIcon("./resources/icon/Refresh_1.svg",0.04f));
+        btn_ok.setIcon(new FlatSVGIcon("./resources/icon/look.svg",0.45f));
     }
     public void setData(){
-        DSKhach dsk = new DSKhach();
+        dsk = new DSKhach();
         qh.LayKH(dsk);
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
@@ -62,14 +79,12 @@ public class KH_Panel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
 
-        btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
 
-        btnSua.setText("Xem ");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
@@ -90,8 +105,9 @@ public class KH_Panel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnThem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
-                        .addComponent(btnSua))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addComponent(btnSua)
+                        .addGap(35, 35, 35))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,14 +124,14 @@ public class KH_Panel extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThem)
-                    .addComponent(btnSua))
-                .addGap(18, 18, 18)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,14 +146,12 @@ public class KH_Panel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
-        btn_ok.setText("Xác nhận");
         btn_ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_okActionPerformed(evt);
             }
         });
 
-        btn_Refresh.setText("Làm mới");
         btn_Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_RefreshActionPerformed(evt);
@@ -149,24 +163,21 @@ public class KH_Panel extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_ok)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Refresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_ok)
-                .addGap(44, 44, 44))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(search)
-                .addContainerGap())
+                .addGap(0, 18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_ok)
-                    .addComponent(btn_Refresh))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(btn_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_Refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -245,7 +256,7 @@ public class KH_Panel extends javax.swing.JPanel {
 
     private void btn_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RefreshActionPerformed
         dtm.setRowCount(0);
-        for (khachDTO a : dskh.getDSK()) {
+        for (khachDTO a : dsk.getDSK()) {
         dtm.addRow(new Object[]{a.getMaKH(), a.getTenkhach(), a.getLoaiKhach(), a.getSDT(),a.getDiachi()});
         }
     }//GEN-LAST:event_btn_RefreshActionPerformed
@@ -253,7 +264,7 @@ public class KH_Panel extends javax.swing.JPanel {
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
         String text = search.getText().trim();
         dtm.setRowCount(0);
-        for(khachDTO a: dskh.getDSK()){
+        for(khachDTO a: dsk.getDSK()){
             if(String.valueOf(a.getMaKH()).toLowerCase().contains(text) || String.valueOf(a.getTenkhach()).toLowerCase().contains(text) || String.valueOf(a.getLoaiKhach()).toLowerCase().contains(text) || String.valueOf(a.getSDT()).toLowerCase().contains(text) || String.valueOf(a.getDiachi()).toLowerCase().contains(text)){
                 dtm.addRow(new Object[]{a.getMaKH(),a.getTenkhach(),a.getLoaiKhach(),a.getSDT(),a.getDiachi()});
             }

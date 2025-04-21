@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import DTO.PermissionDTO;
+import DTO.RolePermissionDTO;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,8 +85,8 @@ public class RolePermissionDAO {
                 String maVT = rs.getString("maVT");
                 String tenVT = rs.getString("tenVT");
                 String tenQuyen = rs.getString("tenQuyen");
-                map.putIfAbsent(maVT + " - " + tenVT, new ArrayList<>());
-map.get(maVT + " - " + tenVT).add(tenQuyen);
+map.putIfAbsent(maVT + " - " + tenVT, new ArrayList<>());
+                map.get(maVT + " - " + tenVT).add(tenQuyen);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,20 +108,45 @@ map.get(maVT + " - " + tenVT).add(tenQuyen);
         }
     }
 
-    public List<String> getAllTenQuyen() {
-        List<String> list = new ArrayList<>();
-        String sql = "SELECT tenQuyen FROM PERMISSION";
-        try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(sql);
+    // === HÀM QUAN TRỌNG NHẤT để PhanQuyenJPanel sử dụng ===
+    public List<RolePermissionDTO> getAllRolePermissions() {
+        List<RolePermissionDTO> list = new ArrayList<>();
+        String sql = "SELECT r.maVT, r.tenVT, p.tenQuyen FROM ROLEPERMISSION rp " +
+                     "JOIN ROLES r ON rp.maVT = r.maVT " +
+                     "JOIN PERMISSION p ON rp.maQuyen = p.maQuyen";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                list.add(rs.getString("tenQuyen"));
+                RolePermissionDTO dto = new RolePermissionDTO();
+                dto.setMaVT(rs.getString("maVT"));
+                dto.setTenVT(rs.getString("tenVT"));
+                dto.setTenQuyen(rs.getString("tenQuyen"));
+                list.add(dto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
     }
+    public List<String> getAllTenQuyen() {
+    List<String> list = new ArrayList<>();
+    String sql = "SELECT tenQuyen FROM PERMISSION";
+    try (PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            list.add(rs.getString("tenQuyen"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return list;
 }
+
+}
+
+
+ 
 
 
 
