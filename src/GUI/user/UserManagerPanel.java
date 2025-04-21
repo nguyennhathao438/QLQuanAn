@@ -88,7 +88,7 @@ public class UserManagerPanel extends JPanel {
         model.setRowCount(0);
         List<User> list = dao.getAllUsers();
         for (User u : list) {
-           if(u.getTrangThai()!=0) {String trangThaiStr = u.getTrangThai() == 2 ? "Hoạt động" : "Không hoạt động";
+           if(u.getTrangThai()!=0) {String trangThaiStr = u.getTrangThai() == 1 ? "Hoạt động" : "Không hoạt động";
             model.addRow(new Object[]{
                 u.getId(), u.getTaiKhoan(), u.getTen(), u.getVaiTro(), trangThaiStr
             });}

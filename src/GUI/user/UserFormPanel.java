@@ -27,20 +27,21 @@ public class UserFormPanel extends JPanel {
     private UserManagerPanel parent;
     private JDialog dialog;
 
-    /**
-     * @param parent JPanel cha để gọi loadUsers()
-     * @param dialog JDialog chứa panel này, để đóng khi xong
-     * @param user   nếu null => Thêm mới, !=null => Sửa
-     */
-    public UserFormPanel(UserManagerPanel parent, JDialog dialog, User user) {
-        this.parent = parent;
-        this.dialog = dialog;
-        this.user = user;
+    
+   public UserFormPanel(UserManagerPanel parent, JDialog dialog, User user) {
+    this.parent = parent;
+    this.dialog = dialog;
+    this.user = user;
 
-        initUI();
-        loadVaiTro();
-        if (user != null) fillForm();
+    initUI();
+    loadVaiTro();
+    if (user != null) {
+        fillForm(); // sửa
+    } else {
+        chkTrangThai.setSelected(true);     // Thêm mới: mặc định hoạt động
+        chkTrangThai.setEnabled(false);     // Không cho chỉnh
     }
+}
 
     private void initUI() {
         setLayout(new BorderLayout());
