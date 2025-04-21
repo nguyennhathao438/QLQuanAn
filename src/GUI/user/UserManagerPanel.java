@@ -25,7 +25,7 @@ public class UserManagerPanel extends JPanel {
     public UserManagerPanel() {
         setLayout(new BorderLayout());
 
-        model = new DefaultTableModel(new String[]{"ID", "Tài khoản", "Tên", "Vai trò", "Trạng thái"}, 0);
+        model = new DefaultTableModel(new String[]{"ID", "Tài khoản", "Tên", "Vai trò"}, 0);
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -84,15 +84,16 @@ public class UserManagerPanel extends JPanel {
         loadUsers();
     }
 
-    public void loadUsers() {
-        model.setRowCount(0);
-        List<User> list = dao.getAllUsers();
-        for (User u : list) {
-           if(u.getTrangThai()!=0) {String trangThaiStr = u.getTrangThai() == 1 ? "Hoạt động" : "Không hoạt động";
+   public void loadUsers() {
+    model.setRowCount(0);
+    List<User> list = dao.getAllUsers();
+    for (User u : list) {
+        if (u.getTrangThai() != 0) { // Chỉ hiện người còn hoạt động
             model.addRow(new Object[]{
-                u.getId(), u.getTaiKhoan(), u.getTen(), u.getVaiTro(), trangThaiStr
-            });}
+                u.getId(), u.getTaiKhoan(), u.getTen(), u.getVaiTro()
+            });
         }
     }
+}
 }
 
