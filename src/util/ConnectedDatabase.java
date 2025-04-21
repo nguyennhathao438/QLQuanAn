@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
 package util;
 
@@ -9,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 public class ConnectedDatabase {
 private static SQLServerDataSource ds = new SQLServerDataSource();
-    public static Connection getConnectedDB() {
+     public static Connection getConnectedDB() {
 		Connection c=null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
