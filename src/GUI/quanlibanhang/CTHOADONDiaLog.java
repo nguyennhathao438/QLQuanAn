@@ -6,9 +6,11 @@ import DTO.HoaDon;
 import DTO.MonAnBan;
 import java.text.DecimalFormat;
 import javax.swing.table.DefaultTableModel;
+import util.Func_class;
 
 
 public class CTHOADONDiaLog extends javax.swing.JDialog {
+    Func_class fc = new Func_class();
     QuanHangDAO qh = new QuanHangDAO();
     DefaultTableModel dtm = new DefaultTableModel();
     DTO.CTHOADON cthd;
@@ -20,6 +22,8 @@ public class CTHOADONDiaLog extends javax.swing.JDialog {
         bangCTHD.setModel(dtm);
         setData();
         setLocationRelativeTo(null);
+        fc.centerTable(bangCTHD);
+        fc.setUpTable(bangCTHD);
     }
     public void setData(){
         DecimalFormat df = new DecimalFormat("#,###");

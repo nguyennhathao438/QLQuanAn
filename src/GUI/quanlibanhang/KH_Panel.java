@@ -16,9 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 public class KH_Panel extends javax.swing.JPanel {
-
+    Func_class fc = new Func_class();
     QuanHangDAO qh = new QuanHangDAO();
     DefaultTableModel dtm = new DefaultTableModel();
     DSKhach dsk = new DSKhach();
@@ -28,6 +29,8 @@ public class KH_Panel extends javax.swing.JPanel {
         setData();
         setTextHidden();
         setIcon();
+        fc.setUpTable(BangKh);
+        fc.centerTable(BangKh);
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Tìm kiếm nhanh", search);

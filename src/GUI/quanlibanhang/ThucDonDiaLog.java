@@ -23,12 +23,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 /**
  *
  * @author phant
  */
 public class ThucDonDiaLog extends javax.swing.JDialog {
+    Func_class fc = new Func_class();
     QuanKhoDAO qk = new QuanKhoDAO();
     QuanHangDAO qh = new QuanHangDAO();
     DSMonAn dsma;
@@ -49,6 +51,10 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
         LoadBanCTMenu();
         setTextHidden();
         setIcon();
+        fc.setUpTable(bangMenu);
+        fc.centerTable(bangMenu);
+        fc.setUpTable(bangCTMenu);
+        fc.centerTable(bangCTMenu);
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Nhập số lượng", jTextField1);
@@ -306,8 +312,8 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addMA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addMA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deleteMA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_luuMA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

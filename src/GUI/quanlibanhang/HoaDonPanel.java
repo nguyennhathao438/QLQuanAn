@@ -18,8 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 public class HoaDonPanel extends javax.swing.JPanel {
+    Func_class fc = new Func_class();
     QuanHangDAO qh = new QuanHangDAO();
     CTHOADON cthd;
     LICHSUBAN lsb = new LICHSUBAN();
@@ -30,6 +32,8 @@ public class HoaDonPanel extends javax.swing.JPanel {
         setData();
         setIcon();
         setTextHidden();
+        fc.setUpTable(bangHoaDon);
+        fc.centerTable(bangHoaDon);
     }
     public void setIcon(){
         btn_check.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.4f));
@@ -264,8 +268,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
