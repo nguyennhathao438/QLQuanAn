@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 public class ConnectedDatabase {
 private static SQLServerDataSource ds = new SQLServerDataSource();
     public static Connection getConnectedDB() {
+
 		Connection c=null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

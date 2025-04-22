@@ -26,28 +26,21 @@ public class UserDAO {
     String sql = "SELECT USERS.id, USERS.matKhau, ROLES.maVT " +
                  "FROM USERS " +
                  "JOIN ROLES ON ROLES.maVT = USERS.maVT " +
-                 "WHERE USERS.taiKhoan = ?";
+                 "WHERE USERS.taiKhoan = ? AND USERS.matKhau = ?";
 
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         stmt.setString(1, taiKhoan);
+        stmt.setString(2, matKhauNhap);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
-            int id = rs.getInt("id");
-            String mklayra = rs.getString("matKhau");
+      //      int id = rs.getInt("id");
+      //      String mklayra = rs.getString("matKhau");
             String vaiTro = rs.getString("maVT");
-
-            if (mklayra.equals(matKhauNhap)) {
-                // Cập nhật trạng thái đăng nhập
-                String updateSql = "UPDATE USERS SET isLogin = 1 WHERE id = ?";
-                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                    updateStmt.setInt(1, id);
-                    updateStmt.executeUpdate();
-                }
+            
                 return vaiTro;
-            }
         }
 
     return ""; // Đăng nhập thất bại

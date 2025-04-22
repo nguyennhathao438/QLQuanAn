@@ -120,7 +120,7 @@ public class QuanHangDAO {
         
     }
     public void LayHDBH(LICHSUBAN lsb){
-        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON WHERE maHD <> 'HD001'";
+        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON WHERE maHD LIKE 'HD___'";
         try(Connection con = getConnection();
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
