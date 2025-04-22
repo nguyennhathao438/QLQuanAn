@@ -8,8 +8,8 @@ public class DSDatBan {
     
     public DSDatBan(){
     }
-    public DSDatBan(DSDatBan dsdb){ 
-        this.dsdb.addAll(dsdb.getDSDB());
+    public DSDatBan(DSDatBan ds){ 
+        dsdb.addAll(ds.getDSDB());
     }
     public ArrayList<DatBan> getDSDB() {
         return dsdb;

@@ -96,7 +96,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlabel_datBan" max="32767" attributes="0"/>
+                              <Component id="jlabel_datTruoc" max="32767" attributes="0"/>
                               <Component id="jLabel13" pref="55" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jlabel_donBan" alignment="0" pref="47" max="32767" attributes="0"/>
-                      <Component id="jlabel_datBan" max="32767" attributes="0"/>
+                      <Component id="jlabel_datTruoc" max="32767" attributes="0"/>
                       <Component id="jlabel_taoDon" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -180,7 +180,10 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlabel_donBanMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jlabel_datBan">
+        <Component class="javax.swing.JLabel" name="jlabel_datTruoc">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlabel_datTruocMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlabel_taoDon">
           <Events>

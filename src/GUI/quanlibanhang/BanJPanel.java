@@ -52,7 +52,7 @@ public class BanJPanel extends javax.swing.JPanel {
         func.setUpBtn(btn_thanhtoan,Color.WHITE,Color.GREEN);
     }
     public void setUpCursorPointer(){
-        func.cursorPointer(jlabel_datBan);
+        func.cursorPointer(jlabel_datTruoc);
         func.cursorPointer(jlabel_donBan);
         func.cursorPointer(jlabel_taoDon);
     }
@@ -60,7 +60,7 @@ public class BanJPanel extends javax.swing.JPanel {
         jlabel_taoDon.setIcon(new FlatSVGIcon("./resources/icon/List_order.svg",0.09f));
         btn_thanhtoan.setIcon(new FlatSVGIcon("./resources/icon/Pay.svg",0.05f));
         jlabel_donBan.setIcon(new FlatSVGIcon("./resources/icon/clear.svg",0.08f));
-        jlabel_datBan.setIcon(new FlatSVGIcon("./resources/icon/order.svg",0.08f));
+        jlabel_datTruoc.setIcon(new FlatSVGIcon("./resources/icon/order.svg",0.08f));
     }
     public void moDialogthucdon(){
          Window parentWindow = SwingUtilities.getWindowAncestor(BanJPanel.this);
@@ -83,6 +83,10 @@ public class BanJPanel extends javax.swing.JPanel {
         else if("Đang Dùng".equals(trangthai)){
             btnBan[i].setBackground(Color.RED);
             btnBan[i].setText("<html>Bàn "+i+"<br> Đang Dùng</html>");
+        }
+        else if("Đã Đặt".equals(trangthai)){
+            btnBan[i].setBackground(Color.ORANGE);
+            btnBan[i].setText("<html>Bàn "+i+"<br> Đã Đặt </html>");
         }
     }
     private void capnhattongtien(int i){
@@ -139,19 +143,6 @@ public class BanJPanel extends javax.swing.JPanel {
         }
     }
     
-     private void btn_donbanActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        if(bandangchon == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để reset", "Errol", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn reset bàn "+ (bandangchon) + "không", "thông báo", JOptionPane.YES_NO_OPTION);
-        if(chon == JOptionPane.YES_OPTION){
-            JOptionPane.showMessageDialog(this, "Bàn đã được đặt lại trạng thái ban đầu");
-            BanManager.thanhtoan(bandangchon);
-            BanManager.Capnhattt(bandangchon, "Trống");
-            capnhatbutton(bandangchon);
-        }
-    } 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,7 +157,7 @@ public class BanJPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jlabel_donBan = new javax.swing.JLabel();
-        jlabel_datBan = new javax.swing.JLabel();
+        jlabel_datTruoc = new javax.swing.JLabel();
         jlabel_taoDon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -212,6 +203,12 @@ public class BanJPanel extends javax.swing.JPanel {
             }
         });
 
+        jlabel_datTruoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlabel_datTruocMouseClicked(evt);
+            }
+        });
+
         jlabel_taoDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlabel_taoDonMouseClicked(evt);
@@ -238,7 +235,7 @@ public class BanJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                         .addGap(51, 51, 51)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlabel_datBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlabel_datTruoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
                         .addGap(49, 49, 49)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -253,7 +250,7 @@ public class BanJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jlabel_donBan, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(jlabel_datBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlabel_datTruoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlabel_taoDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -366,6 +363,34 @@ public class BanJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_TaoDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDonActionPerformed
+        if (bandangchon == -1) {
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+    if("Đã Đặt".equals(trangthai)){
+        JOptionPane.showMessageDialog(null, "Bàn đang đặt trước nếu muốn tạo hãy clear", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    else if ("Trống".equals(trangthai)) {
+        BanManager.taoDon(bandangchon);
+        moDialogthucdon();
+    } else {
+        int chon = JOptionPane.showConfirmDialog(null,
+                "Bàn đang sử dụng. Bạn có muốn xem lại đơn không?",
+                "Thông báo", JOptionPane.YES_NO_OPTION);
+
+        if (chon == JOptionPane.YES_OPTION) {
+            moDialogthucdon();
+            BanManager.laydsmon(bandangchon);
+        }
+    }
+    // Cập nhật trạng thái bàn sau khi thao tác
+    capnhatbutton(bandangchon);
+    }//GEN-LAST:event_btn_TaoDonActionPerformed
+
     private void btn_thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhtoanActionPerformed
         CTHOADON cthdbn = new CTHOADON();
         QuanHangDAO qh = new QuanHangDAO();
@@ -380,7 +405,11 @@ public class BanJPanel extends javax.swing.JPanel {
         if("Trống".equals(trangthai)){
         JOptionPane.showMessageDialog(null, "Bàn đang trống không thể thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
         return;
-        } 
+        }
+        else if("Đã Đặt".equals(trangthai)){
+            JOptionPane.showMessageDialog(null, "Bàn đang được đặt trước không thể thanh toán", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         else if(!makhach.equals("") && !qh.kiemTraTonTaiKH(makhach)){
             JOptionPane.showMessageDialog(null, "Khách hàng không tồn tại", "Errol", JOptionPane.ERROR_MESSAGE);
         }
@@ -426,6 +455,7 @@ public class BanJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jlabel_donBanMouseClicked
 
+
     private void jlabel_taoDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_taoDonMouseClicked
         if (bandangchon == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -433,8 +463,10 @@ public class BanJPanel extends javax.swing.JPanel {
         }
 
         String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-
-        if ("Trống".equals(trangthai)) {
+        if ("Đã Đặt".equals(trangthai)) {
+            JOptionPane.showMessageDialog(null, "Bàn đang đặt trước nếu muốn tạo hãy clear", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if ("Trống".equals(trangthai)) {
             BanManager.taoDon(bandangchon);
             moDialogthucdon();
         } else {
@@ -450,6 +482,60 @@ public class BanJPanel extends javax.swing.JPanel {
         // Cập nhật trạng thái bàn sau khi thao tác
         capnhatbutton(bandangchon);
     }//GEN-LAST:event_jlabel_taoDonMouseClicked
+
+    private void btn_dattruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dattruocActionPerformed
+        if (bandangchon == -1) {
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để đặt đơn trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+        if ("Trống".equals(trangthai)) {
+        BanManager.DatBan(bandangchon);
+        moDialogDatBan();
+    }
+        else if("Đang Dùng".equals(trangthai)){
+            JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        else {
+        int chon = JOptionPane.showConfirmDialog(null,
+                "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
+                "Thông báo", JOptionPane.YES_NO_OPTION);
+
+        if (chon == JOptionPane.YES_OPTION) {
+            moDialogDatBan();
+            BanManager.layTT(bandangchon);
+        }
+    }
+        capnhatbutton(bandangchon);
+    }//GEN-LAST:event_btn_dattruocActionPerformed
+
+    private void jlabel_datTruocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_datTruocMouseClicked
+        if (bandangchon == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để đặt đơn trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+        if ("Trống".equals(trangthai)) {
+            BanManager.DatBan(bandangchon);
+            moDialogDatBan();
+        } else if ("Đang Dùng".equals(trangthai)) {
+            JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else {
+            int chon = JOptionPane.showConfirmDialog(null,
+                    "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
+                    "Thông báo", JOptionPane.YES_NO_OPTION);
+
+            if (chon == JOptionPane.YES_OPTION) {
+                moDialogDatBan();
+                BanManager.layTT(bandangchon);
+            }
+        }
+        capnhatbutton(bandangchon);
+    }//GEN-LAST:event_jlabel_datTruocMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Jpanel_Khuvuc;
@@ -471,7 +557,7 @@ public class BanJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JLabel jlabel_datBan;
+    private javax.swing.JLabel jlabel_datTruoc;
     private javax.swing.JLabel jlabel_donBan;
     private javax.swing.JLabel jlabel_taoDon;
     // End of variables declaration//GEN-END:variables

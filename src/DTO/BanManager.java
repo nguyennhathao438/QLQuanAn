@@ -22,7 +22,7 @@ public class BanManager {
         dsBan[soban].setTrangthai("Đang Dùng");
     }
     public static void DatBan(int soban){
-        dsBan[soban].setTrangthai("Đặt Trước");
+        dsBan[soban].setTrangthai("Đã Đặt");
     }
     public static void themTT(int soban,DatBan db){
         dsdb[soban].themTT(db);

@@ -17,6 +17,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
     public AddKhachHangDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        khoitao();
         qh.LayKH(dsk);
         setIcon();
         setTextHidden();
@@ -32,9 +33,6 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         PromptSupport.setPrompt("Nhập tên khách hàng", text_ten);
         PromptSupport.setForeground(Color.GRAY, text_ten);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, text_ten);
-        PromptSupport.setPrompt("Nhập loại khách", Text_loai);
-        PromptSupport.setForeground(Color.GRAY, Text_loai);
-        PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, Text_loai);
         PromptSupport.setPrompt("Nhập số điện thoại", Text_SDT);
         PromptSupport.setForeground(Color.GRAY, Text_SDT);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, Text_SDT);
@@ -54,9 +52,9 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         text_ten = new javax.swing.JTextField();
-        Text_loai = new javax.swing.JTextField();
         Text_SDT = new javax.swing.JTextField();
         Text_DiaChi = new javax.swing.JTextField();
+        cbb_loaikhach = new javax.swing.JComboBox<>();
         btn_them = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -80,17 +78,13 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             }
         });
 
-        Text_loai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Text_loaiActionPerformed(evt);
-            }
-        });
-
         Text_SDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Text_SDTActionPerformed(evt);
             }
         });
+
+        cbb_loaikhach.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,8 +106,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
                         .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Text_SDT, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Text_loai)
-                            .addComponent(Text_DiaChi)))
+                            .addComponent(Text_DiaChi)
+                            .addComponent(cbb_loaikhach, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -138,8 +132,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Text_loai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(cbb_loaikhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Text_SDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,10 +173,6 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void Text_loaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Text_loaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Text_loaiActionPerformed
     public int ktSDT(String SDT){
         if(SDT.matches("0\\d{8}")) // kt số 0 ở đầu và có 9 số sau
         {
@@ -190,13 +180,20 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         }
         return 0;
     }
+    public void khoitao(){
+        cbb_loaikhach.removeAllItems();
+        cbb_loaikhach.addItem("--Chọn loại khách hàng--");
+        cbb_loaikhach.addItem("Thành viên");
+        cbb_loaikhach.addItem("Khách lẻ");
+    }
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         String makhach = text_khach.getText().trim();
         String tenkhach = text_ten.getText().trim();
-        String loaikhach = Text_loai.getText().trim();
+        String loaikhach = cbb_loaikhach.getSelectedItem().toString();
         String SDT = Text_SDT.getText().trim();
         String diachi = Text_DiaChi.getText().trim();
-        if(makhach.isEmpty() || tenkhach.isEmpty() || loaikhach.isEmpty() || SDT.isEmpty() || diachi.isEmpty()){
+        
+        if(makhach.isEmpty() || tenkhach.isEmpty() || loaikhach.equals("--Chọn loại khách hàng--")|| SDT.isEmpty() || diachi.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -254,8 +251,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Text_DiaChi;
     private javax.swing.JTextField Text_SDT;
-    private javax.swing.JTextField Text_loai;
     private javax.swing.JButton btn_them;
+    private javax.swing.JComboBox<String> cbb_loaikhach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
