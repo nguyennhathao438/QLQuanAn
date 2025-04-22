@@ -3,11 +3,7 @@ package GUI.quanlibanhang;
 import DAO.QuanHangDAO;
 import DTO.BanManager;
 import DTO.CTHOADON;
-import DTO.DSMonAnBan;
-import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -15,30 +11,30 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import DTO.MonAnBan;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 
 public class BanJPanel extends javax.swing.JPanel {
     private JButton[] btnBan = new JButton[BanManager.getsoluongban()];
     private int bandangchon = -1; // luu ban dang chon
+    Func_class func=new Func_class();
     public BanJPanel() {
         initComponents();
         Jpanel_Khuvuc.setLayout(new GridLayout(5,4));
         initbtnBan();
         setTextHidden();
         setIcon();
+        setUpBtn();
+        setUpCursorPointer();
+        setUpJTF();
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Nhập số tiền", jTextField1);
@@ -48,11 +44,23 @@ public class BanJPanel extends javax.swing.JPanel {
         PromptSupport.setForeground(Color.GRAY, jTextField2);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, jTextField2);
     }
+    public void setUpJTF(){
+        func.setUpJTF(jTextField1);
+        func.setUpJTF(jTextField2);
+    }
+    public void setUpBtn(){
+        func.setUpBtn(btn_thanhtoan,Color.WHITE,Color.GREEN);
+    }
+    public void setUpCursorPointer(){
+        func.cursorPointer(jlabel_datBan);
+        func.cursorPointer(jlabel_donBan);
+        func.cursorPointer(jlabel_taoDon);
+    }
     public void setIcon(){
-        btn_TaoDon.setIcon(new FlatSVGIcon("./resources/icon/List_order.svg",0.09f));
+        jlabel_taoDon.setIcon(new FlatSVGIcon("./resources/icon/List_order.svg",0.09f));
         btn_thanhtoan.setIcon(new FlatSVGIcon("./resources/icon/Pay.svg",0.05f));
-        btn_donban.setIcon(new FlatSVGIcon("./resources/icon/clear.svg",0.06f));
-        btn_dattruoc.setIcon(new FlatSVGIcon("./resources/icon/order.svg",0.06f));
+        jlabel_donBan.setIcon(new FlatSVGIcon("./resources/icon/clear.svg",0.08f));
+        jlabel_datBan.setIcon(new FlatSVGIcon("./resources/icon/order.svg",0.08f));
     }
     public void moDialogthucdon(){
          Window parentWindow = SwingUtilities.getWindowAncestor(BanJPanel.this);
@@ -69,7 +77,7 @@ public class BanJPanel extends javax.swing.JPanel {
     public void capnhatbutton(int i){
         String trangthai = BanManager.dsBan[i].getTrangthai();
         if("Trống".equals(trangthai)){
-            btnBan[i].setBackground(Color.GREEN);
+            btnBan[i].setBackground(new Color(107, 142, 35));
             btnBan[i].setText("<html>Bàn "+i+"<br> Trống</html>");
         }
         else if("Đang Dùng".equals(trangthai)){
@@ -130,22 +138,36 @@ public class BanJPanel extends javax.swing.JPanel {
             Jpanel_Khuvuc.add(btnBan[i]);
         }
     }
+    
+     private void btn_donbanActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        if(bandangchon == -1){
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để reset", "Errol", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn reset bàn "+ (bandangchon) + "không", "thông báo", JOptionPane.YES_NO_OPTION);
+        if(chon == JOptionPane.YES_OPTION){
+            JOptionPane.showMessageDialog(this, "Bàn đã được đặt lại trạng thái ban đầu");
+            BanManager.thanhtoan(bandangchon);
+            BanManager.Capnhattt(bandangchon, "Trống");
+            capnhatbutton(bandangchon);
+        }
+    } 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         Jpanel_Khuvuc = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btn_TaoDon = new javax.swing.JButton();
-        btn_dattruoc = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        btn_donban = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jlabel_donBan = new javax.swing.JLabel();
+        jlabel_datBan = new javax.swing.JLabel();
+        jlabel_taoDon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -172,35 +194,29 @@ public class BanJPanel extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
-        btn_TaoDon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TaoDonActionPerformed(evt);
-            }
-        });
-
-        btn_dattruoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_dattruocActionPerformed(evt);
-            }
-        });
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Nhập số tiền:");
-
-        btn_donban.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_donbanActionPerformed(evt);
-            }
-        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Nhập khách hàng:");
 
-        jLabel10.setText("Order");
+        jLabel10.setText("   Order");
 
-        jLabel12.setText("clear");
+        jLabel12.setText("     Clear");
 
-        jLabel13.setText("đặt bàn");
+        jLabel13.setText("   Đặt bàn");
+
+        jlabel_donBan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlabel_donBanMouseClicked(evt);
+            }
+        });
+
+        jlabel_taoDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlabel_taoDonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -216,26 +232,19 @@ public class BanJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel11))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlabel_donBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                        .addGap(51, 51, 51)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btn_donban))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel12)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(btn_dattruoc)
-                                .addGap(39, 39, 39))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(54, 54, 54)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_TaoDon)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(21, 21, 21)))))
+                            .addComponent(jlabel_datBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlabel_taoDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -243,15 +252,15 @@ public class BanJPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_donban, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_TaoDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_dattruoc, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addComponent(jlabel_donBan, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jlabel_datBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlabel_taoDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,23 +303,20 @@ public class BanJPanel extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(btn_thanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_thanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -327,12 +333,12 @@ public class BanJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                .addGap(68, 68, 68)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(btn_thanhtoan, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(btn_thanhtoan, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -351,39 +357,14 @@ public class BanJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Jpanel_Khuvuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jpanel_Khuvuc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGap(33, 33, 33))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_TaoDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDonActionPerformed
-        if (bandangchon == -1) {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-
-    if ("Trống".equals(trangthai)) {
-        BanManager.taoDon(bandangchon);
-        moDialogthucdon();
-    } else {
-        int chon = JOptionPane.showConfirmDialog(null,
-                "Bàn đang sử dụng. Bạn có muốn xem lại đơn không?",
-                "Thông báo", JOptionPane.YES_NO_OPTION);
-
-        if (chon == JOptionPane.YES_OPTION) {
-            moDialogthucdon();
-            BanManager.laydsmon(bandangchon);
-        }
-    }
-    // Cập nhật trạng thái bàn sau khi thao tác
-    capnhatbutton(bandangchon);
-    }//GEN-LAST:event_btn_TaoDonActionPerformed
 
     private void btn_thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhtoanActionPerformed
         CTHOADON cthdbn = new CTHOADON();
@@ -431,7 +412,7 @@ public class BanJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_thanhtoanActionPerformed
 
-    private void btn_donbanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_donbanActionPerformed
+    private void jlabel_donBanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_donBanMouseClicked
         if(bandangchon == -1){
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để reset", "Errol", JOptionPane.ERROR_MESSAGE);
             return;
@@ -443,17 +424,35 @@ public class BanJPanel extends javax.swing.JPanel {
             BanManager.Capnhattt(bandangchon, "Trống");
             capnhatbutton(bandangchon);
         }
-    }//GEN-LAST:event_btn_donbanActionPerformed
+    }//GEN-LAST:event_jlabel_donBanMouseClicked
 
-    private void btn_dattruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dattruocActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_dattruocActionPerformed
+    private void jlabel_taoDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_taoDonMouseClicked
+        if (bandangchon == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+
+        if ("Trống".equals(trangthai)) {
+            BanManager.taoDon(bandangchon);
+            moDialogthucdon();
+        } else {
+            int chon = JOptionPane.showConfirmDialog(null,
+                    "Bàn đang sử dụng. Bạn có muốn xem lại đơn không?",
+                    "Thông báo", JOptionPane.YES_NO_OPTION);
+
+            if (chon == JOptionPane.YES_OPTION) {
+                moDialogthucdon();
+                BanManager.laydsmon(bandangchon);
+            }
+        }
+        // Cập nhật trạng thái bàn sau khi thao tác
+        capnhatbutton(bandangchon);
+    }//GEN-LAST:event_jlabel_taoDonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Jpanel_Khuvuc;
-    private javax.swing.JButton btn_TaoDon;
-    private javax.swing.JButton btn_dattruoc;
-    private javax.swing.JButton btn_donban;
     private javax.swing.JButton btn_thanhtoan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -472,5 +471,8 @@ public class BanJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jlabel_datBan;
+    private javax.swing.JLabel jlabel_donBan;
+    private javax.swing.JLabel jlabel_taoDon;
     // End of variables declaration//GEN-END:variables
 }

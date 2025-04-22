@@ -13,4 +13,5 @@ public class LICHSUBAN {
     public void ThemHDB(HoaDon hdb){
         lsb.add(hdb);
     }
+    
 }

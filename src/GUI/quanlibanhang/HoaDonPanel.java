@@ -6,6 +6,7 @@ import DTO.HoaDon;
 import DTO.LICHSUBAN;
 import DTO.MonAnBan;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import export_file.XuatHoaDonBan;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Window;
@@ -317,48 +318,56 @@ public class HoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_checkActionPerformed
 
     private void btn_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pdfActionPerformed
-
+        int row = bangHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "vui lòng chọn hóa đơn", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else {
+            XuatHoaDonBan export = new XuatHoaDonBan();
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xuất hóa đơn không?");
+            if (confirm == JOptionPane.YES_OPTION) {
+                export.XuatPDFBan((String) bangHoaDon.getValueAt(row, 0));
+            } else {
+                return;
+            }
+        }
     }//GEN-LAST:event_btn_pdfActionPerformed
 
     private void GiacbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GiacbActionPerformed
-    if (Giacb.getSelectedItem() == null) 
-        return;
-    String selected = Giacb.getSelectedItem().toString().trim();
-
-    if (selected.equals("--Select--")) {
+        if (Giacb.getSelectedItem() == null) {
+            return;
+        }
+        String selected = Giacb.getSelectedItem().toString().trim();
+        if (selected.equals("--Select--")) {
+            DecimalFormat df = new DecimalFormat("#,###");
+            dtm.setRowCount(0);
+            for (HoaDon hd : lsb.getLSB()) {
+                String formatTien = df.format(hd.getThanhTien());
+                dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+            }
+            return;
+        }
+        ArrayList<HoaDon> dshd = new ArrayList(lsb.getLSB());
+        if (selected.equals("Tăng dần")) {
+            dshd.sort(Comparator.comparingDouble(HoaDon::getThanhTien));
+        } else if (selected.equals("Giảm dần")) {
+            dshd.sort(Comparator.comparingDouble(HoaDon::getThanhTien).reversed());
+        }
         DecimalFormat df = new DecimalFormat("#,###");
         dtm.setRowCount(0);
-        for (HoaDon hd : lsb.getLSB()) {
-        String formatTien = df.format(hd.getThanhTien());
-        dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
-    }
-        return;
-    }
-
-    ArrayList<HoaDon> dshd = new ArrayList(lsb.getLSB());
-
-    if (selected.equals("Tăng dần")) {
-        dshd.sort(Comparator.comparingDouble(HoaDon::getThanhTien));
-    } else if (selected.equals("Giảm dần")) {
-        dshd.sort(Comparator.comparingDouble(HoaDon::getThanhTien).reversed());
-    }
-
-    DecimalFormat df = new DecimalFormat("#,###");
-    dtm.setRowCount(0);
-    for (HoaDon hd : dshd) {
-        String formatTien = df.format(hd.getThanhTien());
-        dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
-    }
-    
+        for (HoaDon hd : dshd) {
+            String formatTien = df.format(hd.getThanhTien());
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+        }
     }//GEN-LAST:event_GiacbActionPerformed
 
     private void btn_ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ResetActionPerformed
         DecimalFormat df = new DecimalFormat("#,###");
         dtm.setRowCount(0);
         for (HoaDon hd : lsb.getLSB()) {
-        String formatTien = df.format(hd.getThanhTien());
-        dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
-    }
+            String formatTien = df.format(hd.getThanhTien());
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+        }
     }//GEN-LAST:event_btn_ResetActionPerformed
 
 
