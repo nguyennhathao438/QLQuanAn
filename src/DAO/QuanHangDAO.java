@@ -2,6 +2,7 @@ package DAO;
 
 import DTO.CTHOADON;
 import DTO.DSKhach;
+import DTO.DSMonAn;
 import DTO.DSMonAnBan;
 import DTO.HoaDon;
 import DTO.LICHSUBAN;
@@ -26,7 +27,7 @@ public class QuanHangDAO {
     }
     // lam viec voi Khach Hang
     public void LayKH(DSKhach dsk){
-        String query = "SELECT maKH,tenKH,loaiKH,soDienThoai,diaChi FROM KHACHHANG";
+        String query = "SELECT maKH,tenKH,loaiKH,soDienThoai,diaChi FROM KHACHHANG WHERE trangThai = 1";
         try(Connection conn = getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)){
@@ -45,7 +46,7 @@ public class QuanHangDAO {
         }
     }
     public void themKH(khachDTO kh){
-        String query="INSERT INTO KHACHHANG(maKH,tenKH,loaiKH,soDienThoai,diaChi) VALUES (?,?,?,?,?)" ;
+        String query="INSERT INTO KHACHHANG(maKH,tenKH,loaiKH,soDienThoai,diaChi,trangThai) VALUES (?,?,?,?,?,1)" ;
         
         try(Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -72,6 +73,16 @@ public class QuanHangDAO {
         }catch(SQLException e){ 
             e.printStackTrace();
         }
+    }
+    public void xoaKH(String maKH) throws SQLException{
+        String query ="UPDATE KHACHHANG SET trangThai = 0 WHERE maKH = ?;";
+                try(Connection con = getConnection();
+                        PreparedStatement stmt = con.prepareStatement(query)){
+                    stmt.setString(1, maKH);
+                    stmt.executeUpdate();
+                } catch(SQLException e){
+                    e.printStackTrace();
+                }
     }
     // Hoa Don
     public void themCTHDBH(MonAnBan mab,String soban){ 
@@ -136,6 +147,41 @@ public class QuanHangDAO {
         } catch(SQLException ex){
             ex.printStackTrace();
         }
+    }
+    public CTHOADON LayHD(String maHD){
+        CTHOADON ct =new CTHOADON();
+        String query = "SELECT * FROM HOADON,CTHOADON,MONAN WHERE HOADON.maHD=CTHOADON.maHD AND CTHOADON.maMA=MONAN.maMA AND HOADON.maHD =?";
+        try(Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement(query)) {
+           stmt.setString(1,maHD);
+           ResultSet rs= stmt.executeQuery();
+           ArrayList<MonAnBan> dsma = new ArrayList();
+           MonAnBan ma;
+            if(rs.next()){ 
+                ct.setMaHoaDon(maHD);
+                ct.setMaKH(rs.getString("maKH"));
+                ct.setThanhTien(rs.getDouble("thanhTien"));
+                ct.setThoiGian( new java.sql.Date(rs.getDate("thoiGian").getTime()));
+                ma = new MonAnBan();
+                ma.setMaMA(rs.getString("maMA"));
+                ma.setTenMA(rs.getString("tenMA"));
+                ma.setSoluong(rs.getInt("soLuongMA"));
+                ma.setThanhtien(rs.getDouble("gia"));
+                dsma.add(ma);
+            }
+           while(rs.next()){ 
+               ma = new MonAnBan();
+                ma.setMaMA(rs.getString("maMA"));
+                ma.setTenMA(rs.getString("tenMA"));
+                ma.setSoluong(rs.getInt("soLuongMA"));
+                ma.setThanhtien(rs.getDouble("gia"));
+                dsma.add(ma);
+           }
+           ct.setDsma(dsma);
+        }catch (SQLException ex) {
+            Logger.getLogger(QuanHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ct ;
     }
     public CTHOADON LayCTHDBH(String hd){
         CTHOADON cthdbh = new CTHOADON();
