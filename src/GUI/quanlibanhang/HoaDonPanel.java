@@ -310,7 +310,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_checkActionPerformed
 
     private void btn_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pdfActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btn_pdfActionPerformed
 
     private void GiacbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GiacbActionPerformed

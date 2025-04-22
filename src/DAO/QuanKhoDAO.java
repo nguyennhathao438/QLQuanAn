@@ -434,4 +434,19 @@ public class QuanKhoDAO {
             e.printStackTrace();
         }
     }
+     public boolean kiemTraTrungMaNCC(String maNCC) {
+    String sql = "SELECT COUNT(*) FROM NHACUNGCAP WHERE maNCC = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, maNCC);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Trả về true nếu đã tồn tại
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 }
