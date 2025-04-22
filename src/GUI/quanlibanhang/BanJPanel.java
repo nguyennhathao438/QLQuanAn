@@ -110,7 +110,7 @@ public class BanJPanel extends javax.swing.JPanel {
         for(int i = 0 ; i < BanManager.getsoluongban() ; i++){
             final int index = i;
             btnBan[i] = new JButton();
-            btnBan[i].setIcon(new FlatSVGIcon("./resources/icon/table.svg", 0.08f));
+            btnBan[i].setIcon(new FlatSVGIcon("./resources/icon/table.svg", 0.4f));
             btnBan[i].setPreferredSize(new Dimension(150,150));
             btnBan[i].setHorizontalTextPosition(SwingConstants.RIGHT);
             btnBan[i].setVerticalTextPosition(SwingConstants.CENTER);

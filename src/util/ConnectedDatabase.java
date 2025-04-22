@@ -6,15 +6,11 @@
 package util;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection; 
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class ConnectedDatabase {
 private static SQLServerDataSource ds = new SQLServerDataSource();
     public static Connection getConnectedDB() {
-
 		Connection c=null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

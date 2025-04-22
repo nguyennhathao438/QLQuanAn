@@ -229,7 +229,7 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
                 gioiTinh = jradio_nu.getText();
             }
             nvDao.insertNhanVien(new NhanVienDTO(tenNV, ngaySinhSQL, gioiTinh, sdt, maCV));
-            nvPanel.resetTableNhanVien();
+            nvPanel.setUpTable();
             this.dispose();
         }
     }//GEN-LAST:event_btn_add_nvMouseClicked

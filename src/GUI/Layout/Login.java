@@ -5,17 +5,15 @@
 package GUI.Layout;
 
 import DAO.UserDAO;
-import javax.print.DocFlavor.STRING;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import util.ConnectedDatabase;
 
 public class Login extends javax.swing.JFrame {
-     UserDAO userDAO = new UserDAO();
+    UserDAO userDAO = new UserDAO();
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -134,23 +132,17 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-     String tk = taikhoan.getText();
-char tokenmk[] = pass.getPassword();
-String mk = new String(tokenmk);
-
-String vaiTro = userDAO.ktraDangNhap(tk, mk);
-System.out.println(vaiTro);
-
-if (vaiTro.equals("")) {
-    JOptionPane.showMessageDialog(this, "Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu");
-} else {
-    JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-
-    new Menu(vaiTro).setVisible(true);
-
-    // Đóng cửa sổ đăng nhập sau khi mở giao diện mới
-    this.dispose();
-}
+        String tk = taikhoan.getText();
+        char tokenmk[] = pass.getPassword();
+        String mk = new String(tokenmk);
+        String vaiTro = userDAO.ktraDangNhap(tk, mk);
+        if (vaiTro.equals("")) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu");
+        } else {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+            new Menu(vaiTro).setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_bloginActionPerformed
 
     /**

@@ -16,8 +16,18 @@ public class NhanVienDTO {
     private Date ngaySinh;
     private String gioiTinh;
     private String sdt;
+    private int idUser;
     private int maCV;
     public NhanVienDTO(){}
+    public NhanVienDTO(int maNV,String hoTen,Date ngaySinh,String gioiTinh,String sdt,int idUser,int maCV){
+        this.maNV=maNV;
+        this.hoTen=hoTen;
+        this.ngaySinh=ngaySinh;
+        this.gioiTinh=gioiTinh;
+        this.sdt=sdt;
+        this.idUser=idUser;
+        this.maCV=maCV;
+    }
     public NhanVienDTO(int maNV,String hoTen,Date ngaySinh,String gioiTinh,String sdt,int maCV){
         this.maNV=maNV;
         this.hoTen=hoTen;
@@ -62,6 +72,12 @@ public class NhanVienDTO {
     }
     public void setSDT(String sdt){
         this.sdt=sdt;
+    }
+    public int getIdUser(){
+        return this.idUser;
+    }
+    public void setIdUser(int idUser){
+        this.idUser=idUser;
     }
     public int getmaCongViec(){
         return this.maCV;

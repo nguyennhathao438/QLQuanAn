@@ -240,7 +240,7 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
             gioiTinh=jradio_nu.getText();
             nv=new NhanVienDTO(maNV,tenNV,ngaySinhSQL,gioiTinh,sdt,maCV);
             nvDao.updateNhanVien(nv);
-            nvPanel.resetTableNhanVien();
+            nvPanel.setUpTable();
             this.dispose();
         }
     }//GEN-LAST:event_btn_update_nvMouseClicked

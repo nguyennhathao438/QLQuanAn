@@ -5,6 +5,7 @@
 package DAO;
 
 import DTO.NhanVienDTO;
+import java.sql.Connection; 
 import util.ConnectedDatabase;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -91,13 +92,38 @@ public class NhanVienDAO {
                 Date ngaySinh=rs.getDate("ngaySinh");
                 String gioiTinh=rs.getString("gioiTinh");
                 String sdt=rs.getString("sdt");
+                int idUser=rs.getInt("idUser");
                 int maCV=rs.getInt("maCV");
-                listNV.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt,maCV));
+                listNV.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt,idUser,maCV));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listNV;
+    }
+    public int setTaiKhoanNV(int idUser, int maNV) {
+        try {
+            String sql_1 = "UPDATE NhanVien SET idUser = ? WHERE maNV = ? ";
+            PreparedStatement ps1;
+            Connection connect = ConnectedDatabase.getConnectedDB();
+            ps1 = connect.prepareStatement(sql_1);
+            ps1.setInt(1, idUser);
+            ps1.setInt(2, maNV);
+            int result1 = ps1.executeUpdate();
+            if (result1 > 0) {
+                String sql_2 = "UPDATE USERS SET trangThai=2 WHERE id=? ";
+                PreparedStatement ps2 = connect.prepareStatement(sql_2);
+                ps2.setInt(1, idUser);
+                int result2 = ps2.executeUpdate();
+                if (result2 > 0) {
+                    JOptionPane.showMessageDialog(null, "Cấp vai trò nhân viên thành công", "Success", 1);
+                    return 1;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
     public HashMap<String, Integer> mapNV() {
         HashMap<String, Integer> mapNV = new HashMap<>();
