@@ -66,6 +66,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     public void setUpButton(){
         func.setUpBtn(btn_lamMoi,Color.WHITE,new Color(220,220,220));
         func.setUpBtn(btn_themVaiTro,Color.WHITE,new Color(220,220,220));
+        func.setUpBtn(btn_look, Color.WHITE, new Color(220,220,220));
     }
     public void setUpJTF(){
         func.setUpJTF(jtf_find_nv);
@@ -75,7 +76,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg", 0.85f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg", 0.75f));
         jlabel_chiTiet_nv.setIcon(new FlatSVGIcon("./resources/icon/details.svg", 0.45f));
-        jlabel_look_nv.setIcon(new FlatSVGIcon("./resources/icon/find.svg", 0.4f));
+        btn_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg", 0.35f));
         btn_lamMoi.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg", 0.3f));
         jlabel_xuat_excel.setIcon(new FlatSVGIcon("./resources/icon/export_excel.svg", 0.9f));
         btn_themVaiTro.setIcon(new FlatSVGIcon("./resources/icon/add.svg", 0.25f));
@@ -85,7 +86,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         func.cursorPointer(jlabel_update);
         func.cursorPointer(jlabel_delete);
         func.cursorPointer(jlabel_chiTiet_nv);
-        func.cursorPointer(jlabel_look_nv);
         func.cursorPointer(jlabel_xuat_excel);
     }
     public JTable getTableNhanVien() {
@@ -138,7 +138,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jpanel_chucNang2 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jtf_find_nv = new javax.swing.JTextField();
-        jlabel_look_nv = new javax.swing.JLabel();
+        btn_look = new javax.swing.JButton();
         btn_lamMoi = new javax.swing.JButton();
         btn_themVaiTro = new javax.swing.JButton();
 
@@ -245,9 +245,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(211, 217, 211));
 
-        jlabel_look_nv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlabel_look_nvMouseClicked(evt);
+        btn_look.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lookActionPerformed(evt);
             }
         });
 
@@ -257,18 +257,18 @@ public class NhanVienPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtf_find_nv, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jtf_find_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlabel_look_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_find_nv, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jlabel_look_nv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_look, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jtf_find_nv, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -293,14 +293,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jpanel_chucNang2Layout.setVerticalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(13, 13, 13)
                         .addComponent(btn_lamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         btn_themVaiTro.setText("Cấp tài khoản");
@@ -317,16 +316,18 @@ public class NhanVienPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jpanel_chucNang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btn_themVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_themVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,29 +388,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jlabel_deleteMouseClicked
 
-    private void jlabel_look_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_look_nvMouseClicked
-        String find_text = jtf_find_nv.getText().toLowerCase();
-        listNVFilter.clear();
-        mapCV=cvDao.mapCV();
-        for (NhanVienDTO nv : nvDao.listNV()) {
-            String hoTen = nv.getHoTen().toLowerCase();
-            String sdt = nv.getSDT().toLowerCase();
-            String gioiTinh = nv.getGioiTinh().toLowerCase();
-            String ngaySinh = String.valueOf(nv.getNgaySinh()).toLowerCase();
-            int maCV=nv.getmaCongViec();
-            String tenCV=func.getKey(mapCV, maCV);
-            if(tenCV==null)
-                tenCV="";
-            else 
-                tenCV=tenCV.toLowerCase();
-            if (hoTen.contains(find_text) || sdt.contains(find_text) || gioiTinh.contains(find_text) || ngaySinh.contains(find_text)||tenCV.contains(find_text)) {
-                listNVFilter.add(nv);
-            }
-        }
-        loadDataNV(listNVFilter);
-        func.centerTable(table_nv);
-    }//GEN-LAST:event_jlabel_look_nvMouseClicked
-
     private void jlabel_chiTiet_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_chiTiet_nvMouseClicked
         int vitriRow = table_nv.getSelectedRow();
         if (vitriRow == -1) {
@@ -463,9 +441,34 @@ public class NhanVienPanel extends javax.swing.JPanel {
         setUpTable();
     }//GEN-LAST:event_btn_lamMoiActionPerformed
 
+    private void btn_lookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookActionPerformed
+        String find_text = jtf_find_nv.getText().toLowerCase();
+        listNVFilter.clear();
+        mapCV = cvDao.mapCV();
+        for (NhanVienDTO nv : nvDao.listNV()) {
+            String hoTen = nv.getHoTen().toLowerCase();
+            String sdt = nv.getSDT().toLowerCase();
+            String gioiTinh = nv.getGioiTinh().toLowerCase();
+            String ngaySinh = String.valueOf(nv.getNgaySinh()).toLowerCase();
+            int maCV = nv.getmaCongViec();
+            String tenCV = func.getKey(mapCV, maCV);
+            if (tenCV == null) {
+                tenCV = "";
+            } else {
+                tenCV = tenCV.toLowerCase();
+            }
+            if (hoTen.contains(find_text) || sdt.contains(find_text) || gioiTinh.contains(find_text) || ngaySinh.contains(find_text) || tenCV.contains(find_text)) {
+                listNVFilter.add(nv);
+            }
+        }
+        loadDataNV(listNVFilter);
+        func.centerTable(table_nv);
+    }//GEN-LAST:event_btn_lookActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_lamMoi;
+    private javax.swing.JButton btn_look;
     private javax.swing.JButton btn_themVaiTro;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -477,7 +480,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jlabel_add;
     private javax.swing.JLabel jlabel_chiTiet_nv;
     private javax.swing.JLabel jlabel_delete;
-    private javax.swing.JLabel jlabel_look_nv;
     private javax.swing.JLabel jlabel_update;
     private javax.swing.JLabel jlabel_xuat_excel;
     private javax.swing.JPanel jpanel_chucNang1;

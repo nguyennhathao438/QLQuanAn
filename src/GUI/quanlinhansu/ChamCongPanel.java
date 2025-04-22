@@ -46,7 +46,6 @@ public class ChamCongPanel extends javax.swing.JPanel {
         setUpTable();
         BorderForJPanel();
         setFocusForButton();
-        setCursorPointer();
         setTextHidden();
     }
     public void setUpJTF(){
@@ -55,9 +54,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
     public void setUpBtn(){
         func.setUpBtn(btn_refresh,Color.WHITE,new Color(220,220,220));
         func.setUpBtn(btn_them_chamCong,Color.WHITE,new Color(220,220,220));
-    }
-    public void setCursorPointer(){
-        func.cursorPointer(jlabel_look);
+        func.setUpBtn(btn_look, Color.WHITE, new Color(220,220,220));
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Tìm kiếm nhanh", jtf_find);
@@ -75,7 +72,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         jpanel_chucNang2.setBorder(new DropShadowBorder(1,Color.BLACK));
     }
     public void setIconForJLabel(){
-        jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.3f));
+        btn_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.3f));
         btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.25f));
         btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg",0.2f));
     }
@@ -142,7 +139,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         btn_refresh = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jtf_find = new javax.swing.JTextField();
-        jlabel_look = new javax.swing.JLabel();
+        btn_look = new javax.swing.JButton();
 
         table_chamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -194,9 +191,9 @@ public class ChamCongPanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(220, 220, 220));
 
-        jlabel_look.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlabel_lookMouseClicked(evt);
+        btn_look.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lookActionPerformed(evt);
             }
         });
 
@@ -208,15 +205,15 @@ public class ChamCongPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -228,9 +225,9 @@ public class ChamCongPanel extends javax.swing.JPanel {
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(35, 35, 35)
                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
                 .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82))
         );
@@ -307,7 +304,17 @@ public class ChamCongPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_table_chamCongMouseClicked
 
-    private void jlabel_lookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_lookMouseClicked
+    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new AddChamCongDialog((Frame) parentWindow,true,this).setVisible(true);
+    }//GEN-LAST:event_btn_them_chamCongMouseClicked
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        jtf_find.setText("");
+        resetTableChamCong();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_lookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookActionPerformed
         String text = jtf_find.getText().toLowerCase();
         listChamCongFilter.clear();
         for (ChamCongDTO chamcong : chamcongDao.listChamCong()) {
@@ -332,26 +339,16 @@ public class ChamCongPanel extends javax.swing.JPanel {
         }
         loadDataChamCong(listChamCongFilter);
         func.centerTable(table_chamCong);
-    }//GEN-LAST:event_jlabel_lookMouseClicked
-
-    private void btn_them_chamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_them_chamCongMouseClicked
-        Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new AddChamCongDialog((Frame) parentWindow,true,this).setVisible(true);
-    }//GEN-LAST:event_btn_them_chamCongMouseClicked
-
-    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        jtf_find.setText("");
-        resetTableChamCong();
-    }//GEN-LAST:event_btn_refreshActionPerformed
+    }//GEN-LAST:event_btn_lookActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_look;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_them_chamCong;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel jlabel_look;
     private javax.swing.JPanel jpanel_chiTietChamCong;
     private javax.swing.JPanel jpanel_chucNang2;
     private javax.swing.JTextField jtf_find;

@@ -39,6 +39,7 @@ public class CongViecPanel extends javax.swing.JPanel {
     }
     public void setUpBtn(){
         func.setUpBtn(btn_lamMoi,Color.WHITE,new Color(220,220,220));
+        func.setUpBtn(btn_look,Color.WHITE,new Color(220,220,220));
     }
     public void setUpJTF(){
         func.setUpJTF(jtf_find_congViec);
@@ -56,7 +57,7 @@ public class CongViecPanel extends javax.swing.JPanel {
         jpanel_chucNang2.setBorder(new DropShadowBorder(1,Color.BLACK));
     }
     public void setIconJLabel(){
-        jlabel_look_congViec.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.35f));
+        btn_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.35f));
         btn_lamMoi.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg",0.21f));
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg",0.06f));
         jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg",0.85f));
@@ -68,7 +69,6 @@ public class CongViecPanel extends javax.swing.JPanel {
         func.cursorPointer(jlabel_chiTietCV);
         func.cursorPointer(jlabel_delete);
         func.cursorPointer(jlabel_update);
-        func.cursorPointer(jlabel_look_congViec);
     }
     public void setUpTable(){
         resetTableCongViec();
@@ -95,8 +95,7 @@ public class CongViecPanel extends javax.swing.JPanel {
     public void resetTableCongViec(){
         loadDataCongViec(cvDao.listCV());
         func.centerTable(table_cv);
-    }
-    
+    }   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -115,7 +114,7 @@ public class CongViecPanel extends javax.swing.JPanel {
         jpanel_chucNang2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jtf_find_congViec = new javax.swing.JTextField();
-        jlabel_look_congViec = new javax.swing.JLabel();
+        btn_look = new javax.swing.JButton();
         btn_lamMoi = new javax.swing.JButton();
 
         table_cv.setModel(new javax.swing.table.DefaultTableModel(
@@ -217,9 +216,9 @@ public class CongViecPanel extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(211, 217, 211));
 
-        jlabel_look_congViec.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlabel_look_congViecMouseClicked(evt);
+        btn_look.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lookActionPerformed(evt);
             }
         });
 
@@ -229,18 +228,18 @@ public class CongViecPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlabel_look_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabel_look_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_find_congViec, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -260,7 +259,7 @@ public class CongViecPanel extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_lamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(51, 51, 51))
         );
         jpanel_chucNang2Layout.setVerticalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +285,7 @@ public class CongViecPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,7 +293,7 @@ public class CongViecPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jpanel_chucNang1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -341,23 +340,6 @@ public class CongViecPanel extends javax.swing.JPanel {
         new EditCongViecDialog((Frame) parentWindow,true,this,cv).setVisible(true);
     }//GEN-LAST:event_jlabel_updateMouseClicked
 
-    private void jlabel_look_congViecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_look_congViecMouseClicked
-        String text = jtf_find_congViec.getText().toLowerCase();
-        listCVFilter.clear();
-        for (CongViecDTO cv : cvDao.listCV()) {
-            String maCV = String.valueOf(cv.getMaCV());
-            String tenCV = cv.getTenCV().toLowerCase();
-            String luongCoBan = String.valueOf(cv.getLuongCoBan()).toLowerCase();
-            String phuCap = String.valueOf(cv.getPhuCap()).toLowerCase();
-            String heSoLuong = String.valueOf(cv.getHeSoLuong()).toLowerCase();
-            if (maCV.contains(text) || tenCV.contains(text) || luongCoBan.contains(text) || phuCap.contains(text) || heSoLuong.contains(text)) {
-                listCVFilter.add(cv);
-            }
-        }
-        loadDataCongViec(listCVFilter);
-        func.centerTable(table_cv);
-    }//GEN-LAST:event_jlabel_look_congViecMouseClicked
-
     private void jlabel_chiTietCVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_chiTietCVMouseClicked
         int vitriRow=table_cv.getSelectedRow();
         if(vitriRow==-1){
@@ -379,9 +361,27 @@ public class CongViecPanel extends javax.swing.JPanel {
         setUpTable();
     }//GEN-LAST:event_btn_lamMoiActionPerformed
 
+    private void btn_lookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookActionPerformed
+        String text = jtf_find_congViec.getText().toLowerCase();
+        listCVFilter.clear();
+        for (CongViecDTO cv : cvDao.listCV()) {
+            String maCV = String.valueOf(cv.getMaCV());
+            String tenCV = cv.getTenCV().toLowerCase();
+            String luongCoBan = String.valueOf(cv.getLuongCoBan()).toLowerCase();
+            String phuCap = String.valueOf(cv.getPhuCap()).toLowerCase();
+            String heSoLuong = String.valueOf(cv.getHeSoLuong()).toLowerCase();
+            if (maCV.contains(text) || tenCV.contains(text) || luongCoBan.contains(text) || phuCap.contains(text) || heSoLuong.contains(text)) {
+                listCVFilter.add(cv);
+            }
+        }
+        loadDataCongViec(listCVFilter);
+        func.centerTable(table_cv);
+    }//GEN-LAST:event_btn_lookActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_lamMoi;
+    private javax.swing.JButton btn_look;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -391,7 +391,6 @@ public class CongViecPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jlabel_add;
     private javax.swing.JLabel jlabel_chiTietCV;
     private javax.swing.JLabel jlabel_delete;
-    private javax.swing.JLabel jlabel_look_congViec;
     private javax.swing.JLabel jlabel_update;
     private javax.swing.JPanel jpanel_chucNang1;
     private javax.swing.JPanel jpanel_chucNang2;

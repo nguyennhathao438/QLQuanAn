@@ -6,13 +6,12 @@ import DTO.DSKhach;
 import DTO.khachDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import util.Func_class;
 
 public class AddKhachHangDialog extends javax.swing.JDialog {
-
+    Func_class func=new Func_class();
     DSKhach dsk = new DSKhach();
     QuanHangDAO qh = new QuanHangDAO();
     public AddKhachHangDialog(java.awt.Frame parent, boolean modal) {
@@ -23,7 +22,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         setTextHidden();
     }
     public void setIcon(){
-        btn_them.setIcon(new FlatSVGIcon("./resources/icon/Customer.svg",0.05f));
+        func.setUpBtn(btn_them, Color.WHITE, Color.GREEN);
+        btn_them.setIcon(new FlatSVGIcon("./resources/icon/Customer.svg",0.3f));
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Nhập Mã khách", text_khach);
@@ -108,8 +108,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Text_SDT, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -165,8 +164,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(btn_them, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(177, 177, 177)
+                .addComponent(btn_them, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,7 +196,6 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         String loaikhach = Text_loai.getText().trim();
         String SDT = Text_SDT.getText().trim();
         String diachi = Text_DiaChi.getText().trim();
-        
         if(makhach.isEmpty() || tenkhach.isEmpty() || loaikhach.isEmpty() || SDT.isEmpty() || diachi.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Error", JOptionPane.ERROR_MESSAGE);
             return;
