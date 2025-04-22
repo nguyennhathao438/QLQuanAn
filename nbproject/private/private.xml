@@ -11,25 +11,40 @@
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/UserDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/HDNHDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKNCCJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/DatBanDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/util/ConnectedDatabase.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUIADM/PhanQuyenDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/util/DropShadowBorder.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlinhansu/CongViecPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/ThucDonDiaLog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/controller/ChuyenTrang.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/ThanhPhanDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/TrangChu.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/HoaDonPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/resources/icon/table.svg</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlinhansu/ChamCongPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/CTHDNHDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlinhansu/EditNhanVienDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/BanJPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/NhanVienDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/CongViecDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/NhaCungCapDialog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/PhanQuyenDAL.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/Layout/Login.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/resources/icon/update.svg</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKHDNHJPanel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/QuanHangDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/Layout/Menu.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/resources/icon/update_1.svg</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/QuanKhoDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/MonAnDiaLog.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/USerDAO1.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/KH_Panel.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKNLJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/util/Func_class.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/resources/icon/statistics.svg</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/controller/Bean.java</file>
-
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/resources/icon/refresh.svg</file>
         </group>
     </open-files>
 </project-private>
