@@ -3,18 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/BanJPanel.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/HDNHDialog.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/DAO/USerDAO1.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/Layout/Menu.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/TestUserManagement.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/util/ConnectedDatabase.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/UserManagerPanel.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/controller/ChuyenTrang.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/util/DropShadowBorder.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/UserFormPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QLQAPTTK/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QLQAPTTK/QLQuanAn/src/GUI/Layout/Login.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QLQAPTTK/QLQuanAn/src/GUI/quanlinhansu/AddRoleDialog.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QLQAPTTK/QLQuanAn/src/GUI/quanlinhansu/LuongPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/QLQAPTTK/QLQuanAn/src/GUI/quanlinhansu/AddChamCongDialog.java</file>
         </group>
     </open-files>
 </project-private>

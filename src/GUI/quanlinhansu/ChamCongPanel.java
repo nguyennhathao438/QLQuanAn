@@ -4,7 +4,6 @@ import DAO.ChamCongDAO;
 import DAO.NhanVienDAO;
 import DTO.ChamCongDTO;
 import DTO.NhanVienDTO;
-import GUI.quanlinhansu.AddChamCongDialog;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,12 +40,21 @@ public class ChamCongPanel extends javax.swing.JPanel {
     }
     public void khoiTao(){
         setUpPanelThongTinChamCong();
+        setUpJTF();
+        setUpBtn();
         setIconForJLabel();
         setUpTable();
         BorderForJPanel();
         setFocusForButton();
         setCursorPointer();
         setTextHidden();
+    }
+    public void setUpJTF(){
+        func.setUpJTF(jtf_find);
+    }
+    public void setUpBtn(){
+        func.setUpBtn(btn_refresh,Color.WHITE,new Color(220,220,220));
+        func.setUpBtn(btn_them_chamCong,Color.WHITE,new Color(220,220,220));
     }
     public void setCursorPointer(){
         func.cursorPointer(jlabel_look);
@@ -67,7 +75,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         jpanel_chucNang2.setBorder(new DropShadowBorder(1,Color.BLACK));
     }
     public void setIconForJLabel(){
-        jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.25f));
+        jlabel_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.3f));
         btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.25f));
         btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg",0.2f));
     }
@@ -93,7 +101,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         func.setUpTable(table_chamCong);
     }
     public void loadDataChamCong(ArrayList<ChamCongDTO> listCC) {
-        String[] colNames = {"Mã BCC", "Nhân viên", "Tháng Năm", "Ngày làm", "Ngày nghỉ", "Ngày trễ", "Số giờ tăng ca"};
+        String[] colNames = {"Mã BCC","ID-Tên NV", "Tháng Năm", "Ngày làm", "Ngày nghỉ", "Ngày trễ", "Số giờ tăng ca"};
         Object[][] rows = new Object[listCC.size()][colNames.length];
         ArrayList<NhanVienDTO> listNV = nvDao.listNV();
         for (int i = 0; i < listCC.size(); i++) {
@@ -114,6 +122,8 @@ public class ChamCongPanel extends javax.swing.JPanel {
         }
         DefaultTableModel model = new DefaultTableModel(rows, colNames);
         table_chamCong.setModel(model);
+        table_chamCong.getColumnModel().getColumn(0).setPreferredWidth(45);
+        table_chamCong.getColumnModel().getColumn(1).setPreferredWidth(150);
     }
     public void resetTableChamCong(){
         loadDataChamCong(chamcongDao.listChamCong());
@@ -129,9 +139,10 @@ public class ChamCongPanel extends javax.swing.JPanel {
         jpanel_chiTietChamCong = new javax.swing.JPanel();
         jpanel_chucNang2 = new javax.swing.JPanel();
         btn_them_chamCong = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jtf_find = new javax.swing.JTextField();
         jlabel_look = new javax.swing.JLabel();
-        btn_refresh = new javax.swing.JButton();
 
         table_chamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,7 +162,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(table_chamCong);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("DANH SÁCH BẢNG CHẤM CÔNG");
 
         jpanel_chiTietChamCong.setBackground(new java.awt.Color(230, 230, 235));
@@ -168,12 +179,20 @@ public class ChamCongPanel extends javax.swing.JPanel {
         );
 
         btn_them_chamCong.setText("Chấm Công");
-        btn_them_chamCong.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_them_chamCong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_them_chamCongMouseClicked(evt);
             }
         });
+
+        btn_refresh.setText("Làm mới");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(220, 220, 220));
 
         jlabel_look.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -181,44 +200,53 @@ public class ChamCongPanel extends javax.swing.JPanel {
             }
         });
 
-        btn_refresh.setText("Làm mới");
-        btn_refresh.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refreshActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jpanel_chucNang2Layout = new javax.swing.GroupLayout(jpanel_chucNang2);
         jpanel_chucNang2.setLayout(jpanel_chucNang2Layout);
         jpanel_chucNang2Layout.setHorizontalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
                 .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(82, 82, 82))
         );
         jpanel_chucNang2Layout.setVerticalGroup(
             jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpanel_chucNang2Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlabel_look, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 20, Short.MAX_VALUE))
+                        .addGroup(jpanel_chucNang2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_them_chamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpanel_chucNang2Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -228,19 +256,19 @@ public class ChamCongPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(230, 230, 230))
+                .addGap(262, 262, 262))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,6 +349,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_them_chamCong;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jlabel_look;
     private javax.swing.JPanel jpanel_chiTietChamCong;

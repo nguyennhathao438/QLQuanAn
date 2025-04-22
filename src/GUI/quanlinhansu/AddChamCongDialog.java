@@ -50,25 +50,22 @@ import util.Func_class;
  * @author kiman
  */
 public class AddChamCongDialog extends javax.swing.JDialog {
-    private Func_class func = new Func_class();
-    private JButton[] dayButtons = new JButton[42]; // 6 tuần × 7 ngày
-    private JLabel lblNhanVien;
-    private Map<JButton, String> trangThaiNgay = new HashMap<>();
-    private JButton btnNghi, btnDiTre, btnTangCa, btnXoa, btnThongKe, btnThem, btnHuybo;
-    private JComboBox<String> combobox_months;
-    private JComboBox<Integer> combobox_years;
-    private String currentStatus = "";  // Trạng thái hiện tại (Nghỉ, Đi Trễ, Tăng Ca)
-    private JTable table_NV;  // Khai báo bảng JTable
-    private DefaultTableModel tableModel;
-    private ArrayList<NhanVienDTO> listNV;
-    private JLabel label_thongtinNV = new JLabel();
-    private ChamCongPanel chamcongPanel;
-    private ArrayList<ChamCongDTO> listChamCong;
-    private Map<Integer, JButton> mapButtonNgay;
-    private JPanel jpanel_thongTinNhanVien, jpanel_buttons_chamCong, jpanel_calendar,jpanel_TangCa_option,jpanel_option;
-    private JRadioButton rb1h, rb2h, rb3h, rb4h;
-    private ButtonGroup groupTangCa;
-    private int gioTangCaDangChon = 1; // mặc định là 1 giờ
+    Func_class func = new Func_class();
+    JButton[] dayButtons = new JButton[42]; // 6 tuần × 7 ngày
+    Map<JButton, String> trangThaiNgay = new HashMap<>();
+    JButton btnNghi, btnDiTre, btnTangCa, btnXoa, btnThongKe, btnThem;
+    JComboBox<String> combobox_months;
+    JComboBox<Integer> combobox_years;
+    String currentStatus = "";  // Trạng thái hiện tại (Nghỉ, Đi Trễ, Tăng Ca)
+    JTable table_NV;  // Khai báo bảng JTable
+    ArrayList<NhanVienDTO> listNV;
+    JLabel label_thongtinNV = new JLabel();
+    ChamCongPanel chamcongPanel;
+    ArrayList<ChamCongDTO> listChamCong;
+    JPanel jpanel_thongTinNhanVien, jpanel_buttons_chamCong, jpanel_calendar,jpanel_TangCa_option,jpanel_option;
+    JRadioButton rb1h, rb2h, rb3h, rb4h;
+    ButtonGroup groupTangCa;
+    int gioTangCaDangChon = 1; // mặc định là 1 giờ
     public AddChamCongDialog(java.awt.Frame parent, boolean modal,ChamCongPanel chamcongPanel) {
         super(parent, modal);
         initComponents();
@@ -363,8 +360,8 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         Integer[] years={2020,2021,2022,2023,2024,2025,2026,2027};
         combobox_months=new JComboBox<>(months);
         combobox_years=new JComboBox<>(years);
-        combobox_months.setBackground(Color.WHITE);
-        combobox_years.setBackground(Color.WHITE);
+        func.setUpComBoBox(combobox_years);
+        func.setUpComBoBox(combobox_months);
         LocalDate time=LocalDate.now();
         combobox_months.setSelectedIndex(time.getMonthValue()-1);
         combobox_years.setSelectedItem(time.getYear());
@@ -412,6 +409,8 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         JPanel panel_bottom=new JPanel(new FlowLayout());
         btnThem=new JButton("Thêm chấm công");
         btnThongKe=new JButton("Thống kê");
+        func.setUpBtn(btnThem,Color.WHITE,Color.GRAY);
+        func.setUpBtn(btnThongKe,Color.WHITE,Color.GRAY);
         btnThongKe.setFocusPainted(false);
         btnThem.setFocusPainted(false);
         btnThem.setBackground(Color.WHITE);

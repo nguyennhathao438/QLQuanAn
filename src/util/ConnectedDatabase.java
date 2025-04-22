@@ -6,20 +6,17 @@
 package util;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection; 
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class ConnectedDatabase {
 private static SQLServerDataSource ds = new SQLServerDataSource();
      public static Connection getConnectedDB() {
 		Connection c=null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url="jdbc:sqlserver://DESKTOP-SAC9NS5:1433;databaseName=QLQuanAn;encrypt=false;characterEncoding=UTF-8";
+			String url="jdbc:sqlserver://LAPTOP-2EA7CM4Q:1433;databaseName=QuanLyQuanAn;encrypt=false;characterEncoding=UTF-8";
 			String username="sa";
-			String password="quencmnr";
+			String password="123456789";
 			c=DriverManager.getConnection(url,username,password);
 		}catch(Exception e) {
 			e.printStackTrace();

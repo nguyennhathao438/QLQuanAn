@@ -9,6 +9,7 @@ import DTO.ChamCongDTO;
 import DTO.LuongDTO;
 import DTO.NhanVienDTO;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -63,6 +64,8 @@ public class LuongPanel extends javax.swing.JPanel {
         Integer[] years={2019,2020,2021,2022,2023,2024,2025};
         combobox_months=new JComboBox<>(months);
         combobox_years=new JComboBox<>(years);
+        func.setUpComBoBox(combobox_years);
+        func.setUpComBoBox(combobox_months);
         jpanel_top=new JPanel(new BorderLayout());
         jpanel_combobox_thangNam=new JPanel();
         LocalDate time=LocalDate.now();
@@ -73,7 +76,7 @@ public class LuongPanel extends javax.swing.JPanel {
         jpanel_combobox_thangNam.add(combobox_years);
         jpanel_title=new JPanel(new FlowLayout(FlowLayout.CENTER));
         label_title=new JLabel("BẢNG TÍNH LƯƠNG THEO THÁNG");
-        label_title.setFont(new Font("Arial",Font.BOLD,14));
+        label_title.setFont(new Font("Arial",Font.BOLD,16));
         jpanel_title.add(label_title);
         tinhLuong();
         ActionListener comboBoxListener=new ActionListener() {
@@ -119,7 +122,7 @@ public class LuongPanel extends javax.swing.JPanel {
         int selectMonth = getMonthCombobox();
         int selectYear = getYearCombobox();
         listLuong = luongDao.listLuong(selectMonth, selectYear);
-        String[] colNames = {"Mã Lương", "Nhân viên", "Lương cơ bản", "Lương thực tế", "Lương thưởng", "Các khoản trừ", "Thực lãnh"};
+        String[] colNames = {"Mã Lương","ID-Họ tên", "Lương cơ bản", "Lương thực tế", "Lương thưởng", "Các khoản trừ", "Thực lãnh"};
         Object[][] rows = new Object[listLuong.size()][colNames.length];
         DecimalFormat df = new DecimalFormat("#,###");
         for (int i = 0; i < listLuong.size(); i++) {
@@ -151,6 +154,8 @@ public class LuongPanel extends javax.swing.JPanel {
         this.add(jpn_table, BorderLayout.CENTER);
         this.revalidate(); // 👉 cập nhật lại UI
         this.repaint();
+        table_luong.getColumnModel().getColumn(0).setPreferredWidth(45);
+        table_luong.getColumnModel().getColumn(1).setPreferredWidth(150);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

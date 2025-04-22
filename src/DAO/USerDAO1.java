@@ -12,16 +12,12 @@ package DAO;
 import java.sql.*;
 import java.util.*;
 import DTO.User;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import javax.swing.JOptionPane;
 import util.ConnectedDatabase;
 
 public class USerDAO1 {
-
     public Connection getConnection() {
         return ConnectedDatabase.getConnectedDB();
     }
-
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         String sql = "SELECT u.id, u.taiKhoan, u.ten, u.matKhau, r.tenVT, u.trangThai " +
@@ -65,11 +61,9 @@ public class USerDAO1 {
         if (kiemTraTaiKhoanTonTai(u.getTaiKhoan())) {
             return false;
         }
-
         String sql = "INSERT INTO USERS (taiKhoan, matKhau, ten, maVT, trangThai) VALUES (?, ?, ?, ?, 1)";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, u.getTaiKhoan());
             ps.setString(2, u.getMatKhau());
             ps.setString(3, u.getTen());
@@ -86,7 +80,6 @@ public class USerDAO1 {
         String sql = "UPDATE USERS SET ten=?, matKhau=?, trangThai=?, maVT=? WHERE id=?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, u.getTen());
             ps.setString(2, u.getMatKhau());
             ps.setInt(3, u.getTrangThai());
@@ -119,6 +112,7 @@ public class USerDAO1 {
             e.printStackTrace();
         }
     }
+    
 
     public String getMaVaiTro(String tenVT) {
         String maVT = null;
