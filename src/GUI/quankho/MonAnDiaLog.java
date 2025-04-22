@@ -19,16 +19,19 @@ public class MonAnDiaLog extends javax.swing.JDialog {
 QuanKhoDAO kn=new QuanKhoDAO();
     DSMonAn dsma=new DSMonAn(); 
     String maMonAn="";
-   
-    public MonAnDiaLog(java.awt.Frame parent, boolean modal) {
+   QKMonAnJPanel panel;
+    public MonAnDiaLog(java.awt.Frame parent, boolean modal , QKMonAnJPanel panel) {
+        
         super(parent, modal);
+        this.panel=panel;
         initComponents();
         kn.layDSMonAn(dsma);
         setLocationRelativeTo(null);
          setLocationRelativeTo(null);
     }
-    public MonAnDiaLog(java.awt.Frame parent, boolean modal,String maMon) {
+    public MonAnDiaLog(java.awt.Frame parent, boolean modal,String maMon, QKMonAnJPanel panel) {
         super(parent, modal);
+        this.panel=panel;
         initComponents();
         this.maMonAn=maMon;
         kn.layDSMonAn(dsma);
@@ -201,6 +204,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
         }else{
         kn.suaMonAn(ma);
         } 
+        panel.setData();
          this.dispose();
     }//GEN-LAST:event_submitActionPerformed
  private boolean kt(){ 

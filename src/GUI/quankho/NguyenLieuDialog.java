@@ -14,13 +14,16 @@ public class NguyenLieuDialog extends javax.swing.JDialog {
 DSNguyenLieu dsnl=new DSNguyenLieu();
    QuanKhoDAO kn=new QuanKhoDAO();
    String maNguyenLieu="";
-    public NguyenLieuDialog(java.awt.Frame parent, boolean modal) {
+   QKNLJPanel panel ;
+    public NguyenLieuDialog(java.awt.Frame parent, boolean modal, QKNLJPanel panel) {
         super(parent, modal);
         initComponents();
+        this.panel = panel;
          setLocationRelativeTo(null);
     }
-    public NguyenLieuDialog(java.awt.Frame parent, boolean modal,String maNLieu) {
+    public NguyenLieuDialog(java.awt.Frame parent, boolean modal,String maNLieu , QKNLJPanel panel) {
         super(parent, modal);
+        this.panel = panel;
         initComponents();
         kn.layNL(dsnl);
         this.maNguyenLieu=maNLieu;
@@ -126,7 +129,11 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
         confirm.setText("Xác nhận");
         confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmActionPerformed(evt);
+                try {
+                    confirmActionPerformed(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(NguyenLieuDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -160,7 +167,7 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
         pack();
     }// </editor-fold>                        
 
-    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         kn.layNL(dsnl);
         String text=maNL.getText();
         NGUYENLIEU nl=new NGUYENLIEU();
@@ -205,6 +212,7 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
      
             
         }
+        panel.setData();
          this.dispose();
     }                                       
 

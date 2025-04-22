@@ -10,11 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import util.ConnectedDatabase;
 
-
-/**
- *
- * @author THANH HIEU
- */
 public class Login extends javax.swing.JFrame {
      UserDAO userDAO = new UserDAO();
     public Login() {

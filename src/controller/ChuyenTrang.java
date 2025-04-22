@@ -1,6 +1,7 @@
 
 package controller;
 
+import GUI.Layout.TrangChuPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -33,7 +34,7 @@ public class ChuyenTrang {
         this.root = root;
     }
     public void setTrang(JPanel jpn){ 
-        kindSelected="MonAn";
+        kindSelected="TrangChinh";
         root.removeAll();
         root.setLayout(new BorderLayout());
         root.add(new QKMonAnJPanel());
@@ -48,7 +49,6 @@ public class ChuyenTrang {
         
     } 
     class LabelEvent implements MouseListener {
-
       private JPanel node;
       private String kind;
       private JPanel jpnItem;
@@ -137,7 +137,7 @@ public class ChuyenTrang {
      
      public void setDashboard(JPanel jpnItem) {
        kindSelected = "TrangChinh";
-       JPanel node = new QKMonAnJPanel();
+       JPanel node = new TrangChuPanel();
        root.removeAll();
        root.setLayout(new BorderLayout());
        root.add(node);

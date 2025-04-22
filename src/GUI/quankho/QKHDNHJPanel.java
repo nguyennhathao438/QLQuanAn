@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package GUI.quankho;
 
 import DTO.LICHSUNH;
@@ -10,13 +7,8 @@ import DTO.HOADONNHAPHANG;
 import export_file.XuatPhieuNhap;
 import java.awt.Frame;
 import java.awt.Window;
-
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.text.SimpleDateFormat;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;

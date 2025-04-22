@@ -3,18 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/BanJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/RolePermissionDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKMonAnJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/NguyenLieuDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/Layout/TrangChuPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/ChamCongDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/UserDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/HDNHDialog.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/DAO/USerDAO1.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/Layout/Menu.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/TestUserManagement.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/util/ConnectedDatabase.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/UserManagerPanel.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/controller/ChuyenTrang.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/util/DropShadowBorder.java</file>
-            <file>file:/C:/Users/THANH%20HIEU/OneDrive/Máy%20tính/kz/QLQuanAn/src/GUI/user/UserFormPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKNCCJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/util/ConnectedDatabase.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUIADM/PhanQuyenDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/controller/ChuyenTrang.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/TrangChu.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/CTHDNHDialog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quanlibanhang/BanJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/NhanVienDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/CongViecDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/PhanQuyenDAL.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/Layout/Login.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKHDNHJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/QuanHangDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/Layout/Menu.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/QuanKhoDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/MonAnDiaLog.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/DAO/USerDAO1.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/GUI/quankho/QKNLJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/QuanAnNew/QLQuanAn/src/controller/Bean.java</file>
         </group>
     </open-files>
 </project-private>

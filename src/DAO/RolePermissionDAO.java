@@ -12,7 +12,6 @@ import util.ConnectedDatabase;
 
 public class RolePermissionDAO {
     private Connection conn = ConnectedDatabase.getConnectedDB();
-
     public boolean isRoleExists(String maVT) {
         String sql = "SELECT 1 FROM ROLES WHERE maVT = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -24,7 +23,6 @@ public class RolePermissionDAO {
         }
         return false;
     }
-
     public void insertRole(String maVT, String tenVT) {
         String sql = "INSERT INTO ROLES(maVT, tenVT) VALUES (?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

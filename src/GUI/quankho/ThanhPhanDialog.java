@@ -23,9 +23,11 @@ QuanKhoDAO kn=new QuanKhoDAO();
     MONAN monAn;
     int index=0;
     int tinhTrang;
-    public ThanhPhanDialog(java.awt.Frame parent, boolean modal,MONAN ma,int tt) {
+    QKMonAnJPanel panel;
+    public ThanhPhanDialog(java.awt.Frame parent, boolean modal,MONAN ma,int tt,QKMonAnJPanel panel) {
         super(parent, modal);
          this.tinhTrang=tt;
+         this.panel = panel;
         this.monAn=ma;
         initComponents();
         bangNL.setModel(dtm);
@@ -246,7 +248,9 @@ QuanKhoDAO kn=new QuanKhoDAO();
         if(index == 0 ){
             kn.setTTTP(tp.getMaMA());
         }
+        panel.setData();
         this.dispose();
+        
     }//GEN-LAST:event_conFirmActionPerformed
 
     private void addNLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNLActionPerformed

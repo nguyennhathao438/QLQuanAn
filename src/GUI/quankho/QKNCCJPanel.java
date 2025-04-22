@@ -57,8 +57,7 @@ public class QKNCCJPanel extends javax.swing.JPanel {
         PromptSupport.setForeground(Color.GRAY, search);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT,search);
     }
-    public void setTable(){ 
-        
+    public void setTable(){        
         bangNCC.getColumnModel().getColumn(0).setPreferredWidth(80);
         bangNCC.getColumnModel().getColumn(1).setPreferredWidth(200);
         bangNCC.getColumnModel().getColumn(2).setPreferredWidth(300);
