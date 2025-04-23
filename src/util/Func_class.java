@@ -60,21 +60,21 @@ public class Func_class {
         jtf.addKeyListener(new KeyAdapter(){
            public void keyTyped(KeyEvent e){
                char c=e.getKeyChar();
-               if(!Character.isDigit(c) && c!='.'){
+               if(!Character.isDigit(c) && c!='.' && c!=','){
                    e.consume(); 
                }
            }
         });
     }
-    //Hàm ngăn chặn không cho nhập phím số
-    public void notAllowNumber(JTextField jtf){
-        jtf.addKeyListener(new KeyAdapter(){
-           public void keyTyped(KeyEvent e){
-               char c=e.getKeyChar();
-               if(Character.isDigit(c)){
-                   e.consume(); 
-               }
-           }
+    //Hàm ngăn chặn không cho nhập phím số 
+    public void notAllowNumber(JTextField jtf) {
+        jtf.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
         });
     }
     public void setUpTable(JTable table){

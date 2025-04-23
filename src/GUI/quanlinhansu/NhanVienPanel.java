@@ -446,6 +446,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         listNVFilter.clear();
         mapCV = cvDao.mapCV();
         for (NhanVienDTO nv : nvDao.listNV()) {
+            String maNV=String.valueOf(nv.getIdUser()).toLowerCase();
             String hoTen = nv.getHoTen().toLowerCase();
             String sdt = nv.getSDT().toLowerCase();
             String gioiTinh = nv.getGioiTinh().toLowerCase();

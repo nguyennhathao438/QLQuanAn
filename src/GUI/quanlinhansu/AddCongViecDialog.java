@@ -22,8 +22,14 @@ public class AddCongViecDialog extends javax.swing.JDialog {
         initComponents();
         this.setTitle("Thêm mới công việc");
         this.cvPanel=cvPanel;
+        setEnable();
         this.setLocationRelativeTo(null);
     }                             
+    public void setEnable(){
+        func.notAllowText(jtf_phuCap);
+        func.notAllowText(jtf_heSoluong);
+        func.notAllowText(jtf_luongCoBan);
+    }
     public int check_add_CongViec(){
         if(jtf_name_cv.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Vui lòng nhập tên công việc","Erorr",0);
@@ -36,7 +42,7 @@ public class AddCongViecDialog extends javax.swing.JDialog {
         if(jtf_phuCap.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Vui lòng nhập phụ cấp","Erorr",0);
             return 0;
-        }
+        }      
         if(jtf_heSoluong.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Vui lòng nhập hệ số lương","Erorr",0);
             return 0;
@@ -181,6 +187,7 @@ public class AddCongViecDialog extends javax.swing.JDialog {
             CongViecDTO cv=new CongViecDTO(tenCV,luongCoBan,phuCap,heSoLuong);
             cvDao.insertCongViec(cv);
             cvPanel.resetTableCongViec();
+            this.dispose();
         }
     }//GEN-LAST:event_btn_addMouseClicked
 

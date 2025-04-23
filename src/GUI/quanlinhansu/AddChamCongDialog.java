@@ -213,7 +213,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         btnNghi.setBackground(currentStatus.equals("Nghỉ") ? Color.RED : Color.WHITE);
         btnDiTre.setBackground(currentStatus.equals("Đi trễ") ? Color.YELLOW : Color.WHITE);
         btnTangCa.setBackground(currentStatus.equals("Tăng ca") ? Color.CYAN : Color.WHITE);
-        btnXoa.setBackground(currentStatus.isEmpty() ? Color.WHITE : Color.WHITE); // Xóa trạng thái
+        btnXoa.setBackground(currentStatus.equals("Xóa") ? Color.GREEN : Color.WHITE); // Xóa trạng thái
     }
     public void create_JPanel_thongTinNhanVien(){
         jpanel_thongTinNhanVien = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -468,24 +468,27 @@ public class AddChamCongDialog extends javax.swing.JDialog {
                             nghi++;
                         } else if (status.equals("Đi trễ")) {
                             diTre++;
-                        }else if(status.startsWith("Tăng ca")){
-                            String[] parts=status.split("-");
-                            String gioStr = parts[1].trim().replaceAll("giờ","").trim();
-                            int gio=Integer.parseInt(gioStr);
-                            tangCa+=gio;
+                        } else if (status.startsWith("Tăng ca")) {
+                            String[] parts = status.split("-");
+                            String gioStr = parts[1].trim().replaceAll("giờ", "").trim();
+                            int gio = Integer.parseInt(gioStr);
+                            tangCa += gio;
                         }
                     }
                 }
                 int tongNgay = (int) Arrays.stream(dayButtons).filter(JButton::isEnabled).count();
                 int diLam = tongNgay - nghi;
-                chamCong = new ChamCongDTO(maNV, selectMonth, selectYear, diLam, nghi, diTre, tangCa, chiTiet.toString(), "Đã chấm công");
-                int thanhCong = new ChamCongDAO().insertChamCong(chamCong);
-                currentStatus = "";
-                resetTrangThaiButtonColors();
-                if (thanhCong == 1) {
-                    table_NV.setValueAt("Đã chấm công", vitriRow, 2);
+                int conFirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc sẽ chấm công cho nhân viên vào tháng này?", "Thêm chấm công", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (conFirm == JOptionPane.YES_OPTION) {
+                    chamCong = new ChamCongDTO(maNV, selectMonth, selectYear, diLam, nghi, diTre, tangCa, chiTiet.toString(), "Đã chấm công");
+                    int thanhCong = new ChamCongDAO().insertChamCong(chamCong);
+                    currentStatus = "";
+                    resetTrangThaiButtonColors();
+                    if (thanhCong == 1) {
+                        table_NV.setValueAt("Đã chấm công", vitriRow, 2);
+                    }
+                    chamcongPanel.resetTableChamCong();
                 }
-                chamcongPanel.resetTableChamCong();
             }
         });
     }
@@ -558,6 +561,15 @@ public class AddChamCongDialog extends javax.swing.JDialog {
     
     //Tô màu khi nhấn vào button calendar,thay đổi text theo trạng thái currentStatus
     private void toMauSelected(JButton btn) {
+        if(currentStatus.equals("")){
+            JOptionPane.showMessageDialog(null,"Vui lòng chọn trạng thái chấm công","Error",0);
+            return;
+        }
+        int vitriRow=table_NV.getSelectedRow();
+        if(vitriRow==-1){
+            JOptionPane.showMessageDialog(null,"Bạn chưa chọn nhân viên để chấm công","Error",0);
+            return;
+        }
         String text = btn.getText(); //text trong button có dạng :<html><center>day<br><thu></center></html>
         String[] parts = text.split("<br>");
         String ngayStr = parts[0].replaceAll("<html><center>", "");

@@ -27,6 +27,7 @@ public class EditCongViecDialog extends javax.swing.JDialog {
         jtf_luongCoBan.setText(String.format("%,.0f", cv.getLuongCoBan()));
         jtf_phuCap.setText(String.format("%,.0f", cv.getPhuCap()));
         jtf_heSoluong_edit.setText(String.valueOf(cv.getHeSoLuong()));
+        setEnable();
         this.setLocationRelativeTo(null);
     }
     public int check_edit_CongViec(){
@@ -47,6 +48,11 @@ public class EditCongViecDialog extends javax.swing.JDialog {
             return 0;
         }
         return 1;
+    }
+    public void setEnable(){
+        func.notAllowText(jtf_phuCap);
+        func.notAllowText(jtf_heSoluong_edit);
+        func.notAllowText(jtf_luongCoBan);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -184,6 +190,7 @@ public class EditCongViecDialog extends javax.swing.JDialog {
             cv = new CongViecDTO(maCV,tenCV,luongCoBan,phuCap, heSoLuong);
             cvDao.updateCongViec(cv);
             cvPanel.resetTableCongViec();
+            this.dispose();
         }
     }//GEN-LAST:event_btn_editMouseClicked
 

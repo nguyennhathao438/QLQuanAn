@@ -60,16 +60,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-=======
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnThem" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="13" max="32767" attributes="0"/>
-                          <Component id="xoa" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnSua" min="-2" max="-2" attributes="0"/>
-                      </Group>
->>>>>>> 8fdb2c768971c82bdf67292f12b302f2a7454df4
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -114,7 +104,6 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
                       <Component id="jlabel_add" alignment="0" max="32767" attributes="0"/>
                       <Component id="jlabel_update" max="32767" attributes="0"/>
                       <Component id="jlabel_delete" pref="44" max="32767" attributes="0"/>
@@ -142,11 +131,6 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel2" pref="24" max="32767" attributes="0"/>
                       <Component id="jLabel5" max="32767" attributes="0"/>
-=======
-                      <Component id="btnSua" pref="36" max="32767" attributes="0"/>
-                      <Component id="btnThem" max="32767" attributes="0"/>
-                      <Component id="xoa" max="32767" attributes="0"/>
->>>>>>> 8fdb2c768971c82bdf67292f12b302f2a7454df4
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -184,7 +168,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
         </Component>
-<<<<<<< HEAD
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="text" type="java.lang.String" value="  Th&#xea;m"/>
@@ -214,9 +197,6 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlabel_deleteMouseClicked"/>
           </Events>
-=======
-        <Component class="javax.swing.JButton" name="xoa">
->>>>>>> 8fdb2c768971c82bdf67292f12b302f2a7454df4
         </Component>
       </SubComponents>
     </Container>
@@ -241,13 +221,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_ok" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-<<<<<<< HEAD
                   <Component id="btn_Refresh" min="-2" pref="151" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-=======
-                  <Component id="btn_Refresh" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
->>>>>>> 8fdb2c768971c82bdf67292f12b302f2a7454df4
               </Group>
           </Group>
         </DimensionLayout>

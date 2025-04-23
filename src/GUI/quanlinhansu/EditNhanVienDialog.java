@@ -27,6 +27,7 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
     public void khoiTao() {
         fillCbb();
         khoiTaoButtonGroup();
+        setUpEnable();
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
         jdatechooser_ngaySinh.setDate(nv.getNgaySinh());
@@ -45,6 +46,10 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
             jradio_nu.setSelected(true);
         }
         this.setLocationRelativeTo(null);
+    }
+    public void setUpEnable(){
+        func.notAllowNumber(jtf_name_nv);
+        func.notAllowText(jtf_sdt_nv);
     }
     public void khoiTaoButtonGroup(){
         ButtonGroup btnGrp=new ButtonGroup();
@@ -67,7 +72,7 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Vui lòng nhập số điện thoại","Erorr",0);
             return 0;
         }
-        else if(jdatechooser_ngaySinh==null){
+        else if(jdatechooser_ngaySinh.getDate()==null){
             JOptionPane.showMessageDialog(null,"Vui lòng chọn ngày sinh","Erorr",0);
             return 0;
         }
@@ -227,7 +232,7 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
             String tenNV=jtf_name_nv.getText();
             String sdt=jtf_sdt_nv.getText();
             if(sdt.length()!=10||sdt.charAt(0)!='0'){
-                JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ","Success",1);
+                JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ","Error",0);
                 return;
             }
             int maCV = mapCV.get(combobox_cv.getSelectedItem().toString());

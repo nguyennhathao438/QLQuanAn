@@ -42,73 +42,72 @@ import java.text.SimpleDateFormat;
 
 public class QKHDNHJPanel extends javax.swing.JPanel {
         QuanKhoDAO kn = new QuanKhoDAO();
-        LICHSUNH dshd = new LICHSUNH();
-        UserDAO us = new UserDAO();
-        ArrayList<HOADONNHAPHANG> lsnh = dshd.getLSNH();
+    LICHSUNH dshd = new LICHSUNH();
+    UserDAO us = new UserDAO();
+    ArrayList<HOADONNHAPHANG> lsnh = dshd.getLSNH();
 
+    DefaultTableModel dtm = new DefaultTableModel();
 
-        DefaultTableModel dtm = new DefaultTableModel();
+    public QKHDNHJPanel() {
+        kn.layHDNH(dshd);
 
-        public QKHDNHJPanel() {
-                kn.layHDNH(dshd);
+        initComponents();
+        bangLSHDNH.setModel(dtm);
+        setData(lsnh);
+        setTable();
 
-                initComponents();
-                bangLSHDNH.setModel(dtm);
-                setData(lsnh);
-                setTable();
+    }
 
+    public void setData(ArrayList<HOADONNHAPHANG> lsnh) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        dtm.setRowCount(0);
+        // Tạo lại model mới hoàn toàn mỗi lần gọi
+        dtm = new DefaultTableModel();
+        dtm.addColumn("Mã hoá đơn");
+        dtm.addColumn("Nhà cung cấp");
+        dtm.addColumn("Tài khoản");
+        dtm.addColumn("Ngày Nhập");
+        dtm.addColumn("Giá ");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Format đẹp
+
+        for (HOADONNHAPHANG a : lsnh) {
+            if (a == null) {
+                System.out.println("Rỗng");
+
+            } else {
+                String formattedGia = df.format(a.getThanhTien());
+                String formattedDate = sdf.format(a.getNgayNhap());
+                dtm.addRow(new Object[]{a.getMaHDNH(), a.getTenNCC(), us.getTenUserByID(a.getMangLam()), formattedDate, formattedGia});
+
+            }
         }
 
-        public void setData(ArrayList<HOADONNHAPHANG> lsnh) {
-                DecimalFormat df = new DecimalFormat("#,###");
-                dtm.setRowCount(0);
-                // Tạo lại model mới hoàn toàn mỗi lần gọi
-                dtm = new DefaultTableModel();
-                dtm.addColumn("Mã hoá đơn");
-                dtm.addColumn("Nhà cung cấp");
-                dtm.addColumn("Tài khoản");
-                dtm.addColumn("Ngày Nhập");
-                dtm.addColumn("Giá ");
+        bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
+    }
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Format đẹp
-
-                for (HOADONNHAPHANG a : lsnh) {
-                        if (a == null) {
-                                System.out.println("Rỗng");
-
-                        } else {
-                                String formattedGia = df.format(a.getThanhTien());
-                                String formattedDate = sdf.format(a.getNgayNhap());
-                                dtm.addRow(new Object[] { a.getMaHDNH(), a.getTenNCC(),us.getTenUserByID(a.getMangLam()), formattedDate, formattedGia });
-
-                        }
-                }
-
-                bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
+    public void setTable() {
+        // set độ rộng
+        bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
+        bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
+        bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
+        bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
+        // Can giua
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        // Can giữa tẽt
+        for (int i = 0; i < 4; i++) {
+            bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        // Can giua tieu de
+        JTableHeader header = bangLSHDNH.getTableHeader();
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        header.setDefaultRenderer(headerRenderer);
+    }
 
-        public void setTable() {
-                // set độ rộng
-                bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
-                bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
-                bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
-                bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
-                // Can giua
-                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                // Can giữa tẽt
-                for (int i = 0; i < 4; i++) {
-                        bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-                }
-                // Can giua tieu de
-                JTableHeader header = bangLSHDNH.getTableHeader();
-                DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-                headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                header.setDefaultRenderer(headerRenderer);
-        }
-
-        @SuppressWarnings("unchecked")
-        // <editor-fold defaultstate="collapsed" desc="Generated
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -364,118 +363,106 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        new HDNHDialog((Frame) parentWindow, true).setVisible(true);
+    }// GEN-LAST:event_jButton1ActionPerformed
 
-
-   
-
-        private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-                Window parentWindow = SwingUtilities.getWindowAncestor(this);
-                new HDNHDialog((Frame) parentWindow, true).setVisible(true);
-        }// GEN-LAST:event_jButton1ActionPerformed
-
-        private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-                int row = bangLSHDNH.getSelectedRow();
-                if (row == -1) {
-                        JOptionPane.showMessageDialog(this, "Click vào hoá đơn ");
-                } else {
-                        String a = (String) bangLSHDNH.getValueAt(row, 0);
-                        Window parentWindow = SwingUtilities.getWindowAncestor(this);
-                        new CTHDNHDialog((Frame) parentWindow, true, a).setVisible(true);
-                }
-        }// GEN-LAST:event_jButton2ActionPerformed
-
-        private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
-                int row = bangLSHDNH.getSelectedRow();
-                if (row == -1) {
-                        JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
-                        return;
-                } else {
-                        XuatPhieuNhap export = new XuatPhieuNhap();
-                        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc xuất lại hoá đơn ");
-                        if (confirm == JOptionPane.YES_OPTION) {
-                            
-                                export.XuatPDF((String) bangLSHDNH.getValueAt(row, 0));
-                        } else {
-                                return;
-                        }
-                }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
+        int row = bangLSHDNH.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Click vào hoá đơn ");
+        } else {
+            String a = (String) bangLSHDNH.getValueAt(row, 0);
+            Window parentWindow = SwingUtilities.getWindowAncestor(this);
+            new CTHDNHDialog((Frame) parentWindow, true, a).setVisible(true);
         }
-        
-        
-        
-        private JTextField txtQuy;
-        private JTextField txtNam;
-        private JPanel quyPanel;
-        private ArrayList <HOADONNHAPHANG> current=lsnh;
-        private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
-            String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
-            ArrayList <HOADONNHAPHANG> Filter=current;
-   
-       // Gọi hàm lọc dữ liệu dựa theo lựa chọn
-       if (selected.equals("Tất cả")) {
-           bangLSHDNH.setModel(dtm);
-                   setData(lsnh);
-                   setTable();
-           
-       } else if (selected.equals("Giá: Thấp-Cao")) {
-           Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
-           bangLSHDNH.setModel(dtm);
-                   setData(Filter);
-                   setTable();
-       } else if (selected.equals("Giá: Cao-Thấp")) {
-           Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
-           bangLSHDNH.setModel(dtm);
-                   setData(Filter);
-                   setTable();
-       }
-           
-       }
-        
-        private void ThongkeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThongkeButtonActionPerformed
-                // TODO add your handling code here:
-                if (!ThangButton.isSelected()&& !QuyButton.isSelected()) {
-                        JOptionPane.showMessageDialog(this, "Vui lòng chọn kiểu thống kê: Tháng hoặc Quý.");
-                        return;
-                } else if (isThangSelected) {
+    }// GEN-LAST:event_jButton2ActionPerformed
 
-                        java.util.Date utilDate = TimeFrom.getDate();
-                        java.util.Date toDate = TimeTo.getDate();
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
+        int row = bangLSHDNH.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
+            return;
+        } else {
+            XuatPhieuNhap export = new XuatPhieuNhap();
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc xuất lại hoá đơn ");
+            if (confirm == JOptionPane.YES_OPTION) {
 
-                        if (utilDate == null && toDate == null) {
-                                current = lsnh;
-                        } else {
-                                Calendar calfrom = Calendar.getInstance();
-                                calfrom.setTime(utilDate);
-                                int thangfrom = calfrom.get(Calendar.MONTH) + 1;
-                                int namfrom = calfrom.get(Calendar.YEAR);
-                                Calendar calto = Calendar.getInstance();
-                                calto.setTime(toDate);
-                                int thangto = calto.get(Calendar.MONTH) + 1;
-                                int namto = calto.get(Calendar.YEAR);
-                                ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(thangfrom, namfrom, thangto, namto);
-                                current =ls;
+                export.XuatPDF((String) bangLSHDNH.getValueAt(row, 0));
+            } else {
+                return;
+            }
+        }
+    }
 
-                        }
-                } else if (isQuySelected) {
-                        int quy = Integer.parseInt(txtQuy.getText());
-                        int nam = Integer.parseInt(txtNam.getText());
+    private JTextField txtQuy;
+    private JTextField txtNam;
+    private JPanel quyPanel;
+    private ArrayList<HOADONNHAPHANG> current = lsnh;
 
-                        if (quy < 1 || quy > 4) {
-                                JOptionPane.showMessageDialog(this, "Quý phải từ 1 đến 4!", "Lỗi",
-                                                JOptionPane.ERROR_MESSAGE);
-                                return;
-                        }
+    private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
+        String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
+        ArrayList<HOADONNHAPHANG> Filter = current;
+        // Gọi hàm lọc dữ liệu dựa theo lựa chọn
+        if (selected.equals("Tất cả")) {
+            bangLSHDNH.setModel(dtm);
+            setData(lsnh);
+            setTable();
+        } else if (selected.equals("Giá: Thấp-Cao")) {
+            Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
+            bangLSHDNH.setModel(dtm);
+            setData(Filter);
+            setTable();
+        } else if (selected.equals("Giá: Cao-Thấp")) {
+            Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
+            bangLSHDNH.setModel(dtm);
+            setData(Filter);
+            setTable();
+        }
 
-                        ArrayList<HOADONNHAPHANG> ls = thongKeTheoQuy(quy, nam);
-                        current =ls;
+    }
 
-                }
-        }// GEN-LAST:event_ThongkeButtonActionPerformed
+    private void ThongkeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThongkeButtonActionPerformed
+        // TODO add your handling code here:
+        if (!ThangButton.isSelected() && !QuyButton.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn kiểu thống kê: Tháng hoặc Quý.");
+            return;
+        } else if (isThangSelected) {
+            java.util.Date utilDate = TimeFrom.getDate();
+            java.util.Date toDate = TimeTo.getDate();
+            if (utilDate == null && toDate == null) {
+                current = lsnh;
+            } else {
+                Calendar calfrom = Calendar.getInstance();
+                calfrom.setTime(utilDate);
+                int thangfrom = calfrom.get(Calendar.MONTH) + 1;
+                int namfrom = calfrom.get(Calendar.YEAR);
+                Calendar calto = Calendar.getInstance();
+                calto.setTime(toDate);
+                int thangto = calto.get(Calendar.MONTH) + 1;
+                int namto = calto.get(Calendar.YEAR);
+                ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(thangfrom, namfrom, thangto, namto);
+                current = ls;
+            }
+        } else if (isQuySelected) {
+            int quy = Integer.parseInt(txtQuy.getText());
+            int nam = Integer.parseInt(txtNam.getText());
 
-        private boolean isThangSelected = false;
-        private boolean isQuySelected = false;
+            if (quy < 1 || quy > 4) {
+                JOptionPane.showMessageDialog(this, "Quý phải từ 1 đến 4!", "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            ArrayList<HOADONNHAPHANG> ls = thongKeTheoQuy(quy, nam);
+            current = ls;
+        }
+    }// GEN-LAST:event_ThongkeButtonActionPerformed
 
-        private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
+    private boolean isThangSelected = false;
+    private boolean isQuySelected = false;
+
+    private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
 
         if (ThangButton.isSelected()) {
             QuyButton.setSelected(false); // Bỏ chọn checkbox quý
@@ -492,81 +479,72 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         }
     }
 
-        // GEN-LAST:event_ThangButtonActionPerformed
-
-        private void QuyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_QuyButtonActionPerformed
-            if (QuyButton.isSelected()) {
+    // GEN-LAST:event_ThangButtonActionPerformed
+    private void QuyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_QuyButtonActionPerformed
+        if (QuyButton.isSelected()) {
             ThangButton.setSelected(false); // Bỏ chọn checkbox tháng
             // Ẩn input ngày tháng
             TimeFrom.setVisible(false);
             TimeTo.setVisible(false);
             FromText.setVisible(false);
             ToText.setVisible(false);
-
             // Hiện input nhập quý và năm
             if (quyPanel != null) {
                 quyPanel.setVisible(true);
             }
-             }
-                JPanel quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
-                quyPanel.add(new JLabel("Nhập quý (1-4):"));
-                txtQuy = new JTextField();
-                quyPanel.add(txtQuy);
-                quyPanel.add(new JLabel("Nhập năm:"));
-                txtNam = new JTextField();
-                quyPanel.add(txtNam);
-
-                int result = JOptionPane.showConfirmDialog(this, quyPanel, "Thống kê theo quý",
-                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                if (result != JOptionPane.OK_OPTION) {
-                        // Nếu người dùng bấm Cancel hoặc đóng dialog
-                        isQuySelected = false;
-                        ThangButton.setEnabled(true);
-                }
-        }// GEN-LAST:event_QuyButtonActionPerformed
-
-        public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
-                ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-
-                // Khởi tạo thời gian bắt đầu (đầu tháng from)
-                Calendar calFrom = Calendar.getInstance();
-                calFrom.set(namfrom, thangfrom - 1, 1); // Lưu ý: tháng tính từ 0
-
-                // Khởi tạo thời gian kết thúc (cuối tháng to)
-                Calendar calTo = Calendar.getInstance();
-                calTo.set(namto, thangto - 1, 1);
-                calTo.set(Calendar.DAY_OF_MONTH, calTo.getActualMaximum(Calendar.DAY_OF_MONTH)); // Lấy ngày cuối cùng
-                                                                                                 // của tháng
-
-                for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-                        java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
-                        if (ngayNhap != null && !ngayNhap.before(calFrom.getTime())
-                                        && !ngayNhap.after(calTo.getTime())) {
-                                result.add(cthd);
-                        }
-                }
-
-                return result;
         }
-
-        public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
-
-                ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-                for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-                        String maHDNH;
-                        java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(ngayNhap);
-                        int month = cal.get(Calendar.MONTH) + 1;
-                        int year = cal.get(Calendar.YEAR);
-
-                        if (year == nam && ((quy - 1) * 3 + 1 <= month && month <= quy * 3)) {
-                                result.add(cthd);
-                        }
-
-                }
-                return result;
+        JPanel quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+        quyPanel.add(new JLabel("Nhập quý (1-4):"));
+        txtQuy = new JTextField();
+        quyPanel.add(txtQuy);
+        quyPanel.add(new JLabel("Nhập năm:"));
+        txtNam = new JTextField();
+        quyPanel.add(txtNam);
+        int result = JOptionPane.showConfirmDialog(this, quyPanel, "Thống kê theo quý",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result != JOptionPane.OK_OPTION) {
+            // Nếu người dùng bấm Cancel hoặc đóng dialog
+            isQuySelected = false;
+            ThangButton.setEnabled(true);
         }
+    }// GEN-LAST:event_QuyButtonActionPerformed
+
+    public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
+        ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+        // Khởi tạo thời gian bắt đầu (đầu tháng from)
+        Calendar calFrom = Calendar.getInstance();
+        calFrom.set(namfrom, thangfrom - 1, 1); // Lưu ý: tháng tính từ 0
+
+        // Khởi tạo thời gian kết thúc (cuối tháng to)
+        Calendar calTo = Calendar.getInstance();
+        calTo.set(namto, thangto - 1, 1);
+        calTo.set(Calendar.DAY_OF_MONTH, calTo.getActualMaximum(Calendar.DAY_OF_MONTH)); // Lấy ngày cuối cùng
+        // của tháng
+        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
+            java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
+            if (ngayNhap != null && !ngayNhap.before(calFrom.getTime())
+                    && !ngayNhap.after(calTo.getTime())) {
+                result.add(cthd);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
+        ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
+            String maHDNH;
+            java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(ngayNhap);
+            int month = cal.get(Calendar.MONTH) + 1;
+            int year = cal.get(Calendar.YEAR);
+            if (year == nam && ((quy - 1) * 3 + 1 <= month && month <= quy * 3)) {
+                result.add(cthd);
+            }
+        }
+        return result;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> FilterCombo;

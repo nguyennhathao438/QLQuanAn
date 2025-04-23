@@ -35,6 +35,11 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
     public void khoiTao(){
         khoiTaoButtuonGroup();
         khoiTaoComboboxCongViec();
+        setUpEnable();
+    }
+    public void setUpEnable(){
+        func.notAllowNumber(jtf_name_nv);
+        func.notAllowText(jtf_sdt_nv);
     }
     public void khoiTaoButtuonGroup(){
         ButtonGroup btnGr=new ButtonGroup();
@@ -57,7 +62,7 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Bạn chưa nhập số điện thoại nhân viên","Error",0);
             return 0;
         }
-        if(jdatechooser_ngaySinh==null){
+        if(jdatechooser_ngaySinh.getDate()==null){
             JOptionPane.showMessageDialog(null,"Bạn chưa chọn ngày sinh","Error",0);
             return 0;
         }
