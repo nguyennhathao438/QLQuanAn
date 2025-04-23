@@ -26,6 +26,7 @@ import DTO.LICHSUNH;
 import DTO.NGUYENLIEU;
 import DTO.NHACUNGCAP;
 import DTO.NLNhap;
+import util.Func_class;
 
 /**
  *
@@ -42,6 +43,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     String dsmaNL[] =new String[100];
     ArrayList<NLNhap> dsnlnhap=new ArrayList();
     int index=0;
+    Func_class fc = new Func_class();
     public HDNHDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -55,6 +57,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                 }  
         setData();
         setLocationRelativeTo(null);
+        fc.notAllowNumber(tenNL);
     }
 
     public void setData(){ 
@@ -377,7 +380,15 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
             if(gia.getText() == ""){ 
                JOptionPane.showMessageDialog(this, "Vui long nhap gia");
                return false;
-            }  
+            }
+            if(Integer.parseInt(gia.getText()) < 0){
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá > 0");
+                return false;
+            }
+            if(Integer.parseInt(soLuong.getText()) < 0){
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng > 0");
+                return false;
+            }
             if(hansudung.getDate() == null){ 
                 JOptionPane.showMessageDialog(this, "Vui long nhap ngay het han");
                return false;

@@ -1,6 +1,7 @@
 package GUI.quanlibanhang;
 
 import DAO.QuanHangDAO;
+import DAO.UserDAO;
 import DTO.BanManager;
 import DTO.CTHOADON;
 import java.awt.Color;
@@ -95,7 +96,7 @@ public class BanJPanel extends javax.swing.JPanel {
         for(MonAnBan mab:BanManager.dsmab[bandangchon].getDSMAB()){
             Tong += mab.getThanhtien();
         }
-        jLabel4.setText(df.format(Tong)+ ".0 VNĐ");
+        jLabel4.setText(df.format(Tong)+ " VNĐ");
         
         try{
           double tiendu;
@@ -396,6 +397,7 @@ public class BanJPanel extends javax.swing.JPanel {
         QuanHangDAO qh = new QuanHangDAO();
         String mamoi = qh.taoMaHoaDonMoi();
         MonAnBan ma = new MonAnBan();
+        UserDAO us = new UserDAO();
         String makhach = jTextField2.getText().trim();
         if (bandangchon == -1){
         JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
@@ -424,7 +426,8 @@ public class BanJPanel extends javax.swing.JPanel {
         }
         cthdbn.setMaHoaDon(mamoi);
         cthdbn.setThoiGian(new Date());
-        cthdbn.setThanhTien(Tong);        
+        cthdbn.setThanhTien(Tong);
+        cthdbn.setTenuser(us.getIDUserLogin());
         cthdbn.setDsma(BanManager.dsmab[bandangchon].getDSMAB());
         if(ktkhach && qh.kiemTraTonTaiKH(makhach)){
             cthdbn.setMaKH(makhach);
@@ -446,6 +449,7 @@ public class BanJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để reset", "Errol", JOptionPane.ERROR_MESSAGE);
             return;
         }
+                String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
         int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn reset bàn "+ (bandangchon) + "không", "thông báo", JOptionPane.YES_NO_OPTION);
         if(chon == JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(this, "Bàn đã được đặt lại trạng thái ban đầu");
@@ -453,12 +457,16 @@ public class BanJPanel extends javax.swing.JPanel {
             BanManager.Capnhattt(bandangchon, "Trống");
             capnhatbutton(bandangchon);
         }
+        if("Đang Dùng".equals(trangthai)){
+            JOptionPane.showMessageDialog(null, "Bàn đang dùng hãy thanh toán", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
     }//GEN-LAST:event_jlabel_donBanMouseClicked
 
 
     private void jlabel_taoDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_taoDonMouseClicked
         if (bandangchon == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Errol", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -484,31 +492,31 @@ public class BanJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jlabel_taoDonMouseClicked
 
     private void btn_dattruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dattruocActionPerformed
-        if (bandangchon == -1) {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để đặt đơn trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-
-    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-        if ("Trống".equals(trangthai)) {
-        BanManager.DatBan(bandangchon);
-        moDialogDatBan();
-    }
-        else if("Đang Dùng".equals(trangthai)){
-            JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        else {
-        int chon = JOptionPane.showConfirmDialog(null,
-                "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
-                "Thông báo", JOptionPane.YES_NO_OPTION);
-
-        if (chon == JOptionPane.YES_OPTION) {
-            moDialogDatBan();
-            BanManager.layTT(bandangchon);
-        }
-    }
-        capnhatbutton(bandangchon);
+//        if (bandangchon == -1) {
+//        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để đặt đơn trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//        return;
+//    }
+//
+//    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+//        if ("Trống".equals(trangthai)) {
+//        BanManager.DatBan(bandangchon);
+//        moDialogDatBan();
+//    }
+//        else if("Đang Dùng".equals(trangthai)){
+//            JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
+//        else {
+//        int chon = JOptionPane.showConfirmDialog(null,
+//                "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
+//                "Thông báo", JOptionPane.YES_NO_OPTION);
+//
+//        if (chon == JOptionPane.YES_OPTION) {
+//            moDialogDatBan();
+//            BanManager.layTT(bandangchon);
+//        }
+//    }
+//        capnhatbutton(bandangchon);
     }//GEN-LAST:event_btn_dattruocActionPerformed
 
     private void jlabel_datTruocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_datTruocMouseClicked
@@ -517,13 +525,14 @@ public class BanJPanel extends javax.swing.JPanel {
             return;
         }
         String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-        if ("Trống".equals(trangthai)) {
-            BanManager.DatBan(bandangchon);
-            moDialogDatBan();
-        } else if ("Đang Dùng".equals(trangthai)) {
+        if ("Đang Dùng".equals(trangthai)) {
             JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
-        } else {
+        }
+        else if ("Trống".equals(trangthai)) {
+            BanManager.DatBan(bandangchon);
+            moDialogDatBan();
+        }  else {
             int chon = JOptionPane.showConfirmDialog(null,
                     "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
                     "Thông báo", JOptionPane.YES_NO_OPTION);

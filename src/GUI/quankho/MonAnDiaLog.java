@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import DTO.DSMonAn;
 import DAO.QuanKhoDAO;
 import DTO.MONAN;
+import util.Func_class;
 
 /**
  *
@@ -20,6 +21,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
     DSMonAn dsma=new DSMonAn(); 
     String maMonAn="";
    QKMonAnJPanel panel;
+    Func_class fc = new Func_class();
     public MonAnDiaLog(java.awt.Frame parent, boolean modal , QKMonAnJPanel panel) {
         
         super(parent, modal);
@@ -28,11 +30,13 @@ QuanKhoDAO kn=new QuanKhoDAO();
         kn.layDSMonAn(dsma);
         setLocationRelativeTo(null);
          setLocationRelativeTo(null);
+         fc.notAllowNumber(tenMA);
     }
     public MonAnDiaLog(java.awt.Frame parent, boolean modal,String maMon, QKMonAnJPanel panel) {
         super(parent, modal);
         this.panel=panel;
         initComponents();
+        fc.notAllowNumber(tenMA);
         this.maMonAn=maMon;
         kn.layDSMonAn(dsma);
         for(MONAN a:dsma.getDSMA()){ 
@@ -188,6 +192,10 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn");
                 return ;
             }
+            if(Double.parseDouble(gia.getText()) <= 0){
+                JOptionPane.showMessageDialog(rootPane, "Không để giá nhỏ hơn 0");
+                return;
+            }
         for(MONAN a: dsma.getDSMA()){ 
             if(a.getMaMA().equals(text)){ 
                 JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");
@@ -214,7 +222,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
         if(!matcher.matches()){ 
             JOptionPane.showMessageDialog(this,"Giá tiền không hợp lệ ");
             return false;
-        }
+        } 
         return true;
     }
 

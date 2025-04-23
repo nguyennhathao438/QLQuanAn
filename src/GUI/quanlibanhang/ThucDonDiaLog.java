@@ -6,6 +6,7 @@ package GUI.quanlibanhang;
 
 import DAO.QuanHangDAO;
 import DAO.QuanKhoDAO;
+import DAO.UserDAO;
 import DTO.BanManager;
 import DTO.DSMonAn;
 import DTO.DSMonAnBan;
@@ -29,6 +30,7 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
     Func_class fc = new Func_class();
     QuanKhoDAO qk = new QuanKhoDAO();
     QuanHangDAO qh = new QuanHangDAO();
+    UserDAO us = new UserDAO();
     DSMonAn dsma;
     DSMonAnBan dsmab = new DSMonAnBan();
     DefaultTableModel dtm =new DefaultTableModel();

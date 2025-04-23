@@ -103,7 +103,7 @@ public class QuanHangDAO {
     public void themHDBH(CTHOADON hdbh,String maKH,String soban){
         String maHDtam ="HDBAN"+soban;
         String query = "DELETE FROM CTHOADON WHERE maHD=?";
-        String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH) VALUES(?,?,?,?) "; 
+        String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH,userID) VALUES(?,?,?,?,?) "; 
         String queryCTHD = "INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
         try(Connection con = getConnection();
                 PreparedStatement stmt = con.prepareStatement(query);
@@ -115,6 +115,7 @@ public class QuanHangDAO {
             pshd.setDate(2, new java.sql.Date(hdbh.getThoiGian().getTime()));
             pshd.setDouble(3, hdbh.getThanhTien());
             pshd.setString(4, hdbh.getMaKH());
+            pshd.setInt(5, hdbh.getTenuser());
             pshd.executeUpdate();
             int i = 0;
             for(MonAnBan a:hdbh.getDsma()){
@@ -131,7 +132,7 @@ public class QuanHangDAO {
         
     }
     public void LayHDBH(LICHSUBAN lsb){
-        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON WHERE maHD LIKE 'HD___'";
+        String query = "SELECT hd.maHD, hd.thoiGian, hd.thanhTien, kh.tenKH, hd.userID FROM HOADON hd LEFT JOIN KHACHHANG kh ON hd.maKH = kh.maKH WHERE maHD LIKE 'HD___'";
         try(Connection con = getConnection();
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -140,7 +141,8 @@ public class QuanHangDAO {
                         rs.getString("maHD"),
                         rs.getDate("thoiGian"),
                         rs.getDouble("thanhTien"),
-                        rs.getString("maKH")
+                        rs.getString("tenKH"),
+                        rs.getInt("userID")
                 )
                 );
             }

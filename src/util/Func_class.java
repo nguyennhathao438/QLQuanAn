@@ -77,6 +77,17 @@ public class Func_class {
            }
         });
     }
+    //Hàm ko cho nhập các kí tự
+    public void notAllowKyTu(JTextField jtf) {
+        jtf.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c == '.' || c == '/' || c == ',' || c == '-' || c == '_'|| c == '`' || c=='|' || c=='{' || c=='}'|| c=='[' || c==']') {
+                    e.consume();
+                }
+            }
+        });
+    }
     public void setUpTable(JTable table){
         table.setRowHeight(25);
         table.setBackground(Color.white);
