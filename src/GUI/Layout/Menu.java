@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +51,13 @@ public class Menu extends javax.swing.JFrame {
         this.maVT = maVT;
         initComponents();
         guiMenu();
-        
+        this.addWindowListener(new WindowAdapter() {
+    @Override
+    public void windowClosing(WindowEvent e) {
+        us.dangXuat(WIDTH);
+        System.exit(0);
+    }
+});
 
     }
 
