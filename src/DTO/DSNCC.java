@@ -1,6 +1,5 @@
 
 package DTO;
-
 import java.util.ArrayList;
 
 public class DSNCC {

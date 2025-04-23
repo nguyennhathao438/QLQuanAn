@@ -4,10 +4,6 @@
  */
 package DTO;
 
-/**
- *
- * @author kiman
- */
 public class LuongDTO {
 
     private int maLuong;

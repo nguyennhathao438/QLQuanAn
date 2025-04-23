@@ -373,5 +373,6 @@ public class KH_Panel extends javax.swing.JPanel {
     private javax.swing.JLabel jlabel_delete;
     private javax.swing.JLabel jlabel_update;
     private javax.swing.JTextField search;
+    private javax.swing.JButton xoa;
     // End of variables declaration//GEN-END:variables
 }

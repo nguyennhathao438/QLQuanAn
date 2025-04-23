@@ -16,16 +16,19 @@ public class HOADONNHAPHANG {
     private Date ngayNhap;
     private double thanhTien;
     private String tenNCC;
-
+    private int mangLam;
     public HOADONNHAPHANG() {
     }
 
-    public HOADONNHAPHANG(String maHDNH, Date ngayNhap, double thanhTien, String tenNCC) {
+    public HOADONNHAPHANG(String maHDNH, Date ngayNhap, double thanhTien, String tenNCC, int mangLam) {
         this.maHDNH = maHDNH;
         this.ngayNhap = ngayNhap;
         this.thanhTien = thanhTien;
         this.tenNCC = tenNCC;
+        this.mangLam = mangLam;
     }
+
+    
     
     public String getMaHDNH() {
         return maHDNH;
@@ -59,5 +62,13 @@ public class HOADONNHAPHANG {
         this.tenNCC = tenNCC;
     }
 
+    public int getMangLam() {
+        return mangLam;
+    }
+
+    public void setMangLam(int mangLam) {
+        this.mangLam = mangLam;
+    }
+    
     
 }

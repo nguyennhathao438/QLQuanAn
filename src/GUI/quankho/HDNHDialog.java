@@ -21,6 +21,7 @@ import DTO.DSNCC;
 import DTO.DSNguyenLieu;
 import DTO.HOADONNHAPHANG;
 import DAO.QuanKhoDAO;
+import DAO.UserDAO;
 import DTO.LICHSUNH;
 import DTO.NGUYENLIEU;
 import DTO.NHACUNGCAP;
@@ -324,9 +325,10 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
             JOptionPane.showMessageDialog(rootPane, "Vui long them nguyen lieu");
             return ;
         }
-
+        UserDAO us = new UserDAO();
         CTHOADONNH cthd=new CTHOADONNH();
         cthd.setDsnlnhap(dsnlnhap);
+        cthd.setMangLam(us.getIDUserLogin());
         String mahoadon=layMaHD();
         cthd.setMaHDNH(mahoadon);
         Date ngay =new Date();

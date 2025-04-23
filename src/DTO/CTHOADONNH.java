@@ -9,10 +9,7 @@ public class CTHOADONNH extends HOADONNHAPHANG{
 
     public CTHOADONNH() {
     }
-    public CTHOADONNH(String maHDNH, Date ngayNhap, double thanhTien, String tenNCC,ArrayList<NLNhap> dsnlnhap ) {
-        super(maHDNH,ngayNhap,thanhTien,tenNCC);
-        this.dsnlnhap=dsnlnhap;
-    }
+    
     public void setDsnlnhap(ArrayList<NLNhap> dsnlnhap) {
         this.dsnlnhap = dsnlnhap;
     }
