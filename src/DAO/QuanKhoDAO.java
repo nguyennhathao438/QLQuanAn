@@ -190,7 +190,7 @@ public class QuanKhoDAO {
     }
     //Hoa Don Nhap Hang
     public void layHDNH(LICHSUNH lsnh){ 
-       String query="SELECT hd.maHDNH, hd.ngayNhap, ncc.tenNCC, SUM(cthd.soLuong * cthd.gia) AS tongThanhTien FROM HOADONNH hd JOIN NHACUNGCAP ncc ON hd.maNCC = ncc.maNCC JOIN CTHOADONNH cthd ON hd.maHDNH = cthd.maHDNH WHERE hd.trangThai = 1 GROUP BY hd.maHDNH, hd.ngayNhap, ncc.tenNCC ORDER BY hd.maHDNH;";
+       String query="SELECT hd.maHDNH, hd.ngayNhap,hd.userID, ncc.tenNCC, SUM(cthd.soLuong * cthd.gia) AS tongThanhTien FROM HOADONNH hd JOIN NHACUNGCAP ncc ON hd.maNCC = ncc.maNCC JOIN CTHOADONNH cthd ON hd.maHDNH = cthd.maHDNH WHERE hd.trangThai = 1 GROUP BY hd.maHDNH, hd.ngayNhap, ncc.tenNCC,hd.userID ORDER BY hd.maHDNH;";
         try(Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)){ 
@@ -200,7 +200,8 @@ public class QuanKhoDAO {
                 rs.getString("maHDNH"),
                 rs.getDate("ngayNhap"),
                 rs.getDouble("tongThanhTien"),
-                rs.getString("tenNCC")
+                rs.getString("tenNCC"),
+                rs.getInt("userID")
             )
             );
         }            
@@ -242,7 +243,7 @@ public class QuanKhoDAO {
         return cthd;
     }
     public void themHDNH(CTHOADONNH hdnh,String maNCC,String[] maNL){ 
-         String queryHD = "INSERT INTO HOADONNH (maHDNH,ngayNhap,trangThai,maNCC) VALUES(?,?,1,?) "; 
+         String queryHD = "INSERT INTO HOADONNH (maHDNH,ngayNhap,trangThai,maNCC,userID) VALUES(?,?,1,?,?) "; 
          String queryCTHD = "INSERT INTO CTHOADONNH (maHDNH,maNL,soLuong,gia,hsd) VALUES(?,?,?,?,?)";
          try(Connection conn = getConnection();
             PreparedStatement stmthd = conn.prepareStatement(queryHD);
@@ -250,6 +251,7 @@ public class QuanKhoDAO {
             stmthd.setString(1,hdnh.getMaHDNH());
             stmthd.setDate(2, new java.sql.Date(hdnh.getNgayNhap().getTime()));
             stmthd.setString(3,maNCC);
+            stmthd.setInt(4, hdnh.getMangLam());
              stmthd.executeUpdate();
              int i=0;
              for(NLNhap a:hdnh.getDsnlnhap()){ 

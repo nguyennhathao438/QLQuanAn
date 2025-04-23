@@ -1,6 +1,7 @@
 package GUI.Layout;
 
 import DAO.PhanQuyenDAL;
+import DAO.UserDAO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import controller.Bean;
 import controller.ChuyenTrang;
@@ -10,6 +11,8 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -40,11 +44,12 @@ public class Menu extends javax.swing.JFrame {
     HashMap<String, String> mapIcons;
     HashMap<String, String> mapQuyens;
     String maVT = "";
-
+    UserDAO us = new UserDAO();
     public Menu(String maVT) {
         this.maVT = maVT;
         initComponents();
         guiMenu();
+        
 
     }
 
@@ -113,7 +118,14 @@ public class Menu extends javax.swing.JFrame {
         logoutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         sidebarPanel.add(logoutButton);
         sidebarPanel.add(Box.createVerticalStrut(20));
-
+        logoutButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                 us.dangXuat(us.getIDUserLogin());
+                 JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
+                 dispose();
+    }
+});
         // ---------- Thêm JScrollPane ở đây ----------
         JScrollPane scrollPane = new JScrollPane(sidebarPanel);
         scrollPane.setPreferredSize(new Dimension(250, 650));

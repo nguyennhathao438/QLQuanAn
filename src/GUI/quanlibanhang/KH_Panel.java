@@ -42,6 +42,7 @@ public class KH_Panel extends javax.swing.JPanel {
         btnSua.setIcon(new FlatSVGIcon("./resources/icon/update_1.svg",0.05f));
         btn_Refresh.setIcon(new FlatSVGIcon("./resources/icon/Refresh_1.svg",0.04f));
         btn_ok.setIcon(new FlatSVGIcon("./resources/icon/look.svg",0.45f));
+        xoa.setIcon(new FlatSVGIcon("./resources/icon/delete.svg",0.45f));
     }
     public void setData(){
         dsk = new DSKhach();
@@ -72,6 +73,7 @@ public class KH_Panel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        xoa = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         search = new javax.swing.JTextField();
         btn_ok = new javax.swing.JButton();
@@ -108,9 +110,10 @@ public class KH_Panel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnThem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                        .addComponent(btnSua)
-                        .addGap(35, 35, 35))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(xoa)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSua))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +133,8 @@ public class KH_Panel extends javax.swing.JPanel {
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(xoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,7 +175,7 @@ public class KH_Panel extends javax.swing.JPanel {
                 .addComponent(btn_ok)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Refresh)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,5 +295,6 @@ public class KH_Panel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField search;
+    private javax.swing.JButton xoa;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
 package GUI.Layout;
 
 import DAO.UserDAO;
+import DTO.User;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -135,12 +136,12 @@ public class Login extends javax.swing.JFrame {
         String tk = taikhoan.getText();
         char tokenmk[] = pass.getPassword();
         String mk = new String(tokenmk);
-        String vaiTro = userDAO.ktraDangNhap(tk, mk);
-        if (vaiTro.equals("")) {
+        User user = userDAO.ktraDangNhap(tk, mk);
+        if (user.getVaiTro().equals("")) {
             JOptionPane.showMessageDialog(this, "Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu");
         } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-            new Menu(vaiTro).setVisible(true);
+            new Menu(user.getVaiTro()).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_bloginActionPerformed

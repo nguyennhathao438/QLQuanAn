@@ -11,11 +11,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-
-/**
- *
- * @author kiman
- */
 public class ChamCongDAO {
 
     public int insertChamCong(ChamCongDTO cc) {
