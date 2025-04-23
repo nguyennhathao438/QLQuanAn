@@ -3,21 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/Layout/Menu.java</file>
             <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/Layout/Login.java</file>
             <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/util/ConnectedDatabase.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlibanhang/ThucDonDiaLog.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlibanhang/HoaDonPanel.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlibanhang/DatBanDialog.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlibanhang/KH_Panel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUIADM/PhanQuyenJPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/user/UserManagerPanel.java</file>
             <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlibanhang/BanJPanel.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/Layout/TrangChuPanel.java</file>
-=======
-            <file>file:/C:/Users/phant/OneDrive/Desktop/QLQA_moi/src/GUI/quanlibanhang/DatBanDialog.java</file>
-            <file>file:/C:/Users/phant/OneDrive/Desktop/QLQA_moi/src/GUI/quanlibanhang/BanJPanel.java</file>
-            <file>file:/C:/Users/phant/OneDrive/Desktop/QLQA_moi/src/DTO/BanManager.java</file>
->>>>>>> be547d7883227b8af8edbf98106fe9b62a360af6
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/user/UserFormPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
+            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/user/TestUserManagement.java</file>
         </group>
     </open-files>
 </project-private>

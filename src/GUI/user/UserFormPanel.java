@@ -1,48 +1,55 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package GUI.user;
 
-/**
- *
- * @author THANH HIEU
- */
 import DAO.USerDAO1;
 import DTO.User;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-public class UserFormPanel extends JPanel {
-    private JTextField txtTaiKhoan = new JTextField(20);
-    private JPasswordField txtMatKhau = new JPasswordField(20);
-    private JTextField txtTen = new JTextField(20);
-    private JComboBox<String> comboVaiTro = new JComboBox<>();
-    private JCheckBox chkTrangThai = new JCheckBox("Hoạt động");
+/**
+ *
+ * @author kiman
+ */
+public class UserFormPanel extends javax.swing.JDialog {
+    JTextField txtTaiKhoan = new JTextField(20);
+    JPasswordField txtMatKhau = new JPasswordField(20);
+    JTextField txtTen = new JTextField(20);
+    JComboBox<String> comboVaiTro = new JComboBox<>();
+    JCheckBox chkTrangThai = new JCheckBox("Hoạt động");
 
-    private User user;
-    private USerDAO1 dao = new USerDAO1();
-    private UserManagerPanel parent;
-    private JDialog dialog;
-
-    
-   public UserFormPanel(UserManagerPanel parent, JDialog dialog, User user) {
-    this.parent = parent;
-    this.dialog = dialog;
-    this.user = user;
-
-    initUI();
-    loadVaiTro();
-    if (user != null) {
-        fillForm(); // sửa
-    } else {
-        chkTrangThai.setSelected(true);     // Thêm mới: mặc định hoạt động
-        chkTrangThai.setEnabled(false);     // Không cho chỉnh
+    User user;
+    USerDAO1 dao = new USerDAO1();
+    UserManagerPanel userPanel;
+    public UserFormPanel(java.awt.Frame parent, boolean modal,UserManagerPanel userPanel,User user) {
+        super(parent, modal);
+        initComponents();
+        this.userPanel=userPanel;
+        this.user=user;
+        this.setLocationRelativeTo(null);
+        initUI();
+        loadVaiTro();
+        if (user != null) {
+            fillForm(); // sửa
+        } else {
+            chkTrangThai.setSelected(true);     // Thêm mới: mặc định hoạt động
+            chkTrangThai.setEnabled(false);     // Không cho chỉnh
+        }
     }
-}
-
     private void initUI() {
         setLayout(new BorderLayout());
         JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
@@ -58,7 +65,7 @@ public class UserFormPanel extends JPanel {
         JButton btnHuy = new JButton("Huỷ");
 
         btnLuu.addActionListener(e -> luuThongTin());
-        btnHuy.addActionListener(e -> dialog.dispose());
+        btnHuy.addActionListener(e -> this.dispose());
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(btnLuu);
@@ -105,8 +112,30 @@ public class UserFormPanel extends JPanel {
         } else {
             dao.suaUser(u, maVT);
         }
-
-        parent.loadUsers();
-        dialog.dispose();
+        userPanel.setUpTable();
+        this.dispose();
     }
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
 }
