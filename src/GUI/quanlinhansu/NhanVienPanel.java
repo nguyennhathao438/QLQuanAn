@@ -446,7 +446,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         listNVFilter.clear();
         mapCV = cvDao.mapCV();
         for (NhanVienDTO nv : nvDao.listNV()) {
-            String maNV=String.valueOf(nv.getIdUser()).toLowerCase();
+            String maNV=String.valueOf(nv.getMaNV()).toLowerCase();
             String hoTen = nv.getHoTen().toLowerCase();
             String sdt = nv.getSDT().toLowerCase();
             String gioiTinh = nv.getGioiTinh().toLowerCase();
@@ -458,7 +458,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             } else {
                 tenCV = tenCV.toLowerCase();
             }
-            if (hoTen.contains(find_text) || sdt.contains(find_text) || gioiTinh.contains(find_text) || ngaySinh.contains(find_text) || tenCV.contains(find_text)) {
+            if (maNV.contains(find_text)||hoTen.contains(find_text) || sdt.contains(find_text) || gioiTinh.contains(find_text) || ngaySinh.contains(find_text) || tenCV.contains(find_text)) {
                 listNVFilter.add(nv);
             }
         }
