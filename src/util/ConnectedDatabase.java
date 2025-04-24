@@ -12,9 +12,9 @@ public class ConnectedDatabase {
         Connection c = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://LAPTOP-2EA7CM4Q:1433;databaseName=QuanLyQuanAn;encrypt=false;characterEncoding=UTF-8";
+            String url = "jdbc:sqlserver://DESKTOP-SAC9NS5:1433;databaseName=QuanLyQuanAn;encrypt=false;characterEncoding=UTF-8";
             String username = "sa";
-            String password = "123456789";
+            String password = "quencmnr";
             c = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();

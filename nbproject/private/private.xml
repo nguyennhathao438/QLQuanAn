@@ -3,12 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUIADM/PhanQuyenDialog.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/Layout/Login.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlinhansu/EditCongViecDialog.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlinhansu/CongViecPanel.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quanlinhansu/NhanVienPanel.java</file>
-            <file>file:/C:/Users/kiman/OneDrive/Máy%20tính/defgiaodien/QLQuanAn/src/GUI/quankho/QKHDNHJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/GUI/Layout/Login.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DTO/BanManager.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/util/DropShadowBorder.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/GUI/Layout/Menu.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/GUI/quankho/QKNCCJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DTO/CTHOADON.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/controller/Bean.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DTO/ChamCongDTO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/GUI/Layout/TrangChuPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/GUI/quankho/QKMonAnJPanel.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DTO/DSNCC.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DAO/ChamCongDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/util/Func_class.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/util/ConnectedDatabase.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/controller/ChuyenTrang.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/oop/LastQLQA/src/DAO/UserDAO.java</file>
         </group>
     </open-files>
 </project-private>

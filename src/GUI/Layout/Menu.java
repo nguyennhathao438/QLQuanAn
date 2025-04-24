@@ -217,13 +217,15 @@ public class Menu extends javax.swing.JFrame {
         quyenMap.put("Q07", "Bàn");
         quyenMap.put("Q08", "Khách hàng");
         quyenMap.put("Q05", "Hóa đơn bán hàng");
-        quyenMap.put("Q11", "Tài khoản");
+        
         quyenMap.put("Q10", "Chấm công");
         quyenMap.put("Q09", "Tính lương");
         quyenMap.put("Q06", "Thống kê");
-        quyenMap.put("Q12", "Phân quyền");
+        
         quyenMap.put("Q13", "Công việc");
         quyenMap.put("Q14", "Nhân viên");
+        quyenMap.put("Q11", "Tài khoản");
+        quyenMap.put("Q12", "Phân quyền");
         return quyenMap;
     }
 
