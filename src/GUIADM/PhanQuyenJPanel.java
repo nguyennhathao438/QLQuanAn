@@ -13,7 +13,6 @@ package GUIADM;
 
 import DAO.RolePermissionDAO;
 import DTO.RolePermissionDTO;
-import GUIADM.PhanQuyenDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.table.DefaultTableCellRenderer;
+import util.Func_class;
 
 
 
@@ -29,7 +29,16 @@ public class PhanQuyenJPanel extends JPanel {
     private JTable table;
     private DefaultTableModel model;
     private RolePermissionDAO dao = new RolePermissionDAO();
-
+    Func_class func=new Func_class();
+    public void setUpTable(){
+        func.centerTable(table);
+        table.setBackground(Color.white);
+        table.setShowVerticalLines(true);
+        table.setShowHorizontalLines(true);
+        table.setFillsViewportHeight(true);
+        Font font_hearderTable=new Font("Arial",Font.BOLD,13);
+        table.getTableHeader().setFont(font_hearderTable);
+    }
     public PhanQuyenJPanel() {
         setLayout(new BorderLayout());
 
@@ -66,7 +75,7 @@ public class PhanQuyenJPanel extends JPanel {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                           boolean hasFocus, int row, int column) {
+                    boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (value instanceof String && ((String) value).startsWith("<html>")) {
                     label.setVerticalAlignment(SwingConstants.TOP);
@@ -87,6 +96,7 @@ public class PhanQuyenJPanel extends JPanel {
             PhanQuyenDialog dialog = new PhanQuyenDialog((Frame) SwingUtilities.getWindowAncestor(this), false, null, null);
             dialog.setVisible(true);
             loadData();
+            setUpTable();
         });
 
         btnXoa.addActionListener(e -> {
@@ -99,6 +109,7 @@ public class PhanQuyenJPanel extends JPanel {
                     dao.deleteRole(maVT);
                     JOptionPane.showMessageDialog(this, "Xóa thành công.");
                     loadData();
+                    setUpTable();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò cần xóa.");
@@ -113,10 +124,12 @@ public class PhanQuyenJPanel extends JPanel {
                 PhanQuyenDialog dialog = new PhanQuyenDialog((Frame) SwingUtilities.getWindowAncestor(this), true, maVT, tenVT);
                 dialog.setVisible(true);
                 loadData();
+                setUpTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò cần sửa.");
             }
         });
+        setUpTable();
     }
 
     private void loadData() {
