@@ -2,7 +2,13 @@ package GUI.quanlibanhang;
 
 import DTO.BanManager;
 import DTO.DSDatBan;
+import DTO.DatBan;
+import DTO.khachDTO;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import org.apache.poi.hpsf.Date;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 public class DatBanDialog extends javax.swing.JDialog {
@@ -14,6 +20,7 @@ public class DatBanDialog extends javax.swing.JDialog {
         this.bandangchon = bandangchon;
         initComponents();
         setTextHidden();
+        capnhat();
     }
     public void setTextHidden(){
         PromptSupport.setPrompt("Nhập số điện thoại khách hàng", text_SDT);
@@ -23,6 +30,7 @@ public class DatBanDialog extends javax.swing.JDialog {
         PromptSupport.setForeground(Color.GRAY, text_ten);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, text_ten);
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,6 +105,11 @@ public class DatBanDialog extends javax.swing.JDialog {
         );
 
         btn_capnhat.setText("Cập nhật");
+        btn_capnhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_capnhatActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
@@ -115,22 +128,20 @@ public class DatBanDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_dt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel8)
-                .addGap(0, 111, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_day, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(label_name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_dt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(label_day, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,10 +154,10 @@ public class DatBanDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_dt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(label_day, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_day, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addContainerGap())
         );
 
@@ -177,13 +188,54 @@ public class DatBanDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public int ktSDT(String SDT){
+        if(SDT.matches("0\\d{8}")) // kt số 0 ở đầu và có 9 số sau
+        {
+            return 1;
+        }
+        return 0;
+    }
+    
+    private void btn_capnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capnhatActionPerformed
+        String ten = text_ten.getText().trim();
+        String SDT = text_SDT.getText().trim();
+        java.util.Date ngay = jDateChooser1.getDate();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        if(ten.isEmpty() || SDT.isEmpty() || ngay == null){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if(ktSDT(SDT) == 1){
+            JOptionPane.showMessageDialog(null, "Số điện thoại không quá 9 số", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return ;
+        }
+        DatBan db = new DatBan();
+        db.setTenkhach(ten);
+        db.setSDT(SDT);
+        db.setThoigian(ngay);
+        BanManager.themTT(bandangchon, db);
+        JOptionPane.showMessageDialog(this, "Thêm thông tin thành công");
+        BanManager.DatBan(bandangchon);
+        dispose();        
+    }//GEN-LAST:event_btn_capnhatActionPerformed
+    public void capnhat(){
+        ArrayList<DatBan> ds = BanManager.layTT(bandangchon).getDSDB();
+        if(!ds.isEmpty()){
+            DatBan db = ds.get(0);
+        label_name.setText(db.getTenkhach());
+        label_dt.setText(db.getSDT());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        label_day.setText(df.format(db.getThoigian()));
+        }
+    }
     @Override
     public void dispose(){
         super.dispose();
-        if(dsdb.getDSDB().isEmpty()){
-            BanManager.Capnhattt(bandangchon, "Trống");
-        }
-    }
+            if(BanManager.layTT(bandangchon).getDSDB().isEmpty()){
+        BanManager.Capnhattt(bandangchon, "Trống");
+    }    
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_capnhat;

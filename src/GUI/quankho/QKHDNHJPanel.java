@@ -43,8 +43,13 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         initComponents();
         bangLSHDNH.setModel(dtm);
         setData(lsnh);
-        setTable();
+//        setTable();
         setUp();
+        setupTable();
+    }
+    public void setupTable(){
+        func.centerTable(bangLSHDNH);
+        func.setUpTable(bangLSHDNH);        
     }
     public void setUp() {
         label_nhaphang.setIcon(new FlatSVGIcon("./resources/icon/giohang.svg", 0.45f));
@@ -83,25 +88,25 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
     }
 
-    public void setTable() {
-        // set độ rộng
-        bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
-        bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
-        bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
-        bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
-        // Can giua
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        // Can giữa tẽt
-        for (int i = 0; i < 4; i++) {
-            bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        // Can giua tieu de
-        JTableHeader header = bangLSHDNH.getTableHeader();
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setDefaultRenderer(headerRenderer);
-    }
+//    public void setTable() {
+//        // set độ rộng
+//        bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
+//        bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
+//        bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
+//        bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
+//        // Can giua
+//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+//        // Can giữa tẽt
+//        for (int i = 0; i < 4; i++) {
+//            bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+//        }
+//        // Can giua tieu de
+//        JTableHeader header = bangLSHDNH.getTableHeader();
+//        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+//        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+//        header.setDefaultRenderer(headerRenderer);
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -159,12 +164,9 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(FilterCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(FilterCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(563, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,8 +174,8 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(FilterCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(196, 196, 196))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(187, 187, 187))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức Năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -328,7 +330,7 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
@@ -403,17 +405,20 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         if (selected.equals("Tất cả")) {
             bangLSHDNH.setModel(dtm);
             setData(lsnh);
-            setTable();
+//            setTable();
+            setupTable();
         } else if (selected.equals("Giá: Thấp-Cao")) {
             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
             bangLSHDNH.setModel(dtm);
             setData(Filter);
-            setTable();
+//            setTable();
+            setupTable();
         } else if (selected.equals("Giá: Cao-Thấp")) {
             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
             bangLSHDNH.setModel(dtm);
             setData(Filter);
-            setTable();
+//            setTable();
+            setupTable();
         }
 
     }

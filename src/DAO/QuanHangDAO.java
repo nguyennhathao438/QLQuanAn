@@ -240,8 +240,25 @@ public class QuanHangDAO {
     // Nếu không có mã nào -> bắt đầu từ HD001
     return "HD001";
 }
+    public String taomaKH(){
+        String ma = "KH";
+        String query = "SELECT MAX(maKH) as maxMa FROM KHACHHANG WHERE maKH LIKE 'KH___'";
+        try(Connection con = getConnection();
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+            if (rs.next() && rs.getString("maxMa") != null) {
+                String maxMa = rs.getString("maxMa");
+                int so = Integer.parseInt(maxMa.substring(2));
+                so++;
+                return String.format("%s%03d", ma, so);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "KH001";
+    }
     public boolean kiemTraTonTaiKH(String maKH){
-    String query = "SELECT COUNT(*) FROM KHACHHANG WHERE maKH = ?";
+    String query = "SELECT COUNT(*) FROM KHACHHANG WHERE maKH = ? AND trangThai = 1";
     try(Connection con = getConnection(); 
         PreparedStatement ps = con.prepareStatement(query)) {
         ps.setString(1, maKH);
