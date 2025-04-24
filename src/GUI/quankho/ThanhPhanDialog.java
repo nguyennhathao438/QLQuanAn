@@ -261,7 +261,12 @@ QuanKhoDAO kn=new QuanKhoDAO();
         }else if(slNL.getValue()==null){
             JOptionPane.showConfirmDialog(this,"Nhập số lượng ");
             return;
-        }else{
+        }
+        else if(Double.parseDouble(slNL.getText()) <= 0){
+            JOptionPane.showConfirmDialog(this,"Vui lòng không nhập số lượng nhỏ hơn 0");
+            return;
+        }
+        else{
             String maNL=(String) bangNL.getValueAt(row, 0);
             Float sl = ((Number) slNL.getValue()).floatValue();
             boolean kt=false;

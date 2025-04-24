@@ -1,6 +1,7 @@
 package GUI.quanlibanhang;
 
 import DAO.QuanHangDAO;
+import DAO.UserDAO;
 import DTO.CTHOADON;
 import DTO.HoaDon;
 import DTO.LICHSUBAN;
@@ -24,6 +25,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     CTHOADON cthd;
     LICHSUBAN lsb = new LICHSUBAN();
     DefaultTableModel dtm = new DefaultTableModel();
+    UserDAO us = new UserDAO();
     public HoaDonPanel() {
         initComponents();
         bangHoaDon.setModel(dtm);
@@ -53,7 +55,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     public void setData(){
         DecimalFormat df = new DecimalFormat("#,###");
         Giacb.removeAllItems();
-        Giacb.addItem("--Select--");
+        Giacb.addItem("--Select Giá--");
         Giacb.addItem("Tăng dần");
         Giacb.addItem("Giảm dần");
         Giacb.setSelectedIndex(0);
@@ -62,13 +64,14 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
             dtm.addColumn("Mã hóa đơn");
-            dtm.addColumn("Mã khách hàng");
+            dtm.addColumn("Tên khách hàng");
+            dtm.addColumn("Tên User");
             dtm.addColumn("Thời gian");
             dtm.addColumn("Tổng Tiền");
         }
         for(HoaDon a:lsb.getLSB()){
             String formatTongtien = df.format(a.getThanhTien());
-            dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),a.getThoiGian(),formatTongtien});
+            dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),us.getTenUserByID(a.getTenUser()),a.getThoiGian(),formatTongtien});
         }
     }
     @SuppressWarnings("unchecked")
@@ -322,8 +325,8 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for(HoaDon a:lsb.getLSB()){
             String formatTong = df.format(a.getThanhTien());
-            if(String.valueOf(a.getMaHoaDon()).toLowerCase().contains(text) || String.valueOf(a.getMaKH()).toLowerCase().contains(text) || formatTong.contains(text)){
-                dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),a.getThoiGian(),formatTong});
+            if(String.valueOf(a.getMaHoaDon()).toLowerCase().contains(text) || String.valueOf(a.getMaKH()).toLowerCase().contains(text) ||String.valueOf(us.getTenUserByID(a.getTenUser())).toLowerCase().contains(text) || formatTong.contains(text)){
+                dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),us.getTenUserByID(a.getTenUser()),a.getThoiGian(),formatTong});
             }
         }
     }//GEN-LAST:event_btn_checkActionPerformed
@@ -333,12 +336,12 @@ public class HoaDonPanel extends javax.swing.JPanel {
             return;
         }
         String selected = Giacb.getSelectedItem().toString().trim();
-        if (selected.equals("--Select--")) {
+        if (selected.equals("--Select Giá--")) {
             DecimalFormat df = new DecimalFormat("#,###");
             dtm.setRowCount(0);
             for (HoaDon hd : lsb.getLSB()) {
                 String formatTien = df.format(hd.getThanhTien());
-                dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+                dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
             }
             return;
         }
@@ -352,7 +355,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (HoaDon hd : dshd) {
             String formatTien = df.format(hd.getThanhTien());
-            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
         }
     }//GEN-LAST:event_GiacbActionPerformed
 
@@ -361,7 +364,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (HoaDon hd : lsb.getLSB()) {
             String formatTien = df.format(hd.getThanhTien());
-            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
         }
     }//GEN-LAST:event_btn_ResetActionPerformed
 

@@ -1,10 +1,14 @@
 package GUI.quanlibanhang;
 
+import DTO.BanManager;
+import DTO.DSDatBan;
 import java.awt.Color;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 public class DatBanDialog extends javax.swing.JDialog {
     private int bandangchon;
+    DSDatBan dsdb = new DSDatBan();
+
     public DatBanDialog(java.awt.Frame parent, boolean modal,int bandangchon) {
         super(parent, modal);
         this.bandangchon = bandangchon;
@@ -173,7 +177,13 @@ public class DatBanDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    @Override
+    public void dispose(){
+        super.dispose();
+        if(dsdb.getDSDB().isEmpty()){
+            BanManager.Capnhattt(bandangchon, "Trống");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_capnhat;

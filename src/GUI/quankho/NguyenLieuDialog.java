@@ -25,6 +25,7 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
         super(parent, modal);
         this.panel = panel;
         initComponents();
+        maNL.setEnabled(false);
         kn.layNL(dsnl);
         this.maNguyenLieu=maNLieu;
         for(NGUYENLIEU nl:dsnl.getDSNL()){ 
