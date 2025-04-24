@@ -93,12 +93,12 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="tenNCC" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <Component id="tenNCC" min="-2" pref="170" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="68" max="32767" attributes="0"/>
+                  <EmptySpace min="116" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

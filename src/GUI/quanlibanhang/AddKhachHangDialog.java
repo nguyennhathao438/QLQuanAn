@@ -21,6 +21,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         qh.LayKH(dsk);
         setIcon();
         setTextHidden();
+        func.notAllowNumber(text_ten);
+        func.notAllowText(Text_SDT);
     }
     public void setIcon(){
         func.setUpBtn(btn_them, Color.WHITE, Color.GREEN);

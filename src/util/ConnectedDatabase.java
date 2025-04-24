@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 package util;
 
@@ -18,20 +14,21 @@ public class ConnectedDatabase {
             c = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Ket noi co so du lieu that bai");
         }
         return c;
     }
     public static void closeConnectedDB(Connection c) {
-        try {
-            if (c != null) {
-                c.close();
-                System.out.println("Đóng thành công !");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Không thể đóng ");
-        }
-    }
+		try {
+			if(c!=null) {
+				c.close();
+				System.out.println("Đóng thành công !");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Không thể đóng ");
+		}
+	}
 
     public static com.sun.jdi.connect.spi.Connection getConnection() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

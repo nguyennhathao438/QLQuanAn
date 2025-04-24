@@ -7,6 +7,7 @@ public class HoaDon {
     private Date thoiGian ;
     private double thanhTien ;
     private String maKH;
+    private int TenUser;
     public HoaDon() {
     }
 
@@ -18,12 +19,21 @@ public class HoaDon {
         this.maKH = maKH;
     }
 
+    public int getTenUser() {
+        return TenUser;
+    }
+
+    public void setTenUser(int TenUser) {
+        this.TenUser = TenUser;
+    }
+
     
-    public HoaDon(String maHoaDon, Date thoiGian, double thanhTien,String maKH) {
+    public HoaDon(String maHoaDon, Date thoiGian, double thanhTien,String maKH,int TenUser) {
         this.maHoaDon = maHoaDon;
         this.thoiGian = thoiGian;
         this.thanhTien = thanhTien;
         this.maKH = maKH;
+        this.TenUser = TenUser;
     }
     
     public String getMaHoaDon() {

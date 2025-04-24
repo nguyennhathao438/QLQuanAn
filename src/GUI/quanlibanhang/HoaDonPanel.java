@@ -1,6 +1,7 @@
 package GUI.quanlibanhang;
 
 import DAO.QuanHangDAO;
+import DAO.UserDAO;
 import DTO.CTHOADON;
 import DTO.HoaDon;
 import DTO.LICHSUBAN;
@@ -24,6 +25,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     CTHOADON cthd;
     LICHSUBAN lsb = new LICHSUBAN();
     DefaultTableModel dtm = new DefaultTableModel();
+    UserDAO us = new UserDAO();
     public HoaDonPanel() {
         initComponents();
         bangHoaDon.setModel(dtm);
@@ -53,7 +55,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     public void setData(){
         DecimalFormat df = new DecimalFormat("#,###");
         Giacb.removeAllItems();
-        Giacb.addItem("--Select--");
+        Giacb.addItem("--Select Giá--");
         Giacb.addItem("Tăng dần");
         Giacb.addItem("Giảm dần");
         Giacb.setSelectedIndex(0);
@@ -62,13 +64,14 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         if(dtm.getColumnCount() == 0){
             dtm.addColumn("Mã hóa đơn");
-            dtm.addColumn("Mã khách hàng");
+            dtm.addColumn("Tên khách hàng");
+            dtm.addColumn("Tên User");
             dtm.addColumn("Thời gian");
             dtm.addColumn("Tổng Tiền");
         }
         for(HoaDon a:lsb.getLSB()){
             String formatTongtien = df.format(a.getThanhTien());
-            dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),a.getThoiGian(),formatTongtien});
+            dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),us.getTenUserByID(a.getTenUser()),a.getThoiGian(),formatTongtien});
         }
     }
     @SuppressWarnings("unchecked")
@@ -177,13 +180,13 @@ public class HoaDonPanel extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,10 +195,10 @@ public class HoaDonPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -277,13 +280,13 @@ public class HoaDonPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 48, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,8 +325,8 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for(HoaDon a:lsb.getLSB()){
             String formatTong = df.format(a.getThanhTien());
-            if(String.valueOf(a.getMaHoaDon()).toLowerCase().contains(text) || String.valueOf(a.getMaKH()).toLowerCase().contains(text) || formatTong.contains(text)){
-                dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),a.getThoiGian(),formatTong});
+            if(String.valueOf(a.getMaHoaDon()).toLowerCase().contains(text) || String.valueOf(a.getMaKH()).toLowerCase().contains(text) ||String.valueOf(us.getTenUserByID(a.getTenUser())).toLowerCase().contains(text) || formatTong.contains(text)){
+                dtm.addRow(new Object[]{a.getMaHoaDon(),a.getMaKH(),us.getTenUserByID(a.getTenUser()),a.getThoiGian(),formatTong});
             }
         }
     }//GEN-LAST:event_btn_checkActionPerformed
@@ -333,12 +336,12 @@ public class HoaDonPanel extends javax.swing.JPanel {
             return;
         }
         String selected = Giacb.getSelectedItem().toString().trim();
-        if (selected.equals("--Select--")) {
+        if (selected.equals("--Select Giá--")) {
             DecimalFormat df = new DecimalFormat("#,###");
             dtm.setRowCount(0);
             for (HoaDon hd : lsb.getLSB()) {
                 String formatTien = df.format(hd.getThanhTien());
-                dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+                dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
             }
             return;
         }
@@ -352,7 +355,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (HoaDon hd : dshd) {
             String formatTien = df.format(hd.getThanhTien());
-            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
         }
     }//GEN-LAST:event_GiacbActionPerformed
 
@@ -361,7 +364,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         for (HoaDon hd : lsb.getLSB()) {
             String formatTien = df.format(hd.getThanhTien());
-            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(), hd.getThoiGian(), formatTien});
+            dtm.addRow(new Object[]{hd.getMaHoaDon(), hd.getMaKH(),us.getTenUserByID(hd.getTenUser()), hd.getThoiGian(), formatTien});
         }
     }//GEN-LAST:event_btn_ResetActionPerformed
 

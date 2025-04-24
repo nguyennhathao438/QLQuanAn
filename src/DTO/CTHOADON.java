@@ -10,8 +10,8 @@ public class CTHOADON extends HoaDon{
     public CTHOADON(){
         
     }
-    public CTHOADON(String maHoaDon, Date thoiGian, double thanhTien,String maKH, ArrayList<MonAnBan> dsma) {
-        super(maHoaDon, thoiGian, thanhTien,maKH);
+    public CTHOADON(String maHoaDon, Date thoiGian, double thanhTien,String maKH,int TenUser, ArrayList<MonAnBan> dsma) {
+        super(maHoaDon, thoiGian, thanhTien,maKH,TenUser);
         this.dsma = dsma;
     }
 

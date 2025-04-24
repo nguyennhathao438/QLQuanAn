@@ -64,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
     public void guiMenu() {
         setTitle("Quản Lí Quán Ăn");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1050, 650);
+        setSize(1150, 650);
         setLayout(new BorderLayout());
 
         // Create sidebar panel
@@ -101,10 +101,13 @@ public class Menu extends javax.swing.JFrame {
         ChuyenTrang ct = new ChuyenTrang(jpnView);
         ct.setTrang(jpnView);
         ArrayList<Bean> menu = new ArrayList<>();
-        for (Map.Entry<String, String> entry : mapQuyens.entrySet()) {
-            String maQuyen = entry.getKey();
-            String tenQuyen = entry.getValue();
+        List<String> quyenOrder = new ArrayList<>(mapQuyens.keySet());
+        quyenOrder.remove("Q12");         // Bỏ "Q12" tạm thời
+        quyenOrder.add("Q12");            // Thêm "Q12" vào cuối
+
+        for (String maQuyen : quyenOrder) {
             if (arrs.contains(maQuyen)) {
+                String tenQuyen = mapQuyens.get(maQuyen);
                 String iconPath = mapIcons.get(maQuyen);
                 JPanel menuItem = createMenuItem(tenQuyen, iconPath);
                 menu.add(new Bean(maQuyen, menuItem));
@@ -127,13 +130,13 @@ public class Menu extends javax.swing.JFrame {
         sidebarPanel.add(logoutButton);
         sidebarPanel.add(Box.createVerticalStrut(20));
         logoutButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                 us.dangXuat(us.getIDUserLogin());
-                 JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
-                 dispose();
-    }
-});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                us.dangXuat(us.getIDUserLogin());
+                JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
+                dispose();
+            }
+        });
         // ---------- Thêm JScrollPane ở đây ----------
         JScrollPane scrollPane = new JScrollPane(sidebarPanel);
         scrollPane.setPreferredSize(new Dimension(250, 650));
@@ -147,14 +150,17 @@ public class Menu extends javax.swing.JFrame {
                 this.thumbColor = new Color(180, 180, 180); // màu thanh kéo
                 this.trackColor = new Color(60, 60, 60);    // màu nền thanh cuộn
             }
+
             @Override
             protected JButton createDecreaseButton(int orientation) {
                 return invisibleButton();
             }
+
             @Override
             protected JButton createIncreaseButton(int orientation) {
                 return invisibleButton();
             }
+
             private JButton invisibleButton() {
                 JButton button = new JButton();
                 button.setPreferredSize(new Dimension(0, 0));
@@ -163,6 +169,7 @@ public class Menu extends javax.swing.JFrame {
                 button.setVisible(false);
                 return button;
             }
+
             protected Dimension getThumbSize() {
                 return new Dimension(8, 40); // độ dày thanh cuộn
             }
@@ -193,11 +200,13 @@ public class Menu extends javax.swing.JFrame {
                     panel.setBackground(new Color(255, 200, 0));
                 }
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 if (!panel.getBackground().equals(Color.WHITE)) {
                     panel.setBackground(Color.ORANGE);
                 }
             }
+
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 for (JPanel p : menuItemPanels) {
                     p.setBackground(Color.ORANGE);
