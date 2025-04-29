@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import util.Func_class;
 
@@ -61,21 +61,24 @@ public class KH_Panel extends javax.swing.JPanel {
         btn_ok.setIcon(new FlatSVGIcon("./resources/icon/look.svg",0.65f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg",0.75f));
     }
-    public void setData(){
+    public void setData() {
         dsk = new DSKhach();
         qh.LayKH(dsk);
         dtm.setRowCount(0);
-        if(dtm.getColumnCount() == 0){
+        if (dtm.getColumnCount() == 0) {
             dtm.addColumn("Mã Khách Hàng");
             dtm.addColumn("Tên khách hàng");
             dtm.addColumn("Loại khách hàng");
             dtm.addColumn("SĐT");
             dtm.addColumn("Địa chỉ");
         }
-        for(khachDTO a:dsk.getDSK()){
-            dtm.addRow(new Object[]{a.getMaKH(),a.getTenkhach(),a.getLoaiKhach(),a.getSDT(),a.getDiachi()});
+        for (khachDTO a : dsk.getDSK()) {
+            dtm.addRow(new Object[]{a.getMaKH(), a.getTenkhach(), a.getLoaiKhach(), a.getSDT(), a.getDiachi()});
         }
-    } 
+        TableColumnModel columnModel = BangKh.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(40);
+        columnModel.getColumn(4).setPreferredWidth(200);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -304,7 +307,7 @@ public class KH_Panel extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_RefreshActionPerformed
 
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
-        String text = search.getText().trim();
+        String text = search.getText().toLowerCase();
         dtm.setRowCount(0);
         for(khachDTO a: dsk.getDSK()){
             if(String.valueOf(a.getMaKH()).toLowerCase().contains(text) || String.valueOf(a.getTenkhach()).toLowerCase().contains(text) || String.valueOf(a.getLoaiKhach()).toLowerCase().contains(text) || String.valueOf(a.getSDT()).toLowerCase().contains(text) || String.valueOf(a.getDiachi()).toLowerCase().contains(text)){

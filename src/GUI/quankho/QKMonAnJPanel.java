@@ -438,7 +438,7 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
                 }
             }
         }
-        else if(text.equals("Giá giảm dần "))  { 
+        else if(text.equals("Giá giảm dần"))  { 
                 for(int i=0;i<n-1;i++){ 
                 for(int j=i+1;j<n;j++){ 
                     if(dscopy.getDSMA().get(i).getGia()<dscopy.getDSMA().get(j).getGia()){ 
@@ -450,7 +450,6 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
             }
                 }  
         return dscopy;
-
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangMA;

@@ -91,6 +91,7 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
         dsma =new DSMonAn();
         qk.layMonAnDcBan(dsma);
         dtm.setRowCount(0);
+        
         if(dtm.getColumnCount() == 0){
             dtm.addColumn("Mã món ăn");
             dtm.addColumn("Tên món ăn");
@@ -98,6 +99,7 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
             dtm.addColumn("Giá");
             dtm.addColumn("Có thể bán");
         }
+        System.out.println(dsma.getN());
         for(MONAN a:dsma.getDSMA()) {
             if(a.getTrangThai() != 0) {
                 dtm.addRow(new Object[]{a.getMaMA(),a.getTenMA(),a.getLoaiMA(),a.getGia(),a.getSoLuongConLai()});

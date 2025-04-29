@@ -3,18 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.Layout;
-
 import DAO.UserDAO;
 import DTO.User;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-    UserDAO userDAO = new UserDAO();
+    UserDAO userDAO=new UserDAO();
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,8 +135,8 @@ public class Login extends javax.swing.JFrame {
         char tokenmk[] = pass.getPassword();
         String mk = new String(tokenmk);
         User user = userDAO.ktraDangNhap(tk, mk);
-        if (user.getVaiTro()==null) {
-            JOptionPane.showMessageDialog(null,"Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu","Error",0);
+        if (user.getVaiTro() == null) {
+            JOptionPane.showMessageDialog(null, "Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu", "Error", 0);
             return;
         } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
@@ -147,15 +145,7 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bloginActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -163,23 +153,11 @@ public class Login extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new Login().setVisible(true);
         });
     }
 

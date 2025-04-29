@@ -14,7 +14,7 @@ public class XuatPhieuNhap {
     public void XuatPDF(String mahd){ 
         cthd=kn.chitietHDNH(mahd);
         try{
-            String path="C:\\Users\\ADMIN\\Documents\\oop\\QLQuanAn\\exportfile\\phieunhap.pdf";
+            String path="\"C:\\Users\\kiman\\OneDrive\\Máy tính\\defgiaodien\\QLQuanAn\\exportfile\\phieunhap.pdf\"";
             DecimalFormat df = new DecimalFormat("#,###.##");
             Document document =new Document();
             PdfWriter.getInstance(document, new FileOutputStream(path));

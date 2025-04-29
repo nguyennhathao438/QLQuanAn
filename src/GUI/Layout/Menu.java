@@ -18,7 +18,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -47,17 +46,18 @@ public class Menu extends javax.swing.JFrame {
     HashMap<String, String> mapQuyens;
     String maVT = "";
     UserDAO us = new UserDAO();
+
     public Menu(String maVT) {
         this.maVT = maVT;
         initComponents();
         guiMenu();
         this.addWindowListener(new WindowAdapter() {
-    @Override
-    public void windowClosing(WindowEvent e) {
-        us.dangXuat(WIDTH);
-        System.exit(0);
-    }
-});
+            @Override
+            public void windowClosing(WindowEvent e) {
+                us.dangXuat(WIDTH);
+                System.exit(0);
+            }
+        });
 
     }
 
@@ -98,13 +98,16 @@ public class Menu extends javax.swing.JFrame {
 // Thêm panel chính vào giữa
         this.add(jpnView, BorderLayout.CENTER);
 
-        ChuyenTrang ct = new ChuyenTrang(jpnView);
+        ChuyenTrang ct=new ChuyenTrang(jpnView);
         ct.setTrang(jpnView);
         ArrayList<Bean> menu = new ArrayList<>();
-        List<String> quyenOrder = new ArrayList<>(mapQuyens.keySet());
-        quyenOrder.remove("Q12");         // Bỏ "Q12" tạm thời
-        quyenOrder.add("Q12");            // Thêm "Q12" vào cuối
-
+        List<String> quyenOrder = new ArrayList<>(List.of(
+                "Q03", // Món ăn
+                "Q01", // Nguyên Liệu
+                "Q02", // Nhà Cung Cấp
+                "Q07", "Q08","Q04", "Q05", "Q11", "Q13", "Q14", "Q10", "Q09","Q06",
+                "Q12" // Phân quyền để cuối
+        ));
         for (String maQuyen : quyenOrder) {
             if (arrs.contains(maQuyen)) {
                 String tenQuyen = mapQuyens.get(maQuyen);
@@ -114,10 +117,16 @@ public class Menu extends javax.swing.JFrame {
                 menuItemPanels.add(menuItem);
                 sidebarPanel.add(menuItem);
                 sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                
             }
         }
         ct.setEvent(menu);
-
+        for (Bean bean : menu) {
+            if (bean.getKind().equals("Q03")) {
+                bean.getJpn().setBackground(Color.WHITE); // tô màu trắng cho panel món ăn
+                break;
+            }
+        }
         sidebarPanel.add(Box.createVerticalGlue());
         logoutButton = new JButton("Đăng xuất");
         logoutButton.setIcon(new FlatSVGIcon("./resources/icon/logout.svg", 0.3f));

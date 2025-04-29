@@ -158,11 +158,16 @@ public class AddRoleDialog extends javax.swing.JDialog {
             return;
         }
         int idUser=Integer.parseInt(table_TK.getValueAt(vitriRow,0).toString());
-        String statusTK=table_TK.getValueAt(vitriRow,4).toString();
-        if(statusTK.equals("Chưa được cấp")){
-            nvDao.setTaiKhoanNV(idUser, maNV);
-            setUpTable();
-            nvPanel.setUpTable();
+        String statusTK = table_TK.getValueAt(vitriRow, 4).toString();
+        if (statusTK.equals("Chưa được cấp")) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn cấp tài khoản cho nhân viên này",
+                    "Xác nhận cấp", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                nvDao.setTaiKhoanNV(idUser, maNV);
+                setUpTable();
+                nvPanel.setUpTable();
+                this.dispose();
+            }
         }
         if(statusTK.equals("Đã khóa")){
             JOptionPane.showMessageDialog(null,"Tài khoản đã bị khóa không thể cấp","Error",0);

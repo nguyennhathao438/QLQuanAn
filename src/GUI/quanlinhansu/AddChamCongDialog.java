@@ -409,8 +409,8 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         JPanel panel_bottom=new JPanel(new FlowLayout());
         btnThem=new JButton("Thêm chấm công");
         btnThongKe=new JButton("Thống kê");
-        func.setUpBtn(btnThem,Color.WHITE,Color.GRAY);
-        func.setUpBtn(btnThongKe,Color.WHITE,Color.GRAY);
+        func.setUpBtn(btnThem,Color.WHITE,Color.CYAN);
+        func.setUpBtn(btnThongKe,Color.WHITE,Color.ORANGE);
         btnThongKe.setFocusPainted(false);
         btnThem.setFocusPainted(false);
         btnThem.setBackground(Color.WHITE);

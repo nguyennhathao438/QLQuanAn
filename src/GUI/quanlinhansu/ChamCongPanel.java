@@ -44,7 +44,6 @@ public class ChamCongPanel extends javax.swing.JPanel {
         setUpBtn();
         setIconForJLabel();
         setUpTable();
-        //BorderForJPanel();
         setFocusForButton();
         setTextHidden();
     }
@@ -53,7 +52,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
     }
     public void setUpBtn(){
         func.setUpBtn(btn_refresh,Color.WHITE,new Color(220,220,220));
-        func.setUpBtn(btn_them_chamCong,Color.WHITE,new Color(220,220,220));
+        func.setUpBtn(btn_them_chamCong,Color.WHITE,Color.ORANGE);
         func.setUpBtn(btn_look, Color.WHITE, new Color(220,220,220));
     }
     public void setTextHidden(){
@@ -68,9 +67,6 @@ public class ChamCongPanel extends javax.swing.JPanel {
         btn_them_chamCong.setFocusPainted(false);
         btn_refresh.setFocusPainted(false);
     }
-//    public void BorderForJPanel(){
-//        jpanel_chucNang2.setBorder(new DropShadowBorder(1,Color.BLACK));
-//    }
     public void setIconForJLabel(){
         btn_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.3f));
         btn_them_chamCong.setIcon(new FlatSVGIcon("./resources/icon/add.svg",0.25f));
@@ -252,7 +248,7 @@ public class ChamCongPanel extends javax.swing.JPanel {
                     .addComponent(jpanel_chiTietChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpanel_chucNang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
