@@ -186,7 +186,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        else if(ktSDT(SDT) == 1){
+        else if(ktSDT(SDT) != 1){
             JOptionPane.showMessageDialog(null, "Định dạng sai Số điện thoại", "Errol", JOptionPane.ERROR_MESSAGE);
             return;
         }

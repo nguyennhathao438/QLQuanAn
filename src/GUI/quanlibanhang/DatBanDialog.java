@@ -42,7 +42,7 @@ public class DatBanDialog extends javax.swing.JDialog {
         text_SDT = new javax.swing.JTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
-        btn_capnhat = new javax.swing.JButton();
+        btn_them = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -50,6 +50,7 @@ public class DatBanDialog extends javax.swing.JDialog {
         label_dt = new javax.swing.JLabel();
         label_day = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        btn_Sua = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,10 +105,10 @@ public class DatBanDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        btn_capnhat.setText("Cập nhật");
-        btn_capnhat.addActionListener(new java.awt.event.ActionListener() {
+        btn_them.setText("Thêm");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_capnhatActionPerformed(evt);
+                btn_themActionPerformed(evt);
             }
         });
 
@@ -155,25 +156,36 @@ public class DatBanDialog extends javax.swing.JDialog {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_dt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_day, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label_day, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        btn_Sua.setText("Sửa");
+        btn_Sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SuaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(btn_them, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(btn_capnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +194,9 @@ public class DatBanDialog extends javax.swing.JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(btn_capnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_them, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btn_Sua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -190,14 +204,19 @@ public class DatBanDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     public int ktSDT(String SDT){
-        if(SDT.matches("0\\d{8}")) // kt số 0 ở đầu và có 9 số sau
+        if(SDT.matches("0\\d{9}")) // kt số 0 ở đầu và có 9 số sau
         {
             return 1;
         }
         return 0;
     }
     
-    private void btn_capnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capnhatActionPerformed
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        ArrayList<DatBan> ds = BanManager.layTT(bandangchon).getDSDB();
+        if (!ds.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Bàn này đã có thông tin đặt trước. Vui lòng chọn chức năng Sửa.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
         String ten = text_ten.getText().trim();
         String SDT = text_SDT.getText().trim();
         java.util.Date ngay = jDateChooser1.getDate();
@@ -205,8 +224,8 @@ public class DatBanDialog extends javax.swing.JDialog {
         if(ten.isEmpty() || SDT.isEmpty() || ngay == null){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
-        } else if(ktSDT(SDT) == 1){
-            JOptionPane.showMessageDialog(null, "Số điện thoại không quá 9 số", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else if(ktSDT(SDT) != 1){
+            JOptionPane.showMessageDialog(null, "Số điện thoại phải đúng 9 số và số 0 ở đầu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return ;
         }
         DatBan db = new DatBan();
@@ -216,16 +235,40 @@ public class DatBanDialog extends javax.swing.JDialog {
         BanManager.themTT(bandangchon, db);
         JOptionPane.showMessageDialog(this, "Thêm thông tin thành công");
         BanManager.DatBan(bandangchon);
-        dispose();        
-    }//GEN-LAST:event_btn_capnhatActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
+        String ten = text_ten.getText().trim();
+        String SDT = text_SDT.getText().trim();
+        java.util.Date ngay = jDateChooser1.getDate();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        if(ten.isEmpty() || SDT.isEmpty() || ngay == null){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if(ktSDT(SDT) != 1){
+            JOptionPane.showMessageDialog(null, "Số điện thoại phải đúng 9 số và số 0 ở đầu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return ;
+        }
+        BanManager.XoaDatTruoc(bandangchon);
+        DatBan db = new DatBan();
+        db.setTenkhach(ten);
+        db.setSDT(SDT);
+        db.setThoigian(ngay);
+        BanManager.themTT(bandangchon, db);
+        JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công");
+        BanManager.DatBan(bandangchon);
+        dispose();
+    }//GEN-LAST:event_btn_SuaActionPerformed
     public void capnhat(){
         ArrayList<DatBan> ds = BanManager.layTT(bandangchon).getDSDB();
         if(!ds.isEmpty()){
             DatBan db = ds.get(0);
+        text_ten.setText(db.getTenkhach());
+        text_SDT.setText(db.getSDT());
         label_name.setText(db.getTenkhach());
         label_dt.setText(db.getSDT());
-
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");        
         label_day.setText(df.format(db.getThoigian()));
         }
     }
@@ -238,7 +281,8 @@ public class DatBanDialog extends javax.swing.JDialog {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_capnhat;
+    private javax.swing.JButton btn_Sua;
+    private javax.swing.JButton btn_them;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
