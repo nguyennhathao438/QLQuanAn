@@ -163,7 +163,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public int ktSDT(String SDT){
-        if(SDT.matches("0\\d{8}")) // kt số 0 ở đầu và có 9 số sau
+        if(SDT.matches("0\\d{9}")) // kt số 0 ở đầu và có 9 số sau
         {
             return 1;
         }
@@ -181,7 +181,6 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         String loaikhach = cbb_loaikhach.getSelectedItem().toString();
         String SDT = Text_SDT.getText().trim();
         String diachi = Text_DiaChi.getText().trim();
-        
         if(tenkhach.isEmpty() || loaikhach.equals("--Chọn loại khách hàng--")|| SDT.isEmpty() || diachi.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -197,10 +196,8 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             kh.setLoaiKhach(loaikhach);
             kh.setSDT(SDT);
             kh.setDiachi(diachi);
-            
             qh.themKH(kh);
             JOptionPane.showMessageDialog(null,"Thêm Thành công");
-            
             dispose();
         }
         

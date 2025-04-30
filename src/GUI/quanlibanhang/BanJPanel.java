@@ -96,7 +96,7 @@ public class BanJPanel extends javax.swing.JPanel {
         for(MonAnBan mab:BanManager.dsmab[bandangchon].getDSMAB()){
             Tong += mab.getThanhtien();
         }
-        jLabel4.setText(df.format(Tong)+ ".0 VNĐ");
+        jLabel4.setText(df.format(Tong)+ " VNĐ");
         
         try{
           double tiendu;
@@ -450,16 +450,16 @@ public class BanJPanel extends javax.swing.JPanel {
             return;
         }
         String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+        if("Đang Dùng".equals(trangthai)){
+            JOptionPane.showMessageDialog(null, "Bàn đang dùng hãy thanh toán", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn reset bàn "+ (bandangchon) + "không", "thông báo", JOptionPane.YES_NO_OPTION);
         if(chon == JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(this, "Bàn đã được đặt lại trạng thái ban đầu");
             BanManager.thanhtoan(bandangchon);
             BanManager.Capnhattt(bandangchon, "Trống");
             capnhatbutton(bandangchon);
-        }
-        if("Đang Dùng".equals(trangthai)){
-            JOptionPane.showMessageDialog(null, "Bàn đang dùng hãy thanh toán", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
-            return;
         }
     }//GEN-LAST:event_jlabel_donBanMouseClicked
 

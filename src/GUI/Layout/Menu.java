@@ -18,7 +18,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -47,24 +46,25 @@ public class Menu extends javax.swing.JFrame {
     HashMap<String, String> mapQuyens;
     String maVT = "";
     UserDAO us = new UserDAO();
+
     public Menu(String maVT) {
         this.maVT = maVT;
         initComponents();
         guiMenu();
         this.addWindowListener(new WindowAdapter() {
-    @Override
-    public void windowClosing(WindowEvent e) {
-        us.dangXuat(WIDTH);
-        System.exit(0);
-    }
-});
+            @Override
+            public void windowClosing(WindowEvent e) {
+                us.dangXuat(WIDTH);
+                System.exit(0);
+            }
+        });
 
     }
 
     public void guiMenu() {
         setTitle("Quản Lí Quán Ăn");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1050, 650);
+        setSize(1150, 650);
         setLayout(new BorderLayout());
 
         // Create sidebar panel
@@ -98,23 +98,35 @@ public class Menu extends javax.swing.JFrame {
 // Thêm panel chính vào giữa
         this.add(jpnView, BorderLayout.CENTER);
 
-        ChuyenTrang ct = new ChuyenTrang(jpnView);
+        ChuyenTrang ct=new ChuyenTrang(jpnView);
         ct.setTrang(jpnView);
         ArrayList<Bean> menu = new ArrayList<>();
-        for (Map.Entry<String, String> entry : mapQuyens.entrySet()) {
-            String maQuyen = entry.getKey();
-            String tenQuyen = entry.getValue();
+        List<String> quyenOrder = new ArrayList<>(List.of(
+                "Q03", // Món ăn
+                "Q01", // Nguyên Liệu
+                "Q02", // Nhà Cung Cấp
+                "Q07", "Q08","Q04", "Q05", "Q11", "Q13", "Q14", "Q10", "Q09","Q06",
+                "Q12" // Phân quyền để cuối
+        ));
+        for (String maQuyen : quyenOrder) {
             if (arrs.contains(maQuyen)) {
+                String tenQuyen = mapQuyens.get(maQuyen);
                 String iconPath = mapIcons.get(maQuyen);
                 JPanel menuItem = createMenuItem(tenQuyen, iconPath);
                 menu.add(new Bean(maQuyen, menuItem));
                 menuItemPanels.add(menuItem);
                 sidebarPanel.add(menuItem);
                 sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                
             }
         }
         ct.setEvent(menu);
-
+        for (Bean bean : menu) {
+            if (bean.getKind().equals("Q03")) {
+                bean.getJpn().setBackground(Color.WHITE); // tô màu trắng cho panel món ăn
+                break;
+            }
+        }
         sidebarPanel.add(Box.createVerticalGlue());
         logoutButton = new JButton("Đăng xuất");
         logoutButton.setIcon(new FlatSVGIcon("./resources/icon/logout.svg", 0.3f));
@@ -127,13 +139,13 @@ public class Menu extends javax.swing.JFrame {
         sidebarPanel.add(logoutButton);
         sidebarPanel.add(Box.createVerticalStrut(20));
         logoutButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                 us.dangXuat(us.getIDUserLogin());
-                 JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
-                 dispose();
-    }
-});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                us.dangXuat(us.getIDUserLogin());
+                JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
+                dispose();
+            }
+        });
         // ---------- Thêm JScrollPane ở đây ----------
         JScrollPane scrollPane = new JScrollPane(sidebarPanel);
         scrollPane.setPreferredSize(new Dimension(250, 650));
@@ -147,14 +159,17 @@ public class Menu extends javax.swing.JFrame {
                 this.thumbColor = new Color(180, 180, 180); // màu thanh kéo
                 this.trackColor = new Color(60, 60, 60);    // màu nền thanh cuộn
             }
+
             @Override
             protected JButton createDecreaseButton(int orientation) {
                 return invisibleButton();
             }
+
             @Override
             protected JButton createIncreaseButton(int orientation) {
                 return invisibleButton();
             }
+
             private JButton invisibleButton() {
                 JButton button = new JButton();
                 button.setPreferredSize(new Dimension(0, 0));
@@ -163,6 +178,7 @@ public class Menu extends javax.swing.JFrame {
                 button.setVisible(false);
                 return button;
             }
+
             protected Dimension getThumbSize() {
                 return new Dimension(8, 40); // độ dày thanh cuộn
             }
@@ -193,11 +209,13 @@ public class Menu extends javax.swing.JFrame {
                     panel.setBackground(new Color(255, 200, 0));
                 }
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 if (!panel.getBackground().equals(Color.WHITE)) {
                     panel.setBackground(Color.ORANGE);
                 }
             }
+
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 for (JPanel p : menuItemPanels) {
                     p.setBackground(Color.ORANGE);

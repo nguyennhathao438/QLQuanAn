@@ -12,16 +12,12 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import export_file.XuatPhieuNhap;
 import java.awt.Frame;
 import java.awt.Window;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
@@ -54,7 +50,7 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
     public void setUp() {
         label_nhaphang.setIcon(new FlatSVGIcon("./resources/icon/giohang.svg", 0.45f));
         jlabel_details.setIcon(new FlatSVGIcon("./resources/icon/details.svg", 0.45f));
-        jlabel_xuathoadon.setIcon(new FlatSVGIcon("./resources/icon/xuathoadon.svg", 0.55f));
+        jlabel_xuathoadon.setIcon(new FlatSVGIcon("./resources/icon/xuathoadon.svg", 0.45f));
         func.cursorPointer(label_nhaphang);
         func.cursorPointer(jlabel_details);
         func.cursorPointer(jlabel_xuathoadon);

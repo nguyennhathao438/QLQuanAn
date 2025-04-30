@@ -23,14 +23,14 @@ QuanKhoDAO kn=new QuanKhoDAO();
    QKMonAnJPanel panel;
     Func_class fc = new Func_class();
     public MonAnDiaLog(java.awt.Frame parent, boolean modal , QKMonAnJPanel panel) {
-        
         super(parent, modal);
-        this.panel=panel;
+        this.panel = panel;
         initComponents();
         kn.layDSMonAn(dsma);
         setLocationRelativeTo(null);
-         setLocationRelativeTo(null);
-         fc.notAllowNumber(tenMA);
+        setLocationRelativeTo(null);
+        fc.notAllowNumber(tenMA);
+        fc.notAllowText(gia);
     }
     public MonAnDiaLog(java.awt.Frame parent, boolean modal,String maMon, QKMonAnJPanel panel) {
         super(parent, modal);
@@ -49,8 +49,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
         }
          setLocationRelativeTo(null);
     }
-
-    
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -102,7 +101,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                     .addComponent(jLabel1)
                     .addComponent(jLabel5)
                     .addComponent(loaiMA, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,17 +126,16 @@ QuanKhoDAO kn=new QuanKhoDAO();
                         .addComponent(tenMA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loaiMA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addComponent(loaiMA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         submit.setText("Xác nhận");
@@ -174,45 +172,52 @@ QuanKhoDAO kn=new QuanKhoDAO();
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        String text=maMA.getText();
-        MONAN ma=new MONAN();
-        ma.setMaMA(maMA.getText());
+        String text = maMA.getText().trim();
+        String ten = tenMA.getText().trim();
+        String mo = moTa.getText().trim();
+        String g = gia.getText().trim();
+        // Kiểm tra các trường bắt buộc
+        if (text.equals("") || ten.equals("") || g.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        // Kiểm tra định dạng giá
+        if (!kt()) {
+            return;
+        }
+        double giaTien = Double.parseDouble(g);
+        if (giaTien <= 0) {
+            JOptionPane.showMessageDialog(rootPane, "Không để giá nhỏ hơn hoặc bằng 0");
+            return;
+        }
+
+        MONAN ma = new MONAN();
+        ma.setMaMA(text);
         ma.setLoaiMA((String) loaiMA.getSelectedItem());
-        ma.setTenMA(tenMA.getText());
-        ma.setMoTa(moTa.getText());
-        ma.setGia(Double.parseDouble(gia.getText()));
-        boolean kt=false;
-        if(maMonAn.isEmpty()){
-            if(maMA.getText().equals("")){ 
-                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn"); 
-                return ;
+        ma.setTenMA(ten);
+        ma.setMoTa(mo);
+        ma.setGia(giaTien);
+
+        boolean kt = false;
+
+        if (maMonAn.isEmpty()) {
+            for (MONAN a : dsma.getDSMA()) {
+                if (a.getMaMA().equals(text)) {
+                    JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");
+                    return;
+                }
             }
-            if(tenMA.getText().equals("")){ 
-                JOptionPane.showMessageDialog(rootPane, "Vui lòng không để tróng mã món ăn");
-                return ;
-            }
-            if(Double.parseDouble(gia.getText()) <= 0){
-                JOptionPane.showMessageDialog(rootPane, "Không để giá nhỏ hơn 0");
-                return;
-            }
-        for(MONAN a: dsma.getDSMA()){ 
-            if(a.getMaMA().equals(text)){ 
-                JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");
-               return ;
-            }
+            kt = true;
         }
-        kt=true;       
-        }       
-        if(kt()){ 
-            gia.setText("");
-        }
-        if(kt==true){ 
+
+        if (kt == true) {
             kn.themMonAn(ma);
-        }else{
-        kn.suaMonAn(ma);
-        } 
+        } else {
+            kn.suaMonAn(ma);
+        }
+
         panel.setData();
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_submitActionPerformed
  private boolean kt(){ 
         String regex = "^[+-]?([0-9]*[.])?[0-9]+$";

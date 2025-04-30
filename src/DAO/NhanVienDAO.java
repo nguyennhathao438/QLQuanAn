@@ -172,9 +172,10 @@ public class NhanVienDAO {
                 String hoTen = rs.getString("hoTen");
                 Date ngaySinh = rs.getDate("ngaySinh");
                 String gioiTinh = rs.getString("gioiTinh");
+                int idUser=rs.getInt("idUser");
                 String sdt = rs.getString("sdt");
                 int maCV = rs.getInt("maCV");
-                nhanVien = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+                nhanVien = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, idUser,maCV);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
