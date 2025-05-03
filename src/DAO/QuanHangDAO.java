@@ -2,16 +2,11 @@ package DAO;
 
 import DTO.CTHOADON;
 import DTO.DSKhach;
-import DTO.DSMonAn;
-import DTO.DSMonAnBan;
 import DTO.HoaDon;
 import DTO.LICHSUBAN;
 import DTO.MonAnBan;
 import DTO.khachDTO;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,7 +42,6 @@ public class QuanHangDAO {
     }
     public void themKH(khachDTO kh){
         String query="INSERT INTO KHACHHANG(maKH,tenKH,loaiKH,soDienThoai,diaChi,trangThai) VALUES (?,?,?,?,?,1)" ;
-        
         try(Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1,kh.getMaKH());
@@ -55,7 +49,7 @@ public class QuanHangDAO {
             stmt.setString(3,kh.getLoaiKhach());
             stmt.setString(4,kh.getSDT());
             stmt.setString(5,kh.getDiachi());
-             stmt.executeUpdate();
+            stmt.executeUpdate();
         }catch(SQLException ex){ 
             ex.printStackTrace();
         }
@@ -103,7 +97,7 @@ public class QuanHangDAO {
     public void themHDBH(CTHOADON hdbh,String maKH,String soban){
         String maHDtam ="HDBAN"+soban;
         String query = "DELETE FROM CTHOADON WHERE maHD=?";
-        String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH) VALUES(?,?,?,?) "; 
+        String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH,userID) VALUES(?,?,?,?,?) "; 
         String queryCTHD = "INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
         try(Connection con = getConnection();
                 PreparedStatement stmt = con.prepareStatement(query);
@@ -115,6 +109,7 @@ public class QuanHangDAO {
             pshd.setDate(2, new java.sql.Date(hdbh.getThoiGian().getTime()));
             pshd.setDouble(3, hdbh.getThanhTien());
             pshd.setString(4, hdbh.getMaKH());
+            pshd.setInt(5, hdbh.getTenUser());
             pshd.executeUpdate();
             int i = 0;
             for(MonAnBan a:hdbh.getDsma()){
@@ -131,7 +126,7 @@ public class QuanHangDAO {
         
     }
     public void LayHDBH(LICHSUBAN lsb){
-        String query = "SELECT maHD, thoiGian, thanhTien,maKH FROM HOADON WHERE maHD LIKE 'HD___'";
+        String query = "SELECT hd.maHD, hd.thoiGian, hd.thanhTien, kh.tenKH, hd.userID FROM HOADON hd LEFT JOIN KHACHHANG kh ON hd.maKH = kh.maKH WHERE maHD LIKE 'HD___'";
         try(Connection con = getConnection();
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -140,7 +135,8 @@ public class QuanHangDAO {
                         rs.getString("maHD"),
                         rs.getDate("thoiGian"),
                         rs.getDouble("thanhTien"),
-                        rs.getString("maKH")
+                        rs.getString("tenKH"),
+                        rs.getInt("userID")
                 )
                 );
             }
@@ -238,8 +234,25 @@ public class QuanHangDAO {
     // Nếu không có mã nào -> bắt đầu từ HD001
     return "HD001";
 }
+    public String taomaKH(){
+        String ma = "KH";
+        String query = "SELECT MAX(maKH) as maxMa FROM KHACHHANG WHERE maKH LIKE 'KH__'";
+        try(Connection con = getConnection();
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+            if (rs.next() && rs.getString("maxMa") != null) {
+                String maxMa = rs.getString("maxMa");
+                int so = Integer.parseInt(maxMa.substring(2));
+                so++;
+                return String.format("%s%02d", ma, so);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "KH01";
+    }
     public boolean kiemTraTonTaiKH(String maKH){
-    String query = "SELECT COUNT(*) FROM KHACHHANG WHERE maKH = ?";
+    String query = "SELECT COUNT(*) FROM KHACHHANG WHERE maKH = ? AND trangThai = 1";
     try(Connection con = getConnection(); 
         PreparedStatement ps = con.prepareStatement(query)) {
         ps.setString(1, maKH);

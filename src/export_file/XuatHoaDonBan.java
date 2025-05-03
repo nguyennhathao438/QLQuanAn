@@ -2,11 +2,9 @@
 package export_file;
 import DAO.QuanHangDAO;
 import DTO.CTHOADON;
-import DTO.HoaDon;
 import DTO.LICHSUBAN;
 import DTO.MonAnBan;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -19,7 +17,7 @@ public class XuatHoaDonBan {
         cthd=qh.LayCTHDBH(mahd);
         hdb = qh.LayHD(mahd);
         try{
-            String path="C:\\Users\\phant\\OneDrive\\Desktop\\QLQA_moi\\src\\export_file\\hoadonbanhang.pdf";
+            String path="\"C:\\Users\\kiman\\OneDrive\\Máy tính\\defgiaodien\\QLQuanAn\\exportfile\\hoadon.pdf\"";
             DecimalFormat df = new DecimalFormat("#,###.##");
             Document document =new Document();
             PdfWriter.getInstance(document, new FileOutputStream(path));

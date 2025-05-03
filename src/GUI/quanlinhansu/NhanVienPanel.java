@@ -404,10 +404,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
         if (tenCV == null) {
             nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, 0);
         } else {
-            mapCV = cvDao.mapCV();
-            int maCV = mapCV.get(tenCV);
-            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
+            nv = nvDao.getNhanVienByMaNV(maNV);
         }
+
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
         new DetailsNhanVienDialog((Frame) parentWindow, true, nv).setVisible(true);
     }//GEN-LAST:event_jlabel_chiTiet_nvMouseClicked

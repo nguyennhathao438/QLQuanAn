@@ -22,7 +22,6 @@ public class UserDAO {
         return ConnectedDatabase.getConnectedDB();
     }
     public User ktraDangNhap(String taiKhoan, String matKhauNhap) {
-
         String sql = "SELECT * "
                 + "FROM USERS "
                 + "JOIN ROLES ON ROLES.maVT = USERS.maVT "
@@ -93,11 +92,9 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
         return id ;
     }
     public String getTenUserByID(int id){ 
-        String tenUser;
         String query = "SELECT ten FROM USERS WHERE id = ? ";
         try(Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)){ 
@@ -105,6 +102,20 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){ 
                 return rs.getString("ten");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return "";
+    }
+    public String getTenTaiKhoanUserByID(int id){ 
+        String query = "SELECT taiKhoan FROM USERS WHERE id = ? ";
+        try(Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)){ 
+            stmt.setInt(1,id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){ 
+                return rs.getString("taiKhoan");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
