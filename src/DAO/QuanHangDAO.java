@@ -81,13 +81,14 @@ public class QuanHangDAO {
     // Hoa Don
     public void themCTHDBH(MonAnBan mab,String soban){ 
         String maHDtam ="HDBAN"+soban;
-        String query ="INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
+        String query ="INSERT INTO CTHOADON (maHD,maMA,tenmon,soLuongMA) VALUES(?,?,?,?)";
         try(Connection conn = getConnection();
              PreparedStatement pscthd = conn.prepareStatement(query);
                 ){ 
                 pscthd.setString(1, maHDtam);
                 pscthd.setString(2, mab.getMaMA());
-                pscthd.setInt(3, mab.getSoluong());
+                pscthd.setString(3, mab.getTenMA());
+                pscthd.setInt(4, mab.getSoluong());
                 pscthd.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(QuanHangDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +99,7 @@ public class QuanHangDAO {
         String maHDtam ="HDBAN"+soban;
         String query = "DELETE FROM CTHOADON WHERE maHD=?";
         String queryHD = "INSERT INTO HOADON (maHD,thoiGian,thanhTien,maKH,userID) VALUES(?,?,?,?,?) "; 
-        String queryCTHD = "INSERT INTO CTHOADON (maHD,maMA,soLuongMA) VALUES(?,?,?)";
+        String queryCTHD = "INSERT INTO CTHOADON (maHD,maMA,tenmon,soLuongMA) VALUES(?,?,?,?)";
         try(Connection con = getConnection();
                 PreparedStatement stmt = con.prepareStatement(query);
             PreparedStatement pshd = con.prepareStatement(queryHD);
@@ -115,7 +116,8 @@ public class QuanHangDAO {
             for(MonAnBan a:hdbh.getDsma()){
                 pscthd.setString(1, hdbh.getMaHoaDon());
                 pscthd.setString(2, a.getMaMA());
-                pscthd.setInt(3, a.getSoluong());
+                pscthd.setString(3, a.getTenMA());
+                pscthd.setInt(4, a.getSoluong());
                 pscthd.addBatch();
                 i++;
             }
@@ -160,7 +162,7 @@ public class QuanHangDAO {
                 ct.setThoiGian( new java.sql.Date(rs.getDate("thoiGian").getTime()));
                 ma = new MonAnBan();
                 ma.setMaMA(rs.getString("maMA"));
-                ma.setTenMA(rs.getString("tenMA"));
+                ma.setTenMA(rs.getString("tenmon"));
                 ma.setSoluong(rs.getInt("soLuongMA"));
                 ma.setThanhtien(rs.getDouble("gia"));
                 dsma.add(ma);
@@ -168,7 +170,7 @@ public class QuanHangDAO {
            while(rs.next()){ 
                ma = new MonAnBan();
                 ma.setMaMA(rs.getString("maMA"));
-                ma.setTenMA(rs.getString("tenMA"));
+                ma.setTenMA(rs.getString("tenmon"));
                 ma.setSoluong(rs.getInt("soLuongMA"));
                 ma.setThanhtien(rs.getDouble("gia"));
                 dsma.add(ma);
@@ -181,7 +183,7 @@ public class QuanHangDAO {
     }
     public CTHOADON LayCTHDBH(String hd){
         CTHOADON cthdbh = new CTHOADON();
-        String query = "SELECT hd.maHD, ma.tenMA, cthd.soLuongMA, ma.gia ,(ma.gia * cthd.soLuongMA) AS thanhtien "
+        String query = "SELECT hd.maHD,cthd.tenmon, cthd.soLuongMA, ma.gia ,(ma.gia * cthd.soLuongMA) AS thanhtien "
                 + "FROM HOADON hd "
                 + "JOIN CTHOADON cthd ON hd.maHD = cthd.maHD "
                 + "JOIN MONAN ma ON cthd.maMA = ma.maMA "
@@ -197,8 +199,8 @@ public class QuanHangDAO {
                 if(dsmab.isEmpty()){
                     cthdbh.setMaHoaDon(rs.getString("maHD"));
                 }
-                String maMA = rs.getString("tenMA");
-                String tenMA = rs.getString("tenMA");
+                String maMA = rs.getString("tenmon");
+                String tenMA = rs.getString("tenmon");
                 int soluong = rs.getInt("soLuongMA");
                 double gia = rs.getDouble("gia");
                 double thanhtien = rs.getDouble("thanhtien");

@@ -399,6 +399,10 @@ public class BanJPanel extends javax.swing.JPanel {
         MonAnBan ma = new MonAnBan();
         UserDAO us = new UserDAO();
         String makhach = jTextField2.getText().trim();
+        String tienkhach = jLabel6.getText().trim();
+        String tonggia = jLabel4.getText().trim();
+        double tienKhachDua = Double.parseDouble(tienkhach.replaceAll("[^\\d.]", ""));
+        double tongTien = Double.parseDouble(tonggia.replaceAll("[^\\d.]", ""));
         if (bandangchon == -1){
         JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
         return;
@@ -417,7 +421,11 @@ public class BanJPanel extends javax.swing.JPanel {
         }
         else if("Đang Dùng".equals(trangthai)){
         String cthdMaKH = cthdbn.getMaKH();
-        boolean ktkhach = makhach != null;
+        boolean ktkhach = makhach != null;        
+        if(tienKhachDua < tongTien && !tienkhach.equals("")){
+            JOptionPane.showMessageDialog(null, "Tiền khách đưa không đủ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn Thanh toán không? (Nếu đã thanh toán hãy Reset)", "Thông báo", JOptionPane.YES_NO_OPTION);
         if(chon == JOptionPane.YES_OPTION){
         double Tong = 0;
