@@ -14,6 +14,7 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -84,25 +85,7 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
     }
 
-//    public void setTable() {
-//        // set độ rộng
-//        bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
-//        bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
-//        bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
-//        bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
-//        // Can giua
-//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        // Can giữa tẽt
-//        for (int i = 0; i < 4; i++) {
-//            bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//        }
-//        // Can giua tieu de
-//        JTableHeader header = bangLSHDNH.getTableHeader();
-//        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-//        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        header.setDefaultRenderer(headerRenderer);
-//    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -390,157 +373,190 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jlabel_xuathoadonMouseClicked
 
     private JTextField txtQuy;
-    private JTextField txtNam;
-    private JPanel quyPanel;
-    private ArrayList<HOADONNHAPHANG> current = lsnh;
+     private JTextField txtNam;
+     private JPanel quyPanel;
+     private ArrayList<HOADONNHAPHANG> current = lsnh;
+ 
+     private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
+         String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
+         ArrayList<HOADONNHAPHANG> Filter = current;
+         // Gọi hàm lọc dữ liệu dựa theo lựa chọn
+         if (selected.equals("Tất cả")) {
+ Collections.sort(Filter, Comparator.comparing(HOADONNHAPHANG::getMaHDNH));
+ 
+ 
+             setData(Filter);
 
-    private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
-        String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
-        ArrayList<HOADONNHAPHANG> Filter = current;
-        // Gọi hàm lọc dữ liệu dựa theo lựa chọn
-        if (selected.equals("Tất cả")) {
-            bangLSHDNH.setModel(dtm);
-            setData(lsnh);
-//            setTable();
-            setupTable();
-        } else if (selected.equals("Giá: Thấp-Cao")) {
-            Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
-            bangLSHDNH.setModel(dtm);
-            setData(Filter);
-//            setTable();
-            setupTable();
-        } else if (selected.equals("Giá: Cao-Thấp")) {
-            Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
-            bangLSHDNH.setModel(dtm);
-            setData(Filter);
-//            setTable();
-            setupTable();
-        }
+             setupTable();
+         } else if (selected.equals("Giá: Thấp-Cao")) {
+             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
+ 
+             setData(Filter);
 
-    }
+             setupTable();
+         } else if (selected.equals("Giá: Cao-Thấp")) {
+             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
+ 
+             setData(Filter);
 
-    private void ThongkeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThongkeButtonActionPerformed
-        // TODO add your handling code here:
-        if (!ThangButton.isSelected() && !QuyButton.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn kiểu thống kê: Tháng hoặc Quý.");
-            return;
-        } else if (isThangSelected) {
-            java.util.Date utilDate = TimeFrom.getDate();
-            java.util.Date toDate = TimeTo.getDate();
-            if (utilDate == null && toDate == null) {
-                current = lsnh;
-            } else {
-                Calendar calfrom = Calendar.getInstance();
-                calfrom.setTime(utilDate);
-                int thangfrom = calfrom.get(Calendar.MONTH) + 1;
-                int namfrom = calfrom.get(Calendar.YEAR);
-                Calendar calto = Calendar.getInstance();
-                calto.setTime(toDate);
-                int thangto = calto.get(Calendar.MONTH) + 1;
-                int namto = calto.get(Calendar.YEAR);
-                ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(thangfrom, namfrom, thangto, namto);
-                current = ls;
-            }
-        } else if (isQuySelected) {
-            int quy = Integer.parseInt(txtQuy.getText());
-            int nam = Integer.parseInt(txtNam.getText());
+             setupTable();
+         }
+ 
+     }
+ 
+     private void ThongkeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThongkeButtonActionPerformed
+         // TODO add your handling code here:
+         if (!ThangButton.isSelected() && !QuyButton.isSelected()) {
+             JOptionPane.showMessageDialog(this, "Vui lòng chọn kiểu thống kê: Tháng hoặc Quý.");
+             return;
+         } else if (isThangSelected) {
+             java.util.Date utilDate = TimeFrom.getDate();
+             java.util.Date toDate = TimeTo.getDate();
+             if (utilDate == null && toDate == null) {
+                 current = lsnh;
+             } else {
+                 Calendar calfrom = Calendar.getInstance();
+                 calfrom.setTime(utilDate);
+                 int thangfrom = calfrom.get(Calendar.MONTH) + 1;
+                 int namfrom = calfrom.get(Calendar.YEAR);
+                 Calendar calto = Calendar.getInstance();
+                 calto.setTime(toDate);
+                 int thangto = calto.get(Calendar.MONTH) + 1;
+                 int namto = calto.get(Calendar.YEAR);
+                 ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(thangfrom, namfrom, thangto, namto);
+                 
+                 current = ls;
+ 
+             }
+         } else if (isQuySelected) {
+             int quy = Integer.parseInt(txtQuy.getText());
+             int nam = Integer.parseInt(txtNam.getText());
+ 
+             if (quy < 1 || quy > 4) {
+                 JOptionPane.showMessageDialog(this, "Quý phải từ 1 đến 4!", "Lỗi",
+                         JOptionPane.ERROR_MESSAGE);
+                 return;
+             }
+             ArrayList<HOADONNHAPHANG> ls = thongKeTheoQuy(quy, nam);
+             current = ls;
+ 
+         }
+             setData(current);
+             setupTable();
+     }// GEN-LAST:event_ThongkeButtonActionPerformed
+ 
+     private boolean isThangSelected = false;
+     private boolean isQuySelected = false;
+ 
+     private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
+         isThangSelected = true;
+ isQuySelected = false;
+ 
+         if (ThangButton.isSelected()) {
+             QuyButton.setSelected(false); 
 
-            if (quy < 1 || quy > 4) {
-                JOptionPane.showMessageDialog(this, "Quý phải từ 1 đến 4!", "Lỗi",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            ArrayList<HOADONNHAPHANG> ls = thongKeTheoQuy(quy, nam);
-            current = ls;
-        }
-    }// GEN-LAST:event_ThongkeButtonActionPerformed
+             TimeFrom.setVisible(true);
+             TimeTo.setVisible(true);
+             FromText.setVisible(true);
+             ToText.setVisible(true);
+ 
+             // Ẩn input quý nếu có
+             if (quyPanel != null) {
+                 quyPanel.setVisible(false);
+             }
+         }
+     }
+ 
 
-    private boolean isThangSelected = false;
-    private boolean isQuySelected = false;
+     private void QuyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_QuyButtonActionPerformed
+        isThangSelected = false;
+ isQuySelected = true;
+ 
+         if (QuyButton.isSelected()) {
+             ThangButton.setSelected(false); // Bỏ chọn checkbox tháng
+             // Ẩn input ngày tháng
+             TimeFrom.setVisible(false);
+             TimeTo.setVisible(false);
+             FromText.setVisible(false);
+             ToText.setVisible(false);
+             // Hiện input nhập quý và năm
+             if (quyPanel != null) {
+                 quyPanel.setVisible(true);
+             }
+         }
+         quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+ if (txtQuy == null) txtQuy = new JTextField();
+ if (txtNam == null) txtNam = new JTextField();
+ 
+ quyPanel.add(new JLabel("Nhập quý (1-4):"));
+ quyPanel.add(txtQuy);
+ quyPanel.add(new JLabel("Nhập năm:"));
+ quyPanel.add(txtNam);
+         int result = JOptionPane.showConfirmDialog(this, quyPanel, "Thống kê theo quý",
+                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+         if (result != JOptionPane.OK_OPTION) {
+             // Nếu người dùng bấm Cancel hoặc đóng dialog
+             isQuySelected = false;
+             ThangButton.setEnabled(true);
+         }
+     }// GEN-LAST:event_QuyButtonActionPerformed
+ 
+  public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
+     ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+     for (HOADONNHAPHANG cthd : lsnh) {
+         Date ngayNhap = new Date(cthd.getNgayNhap().getTime());
+         Calendar cal = Calendar.getInstance();
+         cal.setTime(ngayNhap);
+         int month = cal.get(Calendar.MONTH) + 1;
+         int year = cal.get(Calendar.YEAR);
+ 
+         boolean inRange = false;
+ 
+         if (namfrom == namto) {
+             inRange = (year == namfrom && month >= thangfrom && month <= thangto);
+         } else if (year == namfrom) {
+             inRange = (month >= thangfrom);
+         } else if (year == namto) {
+             inRange = (month <= thangto);
+         } else {
+             inRange = (year > namfrom && year < namto);
+         }
+ 
+         if (inRange) {
+             result.add(cthd);
+         }
+     }
+     return result;
+ }
+ 
+ public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
+     ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
+ 
 
-    private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
-
-        if (ThangButton.isSelected()) {
-            QuyButton.setSelected(false); // Bỏ chọn checkbox quý
-            // Hiện input ngày tháng (JDateChooser)
-            TimeFrom.setVisible(true);
-            TimeTo.setVisible(true);
-            FromText.setVisible(true);
-            ToText.setVisible(true);
-
-            // Ẩn input quý nếu có
-            if (quyPanel != null) {
-                quyPanel.setVisible(false);
-            }
-        }
-    }
-
-    // GEN-LAST:event_ThangButtonActionPerformed
-    private void QuyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_QuyButtonActionPerformed
-        if (QuyButton.isSelected()) {
-            ThangButton.setSelected(false); // Bỏ chọn checkbox tháng
-            // Ẩn input ngày tháng
-            TimeFrom.setVisible(false);
-            TimeTo.setVisible(false);
-            FromText.setVisible(false);
-            ToText.setVisible(false);
-            // Hiện input nhập quý và năm
-            if (quyPanel != null) {
-                quyPanel.setVisible(true);
-            }
-        }
-        JPanel quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
-        quyPanel.add(new JLabel("Nhập quý (1-4):"));
-        txtQuy = new JTextField();
-        quyPanel.add(txtQuy);
-        quyPanel.add(new JLabel("Nhập năm:"));
-        txtNam = new JTextField();
-        quyPanel.add(txtNam);
-        int result = JOptionPane.showConfirmDialog(this, quyPanel, "Thống kê theo quý",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result != JOptionPane.OK_OPTION) {
-            // Nếu người dùng bấm Cancel hoặc đóng dialog
-            isQuySelected = false;
-            ThangButton.setEnabled(true);
-        }
-    }// GEN-LAST:event_QuyButtonActionPerformed
-
-    public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
-        ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-        // Khởi tạo thời gian bắt đầu (đầu tháng from)
-        Calendar calFrom = Calendar.getInstance();
-        calFrom.set(namfrom, thangfrom - 1, 1); // Lưu ý: tháng tính từ 0
-
-        // Khởi tạo thời gian kết thúc (cuối tháng to)
-        Calendar calTo = Calendar.getInstance();
-        calTo.set(namto, thangto - 1, 1);
-        calTo.set(Calendar.DAY_OF_MONTH, calTo.getActualMaximum(Calendar.DAY_OF_MONTH)); // Lấy ngày cuối cùng
-        // của tháng
-        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-            java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
-            if (ngayNhap != null && !ngayNhap.before(calFrom.getTime())
-                    && !ngayNhap.after(calTo.getTime())) {
-                result.add(cthd);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
-        ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-            String maHDNH;
-            java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(ngayNhap);
-            int month = cal.get(Calendar.MONTH) + 1;
-            int year = cal.get(Calendar.YEAR);
-            if (year == nam && ((quy - 1) * 3 + 1 <= month && month <= quy * 3)) {
-                result.add(cthd);
-            }
-        }
-        return result;
-    }
+ 
+     for (HOADONNHAPHANG cthd : lsnh) {
+         java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
+         Calendar cal = Calendar.getInstance();
+         cal.setTime(ngayNhap);
+         int month = cal.get(Calendar.MONTH) + 1;
+         int year = cal.get(Calendar.YEAR);
+         boolean inRange = false;
+         // So sánh năm và tháng theo quý
+         if(year == nam){
+         if ((quy == 1 && month >= 1 && month <= 3) ||
+     (quy == 2 && month >= 4 && month <= 6) ||
+     (quy == 3 && month >= 7 && month <= 9) ||
+     (quy == 4 && month >= 10 && month <= 12)) {
+     inRange = true;
+ }
+         }
+         if (inRange) {
+             result.add(cthd);
+         }
+     }
+ 
+     return result;
+ }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> FilterCombo;

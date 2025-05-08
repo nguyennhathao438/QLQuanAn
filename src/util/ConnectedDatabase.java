@@ -13,7 +13,7 @@ private static SQLServerDataSource ds = new SQLServerDataSource();
         Connection c = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://DESKTOP-SAC9NS5:1433;databaseName=QuanLyQuanAn;encrypt=false;characterEncoding=UTF-8";
+            String url = "jdbc:sqlserver://LAPTOP-RE8TE7PC:1433;databaseName=QL;encrypt=false;characterEncoding=UTF-8";
             String username = "sa";
             String password = "quencmnr";
             c = DriverManager.getConnection(url, username, password);

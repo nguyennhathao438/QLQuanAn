@@ -1,11 +1,20 @@
 
 package GUI.quankho;
 
+import DAO.NLNhapDAO;
+import DAO.SellMonAnDAO;
 import DAO.ThongKeDAO;
+import DTO.NLNhapDTO;
+import DTO.SellMonAnDTO;
 import DTO.ThongKeThuChi;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -16,6 +25,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class ThongKeJPanel extends javax.swing.JPanel {
 
     ThongKeDAO kn =new ThongKeDAO();
+        NLNhapDAO nl =new NLNhapDAO();
+    SellMonAnDAO ma= new SellMonAnDAO();
     public ThongKeJPanel() {
         initComponents();
         setThongKeThang("2024");
@@ -164,7 +175,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Thống kê theo");
 
-        loaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập bán hàng", "Lương nhân viên", "Doanh thu" }));
+        loaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập bán hàng", "Lương nhân viên", "Doanh thu", "Nguyên liệu nhập", "Món ăn bán chạy" }));
         loaiThongKe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loaiThongKeActionPerformed(evt);
@@ -236,9 +247,329 @@ public class ThongKeJPanel extends javax.swing.JPanel {
                 .addComponent(pnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+public void setThongKeNLThang(String year) {
+    // Lấy dữ liệu từ DAO
+    ArrayList<NLNhapDTO> nln = nl.getTKMonth(year);
+    ArrayList<NLNhapDTO> originalData = new ArrayList<>(nln); // Lưu dữ liệu gốc
 
+    // Cột của bảng
+    String[] columnNames = {"Tháng", "Mã NL", "Tên NL", "Loại NL", "Số lượng", "Tổng tiền"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+    // Đổ dữ liệu ban đầu
+    for (NLNhapDTO a : nln) {
+        Object[] rowData = {
+            "Tháng " + a.getNgayNhap(),
+            a.getMaNL(),
+            a.getTenNL(),
+            a.getLoaiNL(),
+            a.getSoluong(),
+            a.getGia()
+        };
+        model.addRow(rowData);
+    }
+
+    JTable table = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setPreferredSize(new Dimension(678, 441));
+
+    // Hiển thị bảng
+    pnThongKe.removeAll();
+    pnThongKe.setLayout(new BorderLayout());
+
+    JButton btnTop5 = new JButton("Top 5 theo Tháng/Quý");
+    pnThongKe.add(btnTop5, BorderLayout.NORTH);
+    pnThongKe.add(scrollPane, BorderLayout.CENTER);
+    pnThongKe.validate();
+    pnThongKe.repaint();
+
+    // Cờ theo dõi trạng thái
+    final boolean[] isTop5 = {false};
+
+    // Gắn sự kiện cho nút
+    btnTop5.addActionListener(e -> {
+        DefaultTableModel newModel = new DefaultTableModel(columnNames, 0);
+        if (!isTop5[0]) {
+            // Chuyển sang chế độ top 5
+            
+            nln.sort((a, b) -> Double.compare(b.getSoluong(), a.getSoluong()));
+            List<NLNhapDTO> top5 = nln.stream().limit(5).toList();
+
+            for (NLNhapDTO a : top5) {
+                newModel.addRow(new Object[]{
+                    "Tháng " + a.getNgayNhap(),
+                    a.getMaNL(),
+                    a.getTenNL(),
+                    a.getLoaiNL(),
+                    a.getSoluong(),
+                    a.getGia()
+                });
+            }
+
+            btnTop5.setText("Hiển thị tất cả");
+            isTop5[0] = true;
+        } else {
+            // Quay lại hiển thị đầy đủ
+            for (NLNhapDTO a : originalData) {
+                newModel.addRow(new Object[]{
+                    "Tháng " + a.getNgayNhap(),
+                    a.getMaNL(),
+                    a.getTenNL(),
+                    a.getLoaiNL(),
+                    a.getSoluong(),
+                    a.getGia()
+                });
+            }
+
+            btnTop5.setText("Top 5 theo Tháng/Quý");
+            isTop5[0] = false;
+        }
+
+        table.setModel(newModel); // Cập nhật model mới
+    });
+}
+   public void setThongKeNLQuy(String year) {
+    // Lấy dữ liệu từ DAO
+    ArrayList<NLNhapDTO> nln = nl.getTKQuy(year);
+    ArrayList<NLNhapDTO> originalData = new ArrayList<>(nln); // Lưu dữ liệu gốc
+
+    // Cột của bảng
+    String[] columnNames = {"Tháng", "Mã NL", "Tên NL", "Loại NL", "Số lượng", "Tổng tiền"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+    // Đổ dữ liệu ban đầu
+    for (NLNhapDTO a : nln) {
+        Object[] rowData = {
+            "Quý " + a.getNgayNhap(),
+            a.getMaNL(),
+            a.getTenNL(),
+            a.getLoaiNL(),
+            a.getSoluong(),
+            a.getGia()
+        };
+        model.addRow(rowData);
+    }
+
+    JTable table = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setPreferredSize(new Dimension(678, 441));
+
+    // Hiển thị bảng
+    pnThongKe.removeAll();
+    pnThongKe.setLayout(new BorderLayout());
+
+    JButton btnTop5 = new JButton("Top 5 theo Tháng/Quý");
+    pnThongKe.add(btnTop5, BorderLayout.NORTH);
+    pnThongKe.add(scrollPane, BorderLayout.CENTER);
+    pnThongKe.validate();
+    pnThongKe.repaint();
+
+    // Cờ theo dõi trạng thái
+    final boolean[] isTop5 = {false};
+
+    // Gắn sự kiện cho nút
+    btnTop5.addActionListener(e -> {
+        DefaultTableModel newModel = new DefaultTableModel(columnNames, 0);
+        if (!isTop5[0]) {
+            // Chuyển sang chế độ top 5
+            
+            nln.sort((a, b) -> Double.compare(b.getSoluong(), a.getSoluong()));
+            List<NLNhapDTO> top5 = nln.stream().limit(5).toList();
+
+            for (NLNhapDTO a : top5) {
+                newModel.addRow(new Object[]{
+                    "Quý " + a.getNgayNhap(),
+                    a.getMaNL(),
+                    a.getTenNL(),
+                    a.getLoaiNL(),
+                    a.getSoluong(),
+                    a.getGia()
+                });
+            }
+
+            btnTop5.setText("Hiển thị tất cả");
+            isTop5[0] = true;
+        } else {
+            // Quay lại hiển thị đầy đủ
+            for (NLNhapDTO a : originalData) {
+                newModel.addRow(new Object[]{
+                    "Quý " + a.getNgayNhap(),
+                    a.getMaNL(),
+                    a.getTenNL(),
+                    a.getLoaiNL(),
+                    a.getSoluong(),
+                    a.getGia()
+                });
+            }
+
+            btnTop5.setText("Top 5 theo Tháng/Quý");
+            isTop5[0] = false;
+        }
+
+        table.setModel(newModel); // Cập nhật model mới
+    });
+}
+
+     
+public void setThongKeMAThang(String year) {
+    // Lấy dữ liệu từ DAO
+    ArrayList<SellMonAnDTO> nln = ma.getMAMonth(year);
+    ArrayList<SellMonAnDTO> originalData = new ArrayList<>(nln); // Lưu dữ liệu gốc
+
+    // Tạo cột cho bảng
+    String[] columnNames = {"Tháng", "Mã MA", "Tên MA", "Loại MA", "Số lượng"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+    // Đổ dữ liệu vào bảng
+    for (SellMonAnDTO a : nln) {
+        Object[] rowData = {
+            "Tháng " + a.getTime(),
+            a.getMaMA(),
+            a.getTenMA(),
+            a.getLoaiMA(),
+            a.getSoLuong(),
+        };
+        model.addRow(rowData);
+    }
+
+    // Tạo JTable và đặt trong JScrollPane
+    JTable table = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setPreferredSize(new Dimension(678, 441));
+
+    // Hiển thị bảng trong panel
+    pnThongKe.removeAll();
+    pnThongKe.setLayout(new BorderLayout());
+
+    JButton btnTop5 = new JButton("Top 5 theo Tháng");
+    pnThongKe.add(btnTop5, BorderLayout.NORTH);
+    pnThongKe.add(scrollPane, BorderLayout.CENTER);
+    pnThongKe.validate();
+    pnThongKe.repaint();
+
+    // Cờ theo dõi trạng thái
+    final boolean[] isTop5 = {false};
+
+    // Gắn sự kiện cho nút
+    btnTop5.addActionListener(e -> {
+        DefaultTableModel newModel = new DefaultTableModel(columnNames, 0);
+        if (!isTop5[0]) {
+            // Chuyển sang chế độ top 5
+            nln.sort((a, b) -> Integer.compare(b.getSoLuong(), a.getSoLuong()));  // Sắp xếp theo số lượng
+            List<SellMonAnDTO> top5 = nln.stream().limit(5).toList();
+
+            for (SellMonAnDTO a : top5) {
+                newModel.addRow(new Object[]{
+                    "Tháng " + a.getTime(),
+                    a.getMaMA(),
+                    a.getTenMA(),
+                    a.getLoaiMA(),
+                    a.getSoLuong(),
+                });
+            }
+
+            btnTop5.setText("Hiển thị tất cả");
+            isTop5[0] = true;
+        } else {
+            // Quay lại hiển thị đầy đủ
+            for (SellMonAnDTO a : originalData) {
+                newModel.addRow(new Object[]{
+                    "Tháng " + a.getTime(),
+                    a.getMaMA(),
+                    a.getTenMA(),
+                    a.getLoaiMA(),
+                    a.getSoLuong(),
+                });
+            }
+
+            btnTop5.setText("Top 5 theo Tháng");
+            isTop5[0] = false;
+        }
+
+        table.setModel(newModel); // Cập nhật model mới
+    });
+}
+
+public void setThongKeMAQuy(String year) {
+    // Lấy dữ liệu từ DAO
+    ArrayList<SellMonAnDTO> nln = ma.getMAQuy(year);
+    ArrayList<SellMonAnDTO> originalData = new ArrayList<>(nln); // Lưu dữ liệu gốc
+
+    // Tạo cột cho bảng
+    String[] columnNames = {"Quý", "Mã MA", "Tên MA", "Loại MA", "Số lượng"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+    // Đổ dữ liệu vào bảng
+    for (SellMonAnDTO a : nln) {
+        Object[] rowData = {
+            "Quý " + a.getTime(),
+            a.getMaMA(),
+            a.getTenMA(),
+            a.getLoaiMA(),
+            a.getSoLuong(),
+        };
+        model.addRow(rowData);
+    }
+
+    // Tạo JTable và đặt trong JScrollPane
+    JTable table = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setPreferredSize(new Dimension(678, 441));
+
+    // Hiển thị bảng trong panel
+    pnThongKe.removeAll();
+    pnThongKe.setLayout(new BorderLayout());
+
+    JButton btnTop5 = new JButton("Top 5 theo Quý");
+    pnThongKe.add(btnTop5, BorderLayout.NORTH);
+    pnThongKe.add(scrollPane, BorderLayout.CENTER);
+    pnThongKe.validate();
+    pnThongKe.repaint();
+
+    // Cờ theo dõi trạng thái
+    final boolean[] isTop5 = {false};
+
+    // Gắn sự kiện cho nút
+    btnTop5.addActionListener(e -> {
+        DefaultTableModel newModel = new DefaultTableModel(columnNames, 0);
+        if (!isTop5[0]) {
+            // Chuyển sang chế độ top 5
+            nln.sort((a, b) -> Integer.compare(b.getSoLuong(), a.getSoLuong()));  // Sắp xếp theo số lượng
+            List<SellMonAnDTO> top5 = nln.stream().limit(5).toList();
+
+            for (SellMonAnDTO a : top5) {
+                newModel.addRow(new Object[]{
+                    "Quý " + a.getTime(),
+                    a.getMaMA(),
+                    a.getTenMA(),
+                    a.getLoaiMA(),
+                    a.getSoLuong(),
+                });
+            }
+
+            btnTop5.setText("Hiển thị tất cả");
+            isTop5[0] = true;
+        } else {
+            // Quay lại hiển thị đầy đủ
+            for (SellMonAnDTO a : originalData) {
+                newModel.addRow(new Object[]{
+                    "Quý " + a.getTime(),
+                    a.getMaMA(),
+                    a.getTenMA(),
+                    a.getLoaiMA(),
+                    a.getSoLuong(),
+                });
+            }
+
+            btnTop5.setText("Top 5 theo Quý");
+            isTop5[0] = false;
+        }
+
+        table.setModel(newModel); // Cập nhật model mới
+    });
+}
     private void seenBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seenBDActionPerformed
-         String year = (String) nam.getSelectedItem();
+ String year = (String) nam.getSelectedItem();
          String thoiGian = (String) thangQuy.getSelectedItem();
          String lThongKe = (String) loaiThongKe.getSelectedItem();
          if(lThongKe.equals("Nhập bán hàng")){
@@ -249,10 +580,27 @@ public class ThongKeJPanel extends javax.swing.JPanel {
          }
          }else if(lThongKe.equals("Lương nhân viên")){ 
              setThongKeLuongThang(year);
-         }else{ 
+         }else if(lThongKe.equals("Doanh thu")){ 
              setThongKeDoanhThuThang(year);
          }
-         System.out.println();
+         else if(lThongKe.equals("Nguyên liệu nhập"))
+         { 
+             if(thoiGian.equals("tháng")){
+             setThongKeNLThang(year);
+         }
+         else{
+         setThongKeNLQuy(year);
+         }
+         }
+         else if(lThongKe.equals("Món ăn bán chạy"))
+         { 
+             if(thoiGian.equals("tháng")){
+             setThongKeMAThang(year);
+         }
+         else{
+         setThongKeMAQuy(year);
+         }
+         }
     }//GEN-LAST:event_seenBDActionPerformed
 
     private void loaiThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaiThongKeActionPerformed
