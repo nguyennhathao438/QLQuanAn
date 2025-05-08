@@ -67,11 +67,13 @@ public class UserDAO {
             if(trangthai ==1){ 
                 stmt.setInt(1,2);
                 stmt.setInt(2, id);
+                kt = stmt.executeUpdate();
             }else if(trangthai == 2){ 
                 stmt.setInt(1,1);
                 stmt.setInt(2, id);
+                kt = stmt.executeUpdate();
             }
-            kt = stmt.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
