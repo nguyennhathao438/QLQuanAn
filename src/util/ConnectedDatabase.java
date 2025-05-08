@@ -4,7 +4,6 @@ package util;
 
 import java.sql.Connection; 
 import java.sql.DriverManager;
-
 public class ConnectedDatabase {
     public static Connection getConnectedDB() {
         Connection c = null;

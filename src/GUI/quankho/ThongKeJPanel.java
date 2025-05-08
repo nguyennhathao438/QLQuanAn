@@ -240,16 +240,17 @@ public class ThongKeJPanel extends javax.swing.JPanel {
     private void seenBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seenBDActionPerformed
          String year = (String) nam.getSelectedItem();
          String thoiGian = (String) thangQuy.getSelectedItem();
-         String lThongKe = (String) loaiThongKe.getSelectedItem();
-         if(lThongKe.equals("Nhập bán hàng")){
+         int mode =loaiThongKe.getSelectedIndex();
+         if(mode ==0){
          if(thoiGian.equals("tháng")){ 
              setThongKeThang(year);
          }else{ 
              setThongKeQuy(year);
          }
-         }else if(lThongKe.equals("Lương nhân viên")){ 
+         }else if(mode == 1){ 
              setThongKeLuongThang(year);
-         }else{ 
+         }else if(mode ==2){ 
+               System.out.println("Hello");
              setThongKeDoanhThuThang(year);
          }
          System.out.println();
