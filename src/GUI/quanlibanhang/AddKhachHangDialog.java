@@ -19,16 +19,14 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         initComponents();
         khoitao();
         qh.LayKH(dsk);
-        setIcon();
-        setTextHidden();
+        design();
         func.notAllowNumber(text_ten);
         func.notAllowText(Text_SDT);
     }
-    public void setIcon(){
-        func.setUpBtn(btn_them, Color.WHITE, Color.GREEN);
+    public void design(){
+        func.setUpBtnTwo(btn_them, Color.GREEN, Color.GREEN,Color.WHITE,14);
         btn_them.setIcon(new FlatSVGIcon("./resources/icon/Customer.svg",0.3f));
-    }
-    public void setTextHidden(){
+        func.setUpComBoBox(cbb_loaikhach);
         PromptSupport.setPrompt("Nhập tên khách hàng", text_ten);
         PromptSupport.setForeground(Color.GRAY, text_ten);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, text_ten);
@@ -147,7 +145,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(177, 177, 177)
+                .addGap(181, 181, 181)
                 .addComponent(btn_them, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

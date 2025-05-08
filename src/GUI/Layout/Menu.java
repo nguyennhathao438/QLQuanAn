@@ -144,6 +144,8 @@ public class Menu extends javax.swing.JFrame {
                 us.dangXuat(us.getIDUserLogin());
                 JOptionPane.showMessageDialog(null, "Đăng xuất thành công !");
                 dispose();
+                Login lg = new Login();
+                lg.setVisible(true);
             }
         });
         // ---------- Thêm JScrollPane ở đây ----------

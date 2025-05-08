@@ -38,16 +38,15 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         kn.layHDNH(dshd);
         initComponents();
         bangLSHDNH.setModel(dtm);
-        setData(lsnh);
-//        setTable();
-        setUp();
+        setData(dshd.getLSNH());
+        design();
         setupTable();
     }
     public void setupTable(){
         func.centerTable(bangLSHDNH);
         func.setUpTable(bangLSHDNH);        
     }
-    public void setUp() {
+    public void design() {
         label_nhaphang.setIcon(new FlatSVGIcon("./resources/icon/giohang.svg", 0.45f));
         jlabel_details.setIcon(new FlatSVGIcon("./resources/icon/details.svg", 0.45f));
         jlabel_xuathoadon.setIcon(new FlatSVGIcon("./resources/icon/xuathoadon.svg", 0.45f));
@@ -66,13 +65,10 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         dtm.addColumn("Tài khoản");
         dtm.addColumn("Ngày Nhập");
         dtm.addColumn("Giá ");
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Format đẹp
-
         for (HOADONNHAPHANG a : lsnh) {
             if (a == null) {
                 System.out.println("Rỗng");
-
             } else {
                 String formattedGia = df.format(a.getThanhTien());
                 String formattedDate = sdf.format(a.getNgayNhap());
@@ -80,29 +76,8 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
 
             }
         }
-
         bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
     }
-
-//    public void setTable() {
-//        // set độ rộng
-//        bangLSHDNH.getColumnModel().getColumn(0).setPreferredWidth(80);
-//        bangLSHDNH.getColumnModel().getColumn(1).setPreferredWidth(150);
-//        bangLSHDNH.getColumnModel().getColumn(2).setPreferredWidth(150);
-//        bangLSHDNH.getColumnModel().getColumn(3).setPreferredWidth(200);
-//        // Can giua
-//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        // Can giữa tẽt
-//        for (int i = 0; i < 4; i++) {
-//            bangLSHDNH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//        }
-//        // Can giua tieu de
-//        JTableHeader header = bangLSHDNH.getTableHeader();
-//        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-//        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        header.setDefaultRenderer(headerRenderer);
-//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -209,19 +184,19 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_nhaphang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(jlabel_details, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(52, 52, 52)
+                        .addComponent(jlabel_xuathoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(51, 51, 51)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jlabel_xuathoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel3)
+                        .addGap(43, 43, 43))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,26 +372,21 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
     private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
         String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
         ArrayList<HOADONNHAPHANG> Filter = current;
-        // Gọi hàm lọc dữ liệu dựa theo lựa chọn
         if (selected.equals("Tất cả")) {
             bangLSHDNH.setModel(dtm);
-            setData(lsnh);
-//            setTable();
+            setData(dshd.getLSNH());
             setupTable();
         } else if (selected.equals("Giá: Thấp-Cao")) {
             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien));
             bangLSHDNH.setModel(dtm);
             setData(Filter);
-//            setTable();
             setupTable();
         } else if (selected.equals("Giá: Cao-Thấp")) {
             Collections.sort(Filter, Comparator.comparingDouble(HOADONNHAPHANG::getThanhTien).reversed());
             bangLSHDNH.setModel(dtm);
             setData(Filter);
-//            setTable();
             setupTable();
         }
-
     }
 
     private void ThongkeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThongkeButtonActionPerformed

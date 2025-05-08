@@ -87,7 +87,7 @@ public class Func_class {
         table.getTableHeader().setFont(font_hearderTable);
     }
     public void setUpJTF(JTextField jtf){
-        jtf.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        jtf.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
         // Set foreground and background color
         jtf.setForeground(Color.DARK_GRAY);
@@ -119,7 +119,27 @@ public class Func_class {
                 btn.setBackground(colorExit);
             }
         });
-        
+    }
+    public void setUpBtnTwo(JButton btn, Color ColorStart, Color colorExit, Color colorEntered, int size) {
+        btn.setFocusPainted(false);
+        btn.setBackground(ColorStart);
+        btn.setForeground(Color.BLACK);
+        btn.setFont(new Font("Tahoma", Font.BOLD, size));
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // Tạo bo góc
+        btn.setContentAreaFilled(false);
+        btn.setOpaque(true);
+        btn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2, true));
+        // Hiệu ứng hover
+        btn.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                btn.setBackground(colorEntered);
+            }
+            public void mouseExited(MouseEvent evt) {
+                btn.setBackground(colorExit);
+            }
+        });
     }
     public void setUpComBoBox(JComboBox<?> comboBox) {
         comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));

@@ -29,10 +29,9 @@
                   <Component id="jPanel3" max="32767" attributes="0"/>
                   <Component id="jPanel6" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="258" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="246" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -48,10 +47,10 @@
               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" pref="230" max="32767" attributes="0"/>
-                  <Component id="jScrollPane3" pref="230" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="252" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,28 +76,28 @@
                       <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="hansudung" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="gia" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="soLuong" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="tenNCC" min="-2" pref="170" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="soLuong" min="-2" pref="120" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gia" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="116" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="tenNCC" min="-2" pref="230" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,8 +113,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="tenNL" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tenNCC" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="soLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tenNCC" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -135,7 +134,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1a1;ng"/>
+            <Property name="text" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -162,19 +161,14 @@
             <Property name="text" type="java.lang.String" value="T&#xea;n Nguy&#xea;n Li&#x1ec7;u"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="tenNCC">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JTextField" name="soLuong">
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="hansudung">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="tenNCC">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -191,13 +185,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="addNL" max="32767" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="clear" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="confirm" min="-2" pref="97" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <Component id="addNL" min="-2" pref="111" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="clear" min="-2" pref="105" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <Component id="confirm" min="-2" pref="105" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -205,10 +199,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="addNL" alignment="1" pref="38" max="32767" attributes="0"/>
-                      <Component id="confirm" alignment="1" max="32767" attributes="0"/>
                       <Component id="clear" alignment="1" max="32767" attributes="0"/>
+                      <Component id="confirm" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

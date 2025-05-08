@@ -7,19 +7,21 @@ package GUI.user;
 import DAO.USerDAO1;
 import DTO.User;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import util.Func_class;
 
 /**
  *
@@ -31,15 +33,16 @@ public class UserFormPanel extends javax.swing.JDialog {
     JTextField txtTen = new JTextField(20);
     JComboBox<String> comboVaiTro = new JComboBox<>();
     JCheckBox chkTrangThai = new JCheckBox("Hoạt động");
-
     User user;
     USerDAO1 dao = new USerDAO1();
     UserManagerPanel userPanel;
+    Func_class func = new Func_class();
     public UserFormPanel(java.awt.Frame parent, boolean modal,UserManagerPanel userPanel,User user) {
         super(parent, modal);
         initComponents();
         this.userPanel=userPanel;
         this.user=user;
+        func.setUpComBoBox(comboVaiTro);
         this.setLocationRelativeTo(null);
         initUI();
         loadVaiTro();
@@ -55,11 +58,16 @@ public class UserFormPanel extends javax.swing.JDialog {
         JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        formPanel.add(new JLabel("Tài khoản:")); formPanel.add(txtTaiKhoan);
-        formPanel.add(new JLabel("Mật khẩu:")); formPanel.add(txtMatKhau);
-        formPanel.add(new JLabel("Tên:"));      formPanel.add(txtTen);
-        formPanel.add(new JLabel("Vai trò:"));  formPanel.add(comboVaiTro);
-        formPanel.add(new JLabel(""));          formPanel.add(chkTrangThai);
+        formPanel.add(new JLabel("Tài khoản:"));
+        formPanel.add(txtTaiKhoan);
+        formPanel.add(new JLabel("Mật khẩu:"));
+        formPanel.add(txtMatKhau);
+        formPanel.add(new JLabel("Tên:"));
+        formPanel.add(txtTen);
+        formPanel.add(new JLabel("Vai trò:"));
+        formPanel.add(comboVaiTro);
+        formPanel.add(new JLabel(""));
+        formPanel.add(chkTrangThai);
 
         JButton btnLuu = new JButton("Lưu");
         JButton btnHuy = new JButton("Huỷ");
@@ -67,10 +75,15 @@ public class UserFormPanel extends javax.swing.JDialog {
         btnLuu.addActionListener(e -> luuThongTin());
         btnHuy.addActionListener(e -> this.dispose());
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(btnLuu);
         buttonPanel.add(btnHuy);
-
+        func.setUpBtnTwo(btnLuu, Color.GREEN, Color.GREEN, Color.WHITE, 14);
+        func.setUpBtnTwo(btnHuy, Color.RED, Color.RED, Color.WHITE, 14);
+        btnLuu.setMargin(new Insets(8, 20, 8, 20)); // top, left, bottom, right
+        btnHuy.setMargin(new Insets(8, 20, 8, 20));
+        btnLuu.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+btnHuy.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         add(formPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }

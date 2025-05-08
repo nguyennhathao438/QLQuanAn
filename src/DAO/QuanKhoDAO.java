@@ -11,9 +11,7 @@ import DTO.NGUYENLIEU;
 import DTO.NHACUNGCAP;
 import DTO.NLNhap;
 import DTO.THANHPHAN;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -153,38 +151,35 @@ public class QuanKhoDAO {
             ex.printStackTrace();
         }
     }
-    public void xoaNCC(String mancc) throws SQLException{ 
-        String query ="UPDATE NHACUNGCAP SET trangThai = 0 WHERE maNCC = ?;";   
-        try(Connection conn= getConnection();
-                PreparedStatement stmt=conn.prepareStatement(query)){ 
-         stmt.setString(1,mancc);
+    public void xoaNCC(String mancc) throws SQLException {
+        String query = "UPDATE NHACUNGCAP SET trangThai = 0 WHERE maNCC = ?;";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, mancc);
             stmt.executeUpdate();
-        }catch(SQLException e){ 
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void suaNCC(NHACUNGCAP ncc) throws SQLException{ 
-        String query="UPDATE NHACUNGCAP SET tenNCC = ? WHERE maNCC = ?";
-        String queryxoasdt="DELETE FROM NCC_SDT WHERE maNCC = ?";
-        String querythemsdt="INSERT INTO NCC_SDT (maNCC, soDienThoai) VALUES (?, ?)";
-        try(
-        Connection conn=getConnection();
-        PreparedStatement stmt=conn.prepareStatement(query);
-        PreparedStatement stmtxsdt=conn.prepareStatement(queryxoasdt);
-        PreparedStatement stmttsdt=conn.prepareStatement(querythemsdt);){
-         
-        stmt.setString(1,ncc.getTenNCC());
-        stmt.setString(2,ncc.getMaNCC());
-        stmt.executeUpdate();
-        stmtxsdt.setString(1, ncc.getMaNCC());
-        stmtxsdt.executeUpdate();
-        String sdt[]=ncc.getSdt().split(",");
-        for(String a:sdt){ 
-            stmttsdt.setString(1,ncc.getMaNCC());
-            stmttsdt.setString(2, a);
-            stmttsdt.executeUpdate();
-        }
-    }catch(SQLException e){ 
+
+    public void suaNCC(NHACUNGCAP ncc) throws SQLException {
+        String query = "UPDATE NHACUNGCAP SET tenNCC = ? WHERE maNCC = ?";
+        String queryxoasdt = "DELETE FROM NCC_SDT WHERE maNCC = ?";
+        String querythemsdt = "INSERT INTO NCC_SDT (maNCC, soDienThoai) VALUES (?, ?)";
+        try (
+                Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query); PreparedStatement stmtxsdt = conn.prepareStatement(queryxoasdt); PreparedStatement stmttsdt = conn.prepareStatement(querythemsdt);) {
+
+            stmt.setString(1, ncc.getTenNCC());
+            stmt.setString(2, ncc.getMaNCC());
+            stmt.executeUpdate();
+            stmtxsdt.setString(1, ncc.getMaNCC());
+            stmtxsdt.executeUpdate();
+            String sdt[] = ncc.getSdt().split(",");
+            for (String a : sdt) {
+                stmttsdt.setString(1, ncc.getMaNCC());
+                stmttsdt.setString(2, a);
+                stmttsdt.executeUpdate();
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

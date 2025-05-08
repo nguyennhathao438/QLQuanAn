@@ -355,15 +355,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
         Date ngaySinh=(Date) table_nv.getValueAt(vitriRow,2);
         String gioiTinh = table_nv.getValueAt(vitriRow, 3).toString();
         String sdt = table_nv.getValueAt(vitriRow, 4).toString();
-        Object tenCV = table_nv.getValueAt(vitriRow, 5);
+        String tenCV = table_nv.getValueAt(vitriRow, 5).toString();
         NhanVienDTO nv;
-        if (tenCV == null) {
-            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, 0);
-        } else {
-            mapCV = cvDao.mapCV();
-            int maCV = mapCV.get(tenCV);
-            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
-        }
+        mapCV = cvDao.mapCV();
+        int maCV = mapCV.get(tenCV);
+        nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, maCV);
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
         new EditNhanVienDialog((Frame) parentWindow, true, this,nv).setVisible(true);
     }//GEN-LAST:event_jlabel_updateMouseClicked
@@ -395,18 +391,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
             return;
         }
         int maNV = Integer.parseInt(table_nv.getValueAt(vitriRow, 0).toString());
-        String hoTen = table_nv.getValueAt(vitriRow, 1).toString();
-        Date ngaySinh = (Date) table_nv.getValueAt(vitriRow, 2);
-        String gioiTinh = table_nv.getValueAt(vitriRow, 3).toString();
-        String sdt = table_nv.getValueAt(vitriRow, 4).toString();
-        Object tenCV = table_nv.getValueAt(vitriRow, 5);
         NhanVienDTO nv;
-        if (tenCV == null) {
-            nv = new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, 0);
-        } else {
-            nv = nvDao.getNhanVienByMaNV(maNV);
-        }
-
+        nv = nvDao.getNhanVienByMaNV(maNV);
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
         new DetailsNhanVienDialog((Frame) parentWindow, true, nv).setVisible(true);
     }//GEN-LAST:event_jlabel_chiTiet_nvMouseClicked
