@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -17,34 +18,30 @@ import java.util.HashMap;
  * @author kiman
  */
 public class CongViecDAO {
-    public int insertCongViec(CongViecDTO cv){
-        try{
-            String sqlAddCV="INSERT INTO CongViec(tenCV,luongCoBan,phuCap,heSoLuong,trangThai) "+
-                            "VALUES (?,?,?,?,1)";
+    //Thêm công việc
+    public int insertCongViec(CongViecDTO cv) {
+        try {
+            String sqlAddCV = "INSERT INTO CongViec(tenCV,luongCoBan,phuCap,heSoLuong,trangThai) "
+                    + "VALUES (?,?,?,?,1)";
             PreparedStatement ps;
-            ps=ConnectedDatabase.getConnectedDB().prepareStatement(sqlAddCV);
-            ps.setString(1,cv.getTenCV());
+            ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlAddCV);
+            ps.setString(1, cv.getTenCV());
             ps.setDouble(2, cv.getLuongCoBan());
-            ps.setDouble(3,cv.getPhuCap());
-            ps.setDouble(4,cv.getHeSoLuong());
-            if(ps.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null,"Thêm công việc thành công","Success",1);
+            ps.setDouble(3, cv.getPhuCap());
+            ps.setDouble(4, cv.getHeSoLuong());
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Thêm công việc thành công", "Success", 1);
             }
-        }catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
     public int updateCongViec(CongViecDTO cv) {
-        String sqlUpdate = "UPDATE CongViec "
-                + "SET tenCV=?,luongCoBan=?,phuCap=?,heSoLuong=? WHERE maCV=?";
-        PreparedStatement ps;
-        System.out.println(cv.getMaCV());
-        System.out.println(cv.getHeSoLuong());
-        System.out.println(cv.getLuongCoBan());
-        System.out.println(cv.getPhuCap());
-        System.out.println(cv.getTenCV());
         try {
+            String sqlUpdate = "UPDATE CongViec "
+                    + "SET tenCV=?,luongCoBan=?,phuCap=?,heSoLuong=? WHERE maCV=?";
+            PreparedStatement ps;
             ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlUpdate);
             ps.setString(1, cv.getTenCV());
             ps.setDouble(2, cv.getLuongCoBan());
@@ -52,24 +49,24 @@ public class CongViecDAO {
             ps.setDouble(4, cv.getHeSoLuong());
             ps.setInt(5, cv.getMaCV());
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null,"Cập nhật thành công","Success",1);
+                JOptionPane.showMessageDialog(null, "Cập nhật thành công", "Success", 1);
                 return 1;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
-    public int deleteCongViec(int maCV){
-        String sqlDelete="UPDATE CongViec SET trangThai=0 WHERE maCV=? ";
-        PreparedStatement ps;
+    public int deleteCongViec(int maCV) {
         try {
-            ps=ConnectedDatabase.getConnectedDB().prepareStatement(sqlDelete);
-            ps.setInt(1,maCV);
-            if(ps.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null,"Xóa thành công","Success",1);
+            String sqlDelete = "UPDATE CongViec SET trangThai=0 WHERE maCV=? ";
+            PreparedStatement ps;
+            ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlDelete);
+            ps.setInt(1, maCV);
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Xóa thành công", "Success", 1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
@@ -88,7 +85,7 @@ public class CongViecDAO {
                 double luongCoBan=rs.getDouble("luongCoBan");
                 return luongCoBan;
             }
-        }catch(Exception e){
+        }catch(SQLException e){
             e.printStackTrace();
         }
         return 0;
@@ -107,7 +104,7 @@ public class CongViecDAO {
                 double phuCap=rs.getDouble("phuCap");
                 return phuCap;
             }
-        }catch(Exception e){
+        }catch(SQLException e){
             e.printStackTrace();
         }
         return 0;
@@ -126,12 +123,12 @@ public class CongViecDAO {
                 double heSoLuong=rs.getDouble("heSoLuong");
                 return heSoLuong;
             }
-        }catch(Exception e){
+        }catch(SQLException e){
             e.printStackTrace();
         }
         return 0;
     }
-    //Lấy danh sách công việc
+    //Lấy danh sách công việc đang hoạt động
     public ArrayList<CongViecDTO> listCV(){
         ArrayList<CongViecDTO> listCV=new ArrayList<CongViecDTO>();
         String sqlSelectAll="SELECT * FROM CongViec WHERE trangThai=1 ";
@@ -149,25 +146,26 @@ public class CongViecDAO {
                 CongViecDTO cv=new CongViecDTO(maCV,tenCV,luongCoBan,phuCap,heSoLuong);
                 listCV.add(cv);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return listCV;
     }
+   
     public HashMap<String, Integer> mapCV() {
         HashMap<String, Integer> mapCV = new HashMap<>();
-        String sql = "SELECT * FROM CongViec WHERE trangThai=1";
+        String sql = "SELECT * FROM CongViec ";
         PreparedStatement ps;
         ResultSet rs;
         try {
             ps = ConnectedDatabase.getConnectedDB().prepareStatement(sql);
             rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 int maCV = rs.getInt("maCV");
                 String tenCV = rs.getString("tenCV");
-                mapCV.put(tenCV,maCV);
+                mapCV.put(tenCV, maCV);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return mapCV;

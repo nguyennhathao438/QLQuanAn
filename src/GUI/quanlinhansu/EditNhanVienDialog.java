@@ -3,8 +3,10 @@ package GUI.quanlinhansu;
 
 import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
+import DTO.CongViecDTO;
 import DTO.NhanVienDTO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
@@ -15,6 +17,7 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
     Func_class func=new Func_class();
     HashMap<String,Integer> mapCV;
     NhanVienDAO nvDao=new NhanVienDAO();
+    CongViecDAO cvDao=new CongViecDAO();
     NhanVienDTO nv;
     public EditNhanVienDialog(java.awt.Frame parent, boolean modal,NhanVienPanel nvPanel,NhanVienDTO nv) {
         super(parent, modal);
@@ -31,14 +34,9 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
         jdatechooser_ngaySinh.setDate(nv.getNgaySinh());
-        if (nv.getmaCongViec() == 0) {
-            combobox_cv.removeAllItems();
-            fillCbb();
-        } else {
-            mapCV = new CongViecDAO().mapCV();
-            String tenCV = func.getKey(mapCV, nv.getmaCongViec());
-            combobox_cv.setSelectedItem(tenCV);
-        }
+        mapCV = cvDao.mapCV();
+        String tenCV = func.getKey(mapCV, nv.getmaCongViec());
+        combobox_cv.setSelectedItem(tenCV);
         if (nv.getGioiTinh().equals("Nam")) {
             jradio_nam.setSelected(true);
         }
@@ -57,10 +55,10 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
         btnGrp.add(jradio_nu);
     }
     public void fillCbb(){
-        mapCV=new CongViecDAO().mapCV();
-        combobox_cv.setBackground(Color.WHITE);
-        for(String cv: mapCV.keySet()){
-            combobox_cv.addItem(cv);
+        ArrayList<CongViecDTO> listCV = cvDao.listCV();
+        func.setUpComBoBox(combobox_cv);
+        for(CongViecDTO cv : listCV){
+            combobox_cv.addItem(cv.getTenCV());
         }
     }
     public int check_edit_NhanVien(){

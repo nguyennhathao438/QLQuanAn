@@ -181,7 +181,7 @@ public class Login extends javax.swing.JFrame {
         User user = userDAO.ktraDangNhap(tk, mk);
         if (user.getVaiTro() == null) {
             JOptionPane.showMessageDialog(null, "Đăng nhập không thành công, vui lòng kiểm tra lại tài khoản và mật khẩu", "Error", 0);
-            return;
+            return; 
         } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
             new Menu(user.getVaiTro()).setVisible(true);

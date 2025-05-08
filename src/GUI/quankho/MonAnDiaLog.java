@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import DTO.DSMonAn;
 import DAO.QuanKhoDAO;
 import DTO.MONAN;
+import java.awt.Color;
 import util.Func_class;
 
 /**
@@ -31,15 +32,20 @@ QuanKhoDAO kn=new QuanKhoDAO();
         setLocationRelativeTo(null);
         fc.notAllowNumber(tenMA);
         fc.notAllowText(gia);
+        fc.setUpBtnTwo(submit, Color.GREEN, Color.GREEN, Color.WHITE, 14);
+        fc.setUpComBoBox(loaiMA);
     }
-    public MonAnDiaLog(java.awt.Frame parent, boolean modal,String maMon, QKMonAnJPanel panel) {
+    public MonAnDiaLog(java.awt.Frame parent, boolean modal, String maMon, QKMonAnJPanel panel) {
         super(parent, modal);
-        this.panel=panel;
+        this.panel = panel;
         initComponents();
-        this.maMonAn=maMon;
+        this.maMonAn = maMon;
         kn.layDSMonAn(dsma);
-        for(MONAN a:dsma.getDSMA()){ 
-            if(maMonAn.equals(a.getMaMA())){ 
+        maMA.setEnabled(false);
+        fc.setUpComBoBox(loaiMA);
+        fc.setUpBtnTwo(submit, Color.GREEN, Color.GREEN, Color.WHITE, 14);
+        for (MONAN a : dsma.getDSMA()) {
+            if (maMonAn.equals(a.getMaMA())) {
                 maMA.setText(a.getMaMA());
                 loaiMA.setSelectedItem(a.getLoaiMA());
                 tenMA.setText(a.getTenMA());
@@ -47,7 +53,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 moTa.setText(a.getMoTa());
             }
         }
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
  
     @SuppressWarnings("unchecked")
@@ -135,7 +141,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         submit.setText("Xác nhận");
@@ -151,21 +157,21 @@ QuanKhoDAO kn=new QuanKhoDAO();
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(submit)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(181, 181, 181)
+                .addComponent(submit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(submit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,12 +225,12 @@ QuanKhoDAO kn=new QuanKhoDAO();
         panel.setData();
         this.dispose();
     }//GEN-LAST:event_submitActionPerformed
- private boolean kt(){ 
+    private boolean kt() {
         String regex = "^[+-]?([0-9]*[.])?[0-9]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(gia.getText());
-        if(!matcher.matches()){ 
-            JOptionPane.showMessageDialog(this,"Giá tiền không hợp lệ ");
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(this, "Giá tiền không hợp lệ ");
             return false;
         }
         return true;

@@ -5,12 +5,15 @@ import DAO.QuanHangDAO;
 import DTO.DSKhach;
 import DTO.khachDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Color;
 import javax.swing.JOptionPane;
+import util.Func_class;
 
 public class EditKhachHangDialog extends javax.swing.JDialog {
     QuanHangDAO qh = new QuanHangDAO();
     DSKhach dsk = new DSKhach();
-    private String maKH;
+    String maKH;
+    Func_class func=new Func_class();
     khachDTO kh = new khachDTO();
     public EditKhachHangDialog(java.awt.Frame parent, boolean modal,String maKH) {
         super(parent, modal);
@@ -18,11 +21,13 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
         initComponents();
         qh.LayKH(dsk);
         laydulieu();
-        setIcon();
+        design();
         setLocationRelativeTo(null);
     }
-    public void setIcon(){
-        jButton1.setIcon(new FlatSVGIcon("./resources/icon/update_customer.svg",0.05f));
+    public void design(){
+        jButton1.setIcon(new FlatSVGIcon("./resources/icon/update_customer.svg",0.04f));
+        func.setUpComBoBox(cbbLK);
+        func.setUpBtnTwo(jButton1, Color.BLUE, Color.BLUE, Color.WHITE, 14);
     }
     public void laydulieu(){
         for(khachDTO a:dsk.getDSK()){
@@ -54,7 +59,6 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(432, 400));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
@@ -115,6 +119,7 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Lưu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -127,17 +132,17 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jButton1)
+                .addGap(169, 169, 169)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();

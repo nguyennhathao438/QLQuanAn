@@ -8,35 +8,42 @@ import javax.swing.JOptionPane;
 import DTO.DSNguyenLieu;
 import DAO.QuanKhoDAO;
 import DTO.NGUYENLIEU;
+import java.awt.Color;
+import util.Func_class;
 
 
 public class NguyenLieuDialog extends javax.swing.JDialog {
 DSNguyenLieu dsnl=new DSNguyenLieu();
-   QuanKhoDAO kn=new QuanKhoDAO();
-   String maNguyenLieu="";
-   QKNLJPanel panel ;
+    QuanKhoDAO kn = new QuanKhoDAO();
+    String maNguyenLieu = "";
+    QKNLJPanel panel;
+    Func_class func=new Func_class();
     public NguyenLieuDialog(java.awt.Frame parent, boolean modal, QKNLJPanel panel) {
         super(parent, modal);
         initComponents();
         this.panel = panel;
-         setLocationRelativeTo(null);
+        func.setUpComBoBox(loaiNL);
+        this.setTitle("Thêm nguyên liệu");
+        setLocationRelativeTo(null);
     }
-    public NguyenLieuDialog(java.awt.Frame parent, boolean modal,String maNLieu , QKNLJPanel panel) {
+
+    public NguyenLieuDialog(java.awt.Frame parent, boolean modal, String maNLieu, QKNLJPanel panel) {
         super(parent, modal);
         this.panel = panel;
         initComponents();
         maNL.setEnabled(false);
         kn.layNL(dsnl);
-        this.maNguyenLieu=maNLieu;
-        for(NGUYENLIEU nl:dsnl.getDSNL()){ 
-            if(nl.getMaNL().equals(maNguyenLieu)){ 
+        this.maNguyenLieu = maNLieu;
+        func.setUpComBoBox(loaiNL);
+        for (NGUYENLIEU nl : dsnl.getDSNL()) {            
+            if (nl.getMaNL().equals(maNguyenLieu)) {                
                 maNL.setText(nl.getMaNL());
                 loaiNL.setSelectedItem(kn.layTenLoaiNL(nl.getMaLoaiNL()).trim());
                 tenNL.setText(nl.getTenNL());
                 moTa.setText(nl.getMoTa());
             }
         }
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
 
 
@@ -170,29 +177,29 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         kn.layNL(dsnl);
-        String text=maNL.getText();
-        NGUYENLIEU nl=new NGUYENLIEU();
+        String text = maNL.getText();
+        NGUYENLIEU nl = new NGUYENLIEU();
         nl.setMaNL(maNL.getText());
-         
-             nl.setMaLoaiNL(kn.layMaLoaiNL((String) loaiNL.getSelectedItem()).trim());
-         
+        
+        nl.setMaLoaiNL(kn.layMaLoaiNL((String) loaiNL.getSelectedItem()).trim());
+        
         nl.setTenNL(tenNL.getText());
         nl.setMoTa(moTa.getText());
-        if(maNguyenLieu.isEmpty()){
-            if(maNL.getText().equals("")){ 
+        if (maNguyenLieu.isEmpty()) {
+            if (maNL.getText().equals("")) {                
                 JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập thông tin");
                 return;
             }
-            if(tenNL.getText().equals("")){ 
+            if (tenNL.getText().equals("")) {                
                 JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập thông tin");
                 return;
             }
             try {
-                for(NGUYENLIEU a: dsnl.getDSNL()){
+                for (NGUYENLIEU a : dsnl.getDSNL()) {
                     System.out.println(a.getMaNL());
-                    if(a.getMaNL().equals(text)){
+                    if (a.getMaNL().equals(text)) {
                         JOptionPane.showMessageDialog(this, "Mã này đã tồn tại");
-                        return ;
+                        return;
                     }
                 }
                 
@@ -200,22 +207,19 @@ DSNguyenLieu dsnl=new DSNguyenLieu();
             } catch (SQLException ex) {
                 Logger.getLogger(NguyenLieuDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
-         
-        }   else{    
-       
+            
+        } else {            
+            
             try {
                 kn.suaNL(nl);
             } catch (SQLException ex) {
                 Logger.getLogger(NguyenLieuDialog.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            
-         
-     
+            }            
             
         }
         panel.setData();
-         this.dispose();
-    }                                       
+        this.dispose();
+    }                                   
 
     
 

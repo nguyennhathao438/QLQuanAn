@@ -4,13 +4,9 @@
  */
 package GUI.quankho;
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
@@ -26,6 +22,9 @@ import DTO.LICHSUNH;
 import DTO.NGUYENLIEU;
 import DTO.NHACUNGCAP;
 import DTO.NLNhap;
+import java.awt.Color;
+import javax.swing.JTree;
+import util.Func_class;
 
 /**
  *
@@ -36,56 +35,74 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     QuanKhoDAO kn=new QuanKhoDAO();
     DSNCC dsncc ;
     DSNguyenLieu dsnl ;
-    
     LICHSUNH lsnh;
     DefaultTableModel dtm =new DefaultTableModel();
     String dsmaNL[] =new String[100];
     ArrayList<NLNhap> dsnlnhap=new ArrayList();
     int index=0;
-    public HDNHDialog(java.awt.Frame parent, boolean modal) {
+    Func_class func=new Func_class();
+    QKHDNHJPanel panel;
+    public HDNHDialog(java.awt.Frame parent, boolean modal,QKHDNHJPanel hdpn) {
         super(parent, modal);
         initComponents();
-        dsncc=new DSNCC();
-        lsnh=new LICHSUNH();
-        
+        dsncc = new DSNCC();
+        lsnh = new LICHSUNH();
         kn.layNCC(dsncc);
         kn.layHDNH(lsnh);
-        for(NHACUNGCAP a:dsncc.getDSNCC()){
-        tenNCC.addItem(a.getTenNCC());
-                }  
-        setData();
+        for (NHACUNGCAP a : dsncc.getDSNCC()) {
+            tenNCC.addItem(a.getTenNCC());
+        }
+        khoiTao();
+        this.setTitle("Nhập hàng");
         setLocationRelativeTo(null);
     }
-
-    public void setData(){ 
-        dsnl=new DSNguyenLieu();
+    public void khoiTao(){
+        setUpTable();
+        design();
+    }
+    public void setUpTable(){
+        setData();
+        func.centerTable(bangNL);
+        func.setUpTable(bangNL);
+    }
+    public void design(){
+       func.setUpBtnTwo(addNL, Color.GREEN, Color.GREEN, Color.WHITE, 14);
+       func.setUpBtnTwo(clear, Color.ORANGE, Color.ORANGE, Color.WHITE, 14);
+       func.setUpBtnTwo(confirm, Color.CYAN, Color.CYAN, Color.WHITE, 14);
+       func.setUpComBoBox(tenNCC);
+       func.notAllowText(gia);
+       func.notAllowText(soLuong);
+    }
+    public void setData() {
+        dsnl = new DSNguyenLieu();
         kn.layNL(dsnl);
         dtm.setRowCount(0);
-        if(dtm.getColumnCount() == 0){
+        if (dtm.getColumnCount() == 0) {
             dtm.addColumn("Mã NL");
             dtm.addColumn("Loại NL");
             dtm.addColumn("Tên TL");
-           
-            
-        }        
-        for(NGUYENLIEU nl:dsnl.getDSNL()){ 
-            if(nl.getTrangThai()!=0)
-            dtm.addRow(new Object[]{nl.getMaNL(),kn.layTenLoaiNL(nl.getMaLoaiNL()),nl.getTenNL()});
-        }   
-        
-       bangNL.setModel(dtm);
+
+        }
+        for (NGUYENLIEU nl : dsnl.getDSNL()) {
+            if (nl.getTrangThai() != 0) {
+                dtm.addRow(new Object[]{nl.getMaNL(), kn.layTenLoaiNL(nl.getMaLoaiNL()), nl.getTenNL()});
+            }
+        }
+
+        bangNL.setModel(dtm);
     }
-    public void setTextArea(){ 
+
+    public void setTextArea() {
         StringBuilder sb = new StringBuilder();
-    sb.append("Hoá đơn nhập hàng ").append("\n\n");
-    sb.append(String.format("%-5s %-20s %-10s %-10s\n", "STT", "Tên NL", "SL","Giá thành"));
-    sb.append("----------------------------------------------------\n");
-    int i=0;
-    for(NLNhap a:dsnlnhap){ 
-        sb.append(String.format("%-5s %-20s %-10s %-10s\n", i + 1,a.getMaNL(), a.getSoLuong(),a.getGia()));
-        i++;
-    }
-    hdnh.setText(sb.toString());
+        sb.append("Hoá đơn nhập hàng ").append("\n\n");
+        sb.append(String.format("%-5s %-20s %-10s %-10s\n", "STT", "Tên NL", "SL", "Giá thành"));
+        sb.append("----------------------------------------------------\n");
+        int i = 0;
+        for (NLNhap a : dsnlnhap) {
+            sb.append(String.format("%-5s %-20s %-10s %-10s\n", i + 1, a.getMaNL(), a.getSoLuong(), a.getGia()));
+            i++;
+        }
+        hdnh.setText(sb.toString());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -99,9 +116,9 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
         gia = new javax.swing.JTextField();
         tenNL = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        tenNCC = new javax.swing.JComboBox<>();
         soLuong = new javax.swing.JTextField();
         hansudung = new com.toedter.calendar.JDateChooser();
+        tenNCC = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         addNL = new javax.swing.JButton();
         clear = new javax.swing.JButton();
@@ -115,7 +132,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tạo Hoá Đơn"));
 
-        jLabel1.setText("Số Lương");
+        jLabel1.setText("Số Lượng");
 
         jLabel2.setText("Ngày Hết Hạn");
 
@@ -136,21 +153,21 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                     .addComponent(tenNL, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(jLabel5)
                     .addComponent(hansudung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(94, 94, 94))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(soLuong)
-                                .addGap(26, 26, 26)))
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -164,8 +181,8 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tenNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -205,22 +222,22 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(addNL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(206, 206, 206))
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(addNL, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(198, 198, 198))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addNL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(confirm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(clear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(confirm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -256,10 +273,9 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -271,9 +287,9 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                .addGap(28, 28, 28))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();

@@ -35,7 +35,6 @@ public class UserManagerPanel extends javax.swing.JPanel {
         khoiTao();
     }
     public void khoiTao(){
-        
         setIcon();
         setUpTable();
         setBorder();

@@ -7,7 +7,6 @@ package GUI.quanlinhansu;
 import DAO.CongViecDAO;
 import DAO.UserDAO;
 import DTO.NhanVienDTO;
-import java.awt.Color;
 import java.util.HashMap;
 import util.Func_class;
 
@@ -19,49 +18,42 @@ public class DetailsNhanVienDialog extends javax.swing.JDialog {
     Func_class func=new Func_class();
     UserDAO userDao=new UserDAO();
     HashMap<String,Integer> mapCV;
+    CongViecDAO cvDao = new CongViecDAO();
     public DetailsNhanVienDialog(java.awt.Frame parent, boolean modal, NhanVienDTO nv) {
         super(parent, modal);
         initComponents();
         this.setTitle("Xem chi tiết nhân viên");
         this.setLocationRelativeTo(null);
         khoiTao();
+        func.setUpComBoBox(combobox_congviec);
         jtf_name_nv.setText(nv.getHoTen());
         jtf_sdt_nv.setText(nv.getSDT());
-        if (nv.getmaCongViec() == 0) {
-            combobox_congviec.removeAllItems();
-        } else {
-            mapCV = new CongViecDAO().mapCV();
-            String tenCV = func.getKey(mapCV, nv.getmaCongViec());
-            combobox_congviec.setSelectedItem(tenCV);
-        }
+        mapCV = cvDao.mapCV();
+        String tenCV = func.getKey(mapCV, nv.getmaCongViec());
+        combobox_congviec.addItem(tenCV);
+        combobox_congviec.setSelectedItem(tenCV);
         if (nv.getGioiTinh().equals("Nam")) {
             jradio_nam.setSelected(true);
         } else {
             jradio_nu.setSelected(true);
         }
         jdateChooser_ngaySinh.setDate(nv.getNgaySinh());
-        if(nv.getIdUser()!=0){
-            String userName=userDao.getTenTaiKhoanUserByID(nv.getIdUser());
+        if (nv.getIdUser() != 0) {
+            String userName = userDao.getTenTaiKhoanUserByID(nv.getIdUser());
             jtf_userName.setText(userName);
         }
-        if(nv.getIdUser()==0){
+        if (nv.getIdUser() == 0) {
             jtf_userName.setText("null");
         }
     }
-    public void khoiTao(){
-        fillComBoBoxCongViec();
+
+    public void khoiTao() {
         setEditToFalse();
     }
-    public void fillComBoBoxCongViec(){
-        mapCV=new CongViecDAO().mapCV();
-        combobox_congviec.setBackground(Color.WHITE);
-        for(String tenCV : mapCV.keySet())
-            combobox_congviec.addItem(tenCV);
-    }
+
     public void setEditToFalse() {
         jtf_name_nv.setEditable(false);
         jtf_sdt_nv.setEditable(false);
-        combobox_congviec.setEnabled(false);
         jradio_nam.setEnabled(false);
         jradio_nu.setEnabled(false);
         jtf_userName.setEnabled(false);

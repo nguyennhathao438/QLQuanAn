@@ -6,8 +6,10 @@ package GUI.quanlinhansu;
 
 import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
+import DTO.CongViecDTO;
 import DTO.NhanVienDTO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
@@ -47,10 +49,10 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
         btnGr.add(jradio_nu);
     }
     public void khoiTaoComboboxCongViec(){
-        mapCV=cvDao.mapCV();
-        combobox_cv.setBackground(Color.WHITE);
-        for(String cv : mapCV.keySet()){
-            combobox_cv.addItem(cv);
+        ArrayList<CongViecDTO> listCV = cvDao.listCV();
+        func.setUpComBoBox(combobox_cv);
+        for(CongViecDTO cv :listCV){
+            combobox_cv.addItem(cv.getTenCV());
         }
     }
     public int check_add_nhanVien(){

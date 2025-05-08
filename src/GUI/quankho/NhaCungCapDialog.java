@@ -43,7 +43,7 @@ public class NhaCungCapDialog extends JDialog {
             nhaCungCap = new NHACUNGCAP();
         }
         btnLuu.addActionListener(e -> {
-            lblThongBao.setText(""); // Xoá thông báo cũ
+            lblThongBao.setText(""); // Xóa thông báo cũ
             if (!validateForm()) {
                 lblThongBao.setText("Vui lòng nhập đầy đủ thông tin!");
                 return;
@@ -52,8 +52,8 @@ public class NhaCungCapDialog extends JDialog {
                 lblThongBao.setText("Mã nhà cung cấp đã tồn tại!");
                 return;
             }
-            if (txtSDT.getText().length() != 10 || txtSDT.getText().charAt(0) != '0') {
-                lblThongBao.setText("Số điện thoại không hợp lệ");
+            if (!isValidPhoneNumber(txtSDT.getText().trim())) {
+                lblThongBao.setText("Số điện thoại không hợp lệ!");
                 return;
             }
             getFormData();
@@ -88,10 +88,15 @@ public class NhaCungCapDialog extends JDialog {
         this.pack();
         this.setLocationRelativeTo(null);
     }
-    public void setUpBtn(){
+    public void setUpBtn() {
         func.setUpBtn(btnLuu, Color.WHITE, Color.GREEN);
         func.setUpBtn(btnHuy, Color.WHITE, Color.RED);
     }
+
+    private boolean isValidPhoneNumber(String phone) {
+        return phone.matches("0\\d{9}");
+    }
+
     private void setForm(NHACUNGCAP ncc) {
         txtMaNCC.setText(ncc.getMaNCC());
         txtTenNCC.setText(ncc.getTenNCC());
@@ -105,9 +110,9 @@ public class NhaCungCapDialog extends JDialog {
     }
 
     private boolean validateForm() {
-        return !txtMaNCC.getText().isEmpty() &&
-               !txtTenNCC.getText().isEmpty() &&
-               !txtSDT.getText().isEmpty();
+        return !txtMaNCC.getText().isEmpty()
+                && !txtTenNCC.getText().isEmpty()
+                && !txtSDT.getText().isEmpty();
     }
 
     public NHACUNGCAP getNhaCungCap() {

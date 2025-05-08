@@ -10,13 +10,14 @@ import javax.swing.table.DefaultTableModel;
 import DTO.CTHOADONNH;
 import DAO.QuanKhoDAO;
 import DTO.NLNhap;
+import util.Func_class;
 
 /**
  *
  * @author ADMIN
  */
 public class CTHDNHDialog extends javax.swing.JDialog {
-
+    Func_class func = new Func_class();
     QuanKhoDAO kn=new QuanKhoDAO();
     DefaultTableModel dtm =new DefaultTableModel();
     String maHDNH="";
@@ -24,27 +25,28 @@ public class CTHDNHDialog extends javax.swing.JDialog {
     public CTHDNHDialog(java.awt.Frame parent, boolean modal,String maHDNH) {
         super(parent, modal);
         initComponents();
-        this.maHDNH=maHDNH;
-        cthd=kn.chitietHDNH(maHDNH);
+        this.maHDNH = maHDNH;
+        cthd = kn.chitietHDNH(maHDNH);
         maHD.setText(cthd.getMaHDNH());
         tenNCC.setText(cthd.getTenNCC());
-        SimpleDateFormat sdf=new SimpleDateFormat("d/M/y");
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/y");
         ngayNhap.setText(sdf.format(cthd.getNgayNhap()));
         DecimalFormat df = new DecimalFormat("#,###.##");
         thanhTien.setText(df.format(cthd.getThanhTien()));
         dtm.setRowCount(0);
-        if(dtm.getColumnCount() == 0){
-        dtm.addColumn("Tên NL");
-        dtm.addColumn("Hsd");
-        dtm.addColumn("Số Lượng");
-        dtm.addColumn("Đơn giá");
+        if (dtm.getColumnCount() == 0) {
+            dtm.addColumn("Tên NL");
+            dtm.addColumn("HSD");
+            dtm.addColumn("Số Lượng");
+            dtm.addColumn("Đơn giá");
         }
-        
-        for(NLNhap a:cthd.getDsnlnhap()){
-            String formattedGia = df.format(a.getGia());             
-            dtm.addRow(new Object[]{a.getMaNL(),a.getHsd(),a.getSoLuong(),formattedGia});           
-        }  
+        for (NLNhap a : cthd.getDsnlnhap()) {
+            String formattedGia = df.format(a.getGia());
+            dtm.addRow(new Object[]{a.getMaNL(), a.getHsd(), a.getSoLuong(), formattedGia});
+        }
         bangNLNhap.setModel(dtm);
+        func.centerTable(bangNLNhap);
+        func.setUpTable(bangNLNhap);
         setLocationRelativeTo(null);
     }
 
@@ -89,19 +91,16 @@ public class CTHDNHDialog extends javax.swing.JDialog {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(maHD, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                    .addComponent(maHD, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(129, 129, 129))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(ngayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)))
+                    .addComponent(jLabel2)
+                    .addComponent(ngayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(27, 27, 27))
+                    .addComponent(jLabel4)
+                    .addComponent(tenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

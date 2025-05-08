@@ -78,23 +78,47 @@ public class NhanVienDAO {
         }
         return 0;
     }
-    public ArrayList<NhanVienDTO> listNV(){
-        ArrayList<NhanVienDTO> listNV=new ArrayList<NhanVienDTO>();
-        String sqlListNV="SELECT * FROM NhanVien WHERE trangThai=1";
+    public ArrayList<NhanVienDTO> listNV() {
+        ArrayList<NhanVienDTO> listNV = new ArrayList<NhanVienDTO>();
+        String sqlListNV = "SELECT * FROM NhanVien WHERE trangThai=1";
         PreparedStatement ps;
         ResultSet rs;
         try {
-            ps=ConnectedDatabase.getConnectedDB().prepareStatement(sqlListNV);
-            rs=ps.executeQuery();
-            while(rs.next()){
-                int maNV=rs.getInt("maNV");
-                String hoTen=rs.getString("hoTen");
-                Date ngaySinh=rs.getDate("ngaySinh");
-                String gioiTinh=rs.getString("gioiTinh");
-                String sdt=rs.getString("sdt");
-                int idUser=rs.getInt("idUser");
-                int maCV=rs.getInt("maCV");
-                listNV.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt,idUser,maCV));
+            ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlListNV);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int maNV = rs.getInt("maNV");
+                String hoTen = rs.getString("hoTen");
+                Date ngaySinh = rs.getDate("ngaySinh");
+                String gioiTinh = rs.getString("gioiTinh");
+                String sdt = rs.getString("sdt");
+                int idUser = rs.getInt("idUser");
+                int maCV = rs.getInt("maCV");
+                listNV.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, idUser, maCV));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listNV;
+    }
+
+    public ArrayList<NhanVienDTO> arrlistNV() {
+        ArrayList<NhanVienDTO> listNV = new ArrayList<NhanVienDTO>();
+        String sqlListNV = "SELECT * FROM NhanVien ";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlListNV);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int maNV = rs.getInt("maNV");
+                String hoTen = rs.getString("hoTen");
+                Date ngaySinh = rs.getDate("ngaySinh");
+                String gioiTinh = rs.getString("gioiTinh");
+                String sdt = rs.getString("sdt");
+                int idUser = rs.getInt("idUser");
+                int maCV = rs.getInt("maCV");
+                listNV.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sdt, idUser, maCV));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
