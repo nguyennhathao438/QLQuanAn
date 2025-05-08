@@ -9,7 +9,8 @@ public class LICHSUNH {
     public ArrayList<HOADONNHAPHANG> getLSNH() {
         return lsnh;
     }
-    public void themHDNH(HOADONNHAPHANG a){ 
+
+    public void themHDNH(HOADONNHAPHANG a) {
         lsnh.add(a);
     }
 }

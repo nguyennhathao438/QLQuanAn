@@ -42,6 +42,9 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         design();
         setupTable();
     }
+    public JTable getTable(){
+        return this.bangLSHDNH;
+    }
     public void setupTable(){
         func.centerTable(bangLSHDNH);
         func.setUpTable(bangLSHDNH);        
@@ -57,26 +60,35 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
     }
     public void setData(ArrayList<HOADONNHAPHANG> lsnh) {
         DecimalFormat df = new DecimalFormat("#,###");
-        dtm.setRowCount(0);
-        // Tạo lại model mới hoàn toàn mỗi lần gọi
-        dtm = new DefaultTableModel();
-        dtm.addColumn("Mã hoá đơn");
-        dtm.addColumn("Nhà cung cấp");
-        dtm.addColumn("Tài khoản");
-        dtm.addColumn("Ngày Nhập");
-        dtm.addColumn("Giá ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Format đẹp
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Tạo model mới
+        DefaultTableModel newModel = new DefaultTableModel();
+        newModel.addColumn("Mã hoá đơn");
+        newModel.addColumn("Nhà cung cấp");
+        newModel.addColumn("Tài khoản");
+        newModel.addColumn("Ngày Nhập");
+        newModel.addColumn("Giá ");
+
         for (HOADONNHAPHANG a : lsnh) {
-            if (a == null) {
-                System.out.println("Rỗng");
-            } else {
+            if (a != null) {
                 String formattedGia = df.format(a.getThanhTien());
                 String formattedDate = sdf.format(a.getNgayNhap());
-                dtm.addRow(new Object[]{a.getMaHDNH(), a.getTenNCC(), us.getTenUserByID(a.getMangLam()), formattedDate, formattedGia});
-
+                newModel.addRow(new Object[]{
+                    a.getMaHDNH(),
+                    a.getTenNCC(),
+                    us.getTenUserByID(a.getMangLam()),
+                    formattedDate,
+                    formattedGia
+                });
             }
         }
-        bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
+
+        // Gán model mới vào bảng
+        bangLSHDNH.setModel(newModel);
+
+        // Nếu bạn cần sử dụng dtm tiếp, gán lại nó:
+        dtm = newModel;
     }
 
     @SuppressWarnings("unchecked")
@@ -333,7 +345,7 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
 
     private void label_nhaphangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_nhaphangMouseClicked
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new HDNHDialog((Frame) parentWindow, true).setVisible(true);
+        new HDNHDialog((Frame) parentWindow, true,this).setVisible(true);
     }//GEN-LAST:event_label_nhaphangMouseClicked
 
     private void jlabel_detailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_detailsMouseClicked

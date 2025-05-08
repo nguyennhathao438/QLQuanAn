@@ -23,7 +23,6 @@ import DTO.NGUYENLIEU;
 import DTO.NHACUNGCAP;
 import DTO.NLNhap;
 import java.awt.Color;
-import javax.swing.JTree;
 import util.Func_class;
 
 /**
@@ -33,6 +32,8 @@ import util.Func_class;
 public class HDNHDialog extends javax.swing.JDialog {
 DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     QuanKhoDAO kn=new QuanKhoDAO();
+    LICHSUNH dshd = new LICHSUNH();
+    QKHDNHJPanel quankhoPanel;
     DSNCC dsncc ;
     DSNguyenLieu dsnl ;
     LICHSUNH lsnh;
@@ -41,9 +42,10 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     ArrayList<NLNhap> dsnlnhap=new ArrayList();
     int index=0;
     Func_class func=new Func_class();
-    public HDNHDialog(java.awt.Frame parent, boolean modal) {
+    public HDNHDialog(java.awt.Frame parent, boolean modal,QKHDNHJPanel quankhoPanel) {
         super(parent, modal);
         initComponents();
+        this.quankhoPanel=quankhoPanel;
         dsncc = new DSNCC();
         lsnh = new LICHSUNH();
         kn.layNCC(dsncc);
@@ -350,6 +352,9 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
         cthd.setNgayNhap(ngay);
         String ten=(String) tenNCC.getSelectedItem();
         kn.themHDNH(cthd, changeTentoMaNCC(ten), dsmaNL);
+        kn.layHDNH(dshd);
+        quankhoPanel.setData(dshd.getLSNH());
+        func.centerTable(quankhoPanel.getTable());
         this.dispose();
     }//GEN-LAST:event_confirmActionPerformed
 
