@@ -18,7 +18,7 @@ public class ThongKeDAO {
     }
     public ArrayList<ThongKeThuChi> thongKeChiThang(String nam){ 
         ArrayList<ThongKeThuChi> dstk = new ArrayList();
-        String query = "SELECT MONTH(ngayNhap) AS thang,SUM(CTHOADONNH.gia) AS tong_tien FROM HOADONNH JOIN CTHOADONNH ON HOADONNH.maHDNH =CTHOADONNH.maHDNH WHERE YEAR(ngayNhap) = ? GROUP BY MONTH(ngayNhap) ORDER BY thang ";
+        String query = "SELECT MONTH(ngayNhap) AS thang,SUM(CTHOADONNH.gia*CTHOADONNH.soLuong) AS tong_tien FROM HOADONNH JOIN CTHOADONNH ON HOADONNH.maHDNH =CTHOADONNH.maHDNH WHERE YEAR(ngayNhap) = ? GROUP BY MONTH(ngayNhap) ORDER BY thang ";
         try(Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)){ 
             stmt.setString(1,nam);

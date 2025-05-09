@@ -51,8 +51,8 @@ public class EditCongViecDialog extends javax.swing.JDialog {
         func.notAllowText(jtf_phuCap);
         func.notAllowText(jtf_heSoluong_edit);
         func.notAllowText(jtf_luongCoBan);
-        func.setUpBtnTwo(btn_edit, Color.RED, Color.RED, new Color(211, 218, 211), 14);
-        func.setUpBtnTwo(btn_edit, Color.GREEN, Color.GREEN, new Color(211, 218, 211), 14);
+        func.setUpBtnTwo(btn_exit, Color.RED, Color.RED, Color.WHITE, 14);
+        func.setUpBtnTwo(btn_edit, Color.GREEN, Color.GREEN, Color.WHITE, 14);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -97,7 +97,7 @@ public class EditCongViecDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(250, 255, 250));
+        jPanel2.setBackground(new java.awt.Color(211, 218, 211));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên công việc");
@@ -138,7 +138,7 @@ public class EditCongViecDialog extends javax.swing.JDialog {
                         .addComponent(jtf_luongCoBan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jtf_name_edit_cv, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(90, 90, 90)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
