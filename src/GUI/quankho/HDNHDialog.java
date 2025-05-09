@@ -42,7 +42,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     int index=0;
     Func_class func=new Func_class();
     QKHDNHJPanel panel;
-    public HDNHDialog(java.awt.Frame parent, boolean modal,QKHDNHJPanel hdpn) {
+    public HDNHDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         dsncc = new DSNCC();
