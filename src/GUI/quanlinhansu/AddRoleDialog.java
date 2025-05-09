@@ -46,24 +46,20 @@ public class AddRoleDialog extends javax.swing.JDialog {
         func.setUpBtnTwo(btn_exit, Color.RED, Color.RED, new Color(211, 218, 211), 14);
     }
     public void loadUsers(List<User> listUSER) {
-        String[] colNames={"Mã tài khoản","Tài khoản","Tên","Vai trò","Trạng thái tài khoản"};
-        Object[][] rows=new Object[listUSER.size()][colNames.length];
-        for(int i=0;i<listUSER.size();i++){
-            rows[i][0]=listUSER.get(i).getId();
-            rows[i][1]=listUSER.get(i).getTaiKhoan();
-            rows[i][2]=listUSER.get(i).getTen();
-            rows[i][3]=listUSER.get(i).getVaiTro();
-            if(listUSER.get(i).getTrangThai()==0){
-                rows[i][4]="Đã khóa";
-            }
-            if(listUSER.get(i).getTrangThai()==1){
-                rows[i][4]="Có thể cấp";
-            }
-            if(listUSER.get(i).getTrangThai()==2){
-                rows[i][4]="Không thể cấp";
+        String[] colNames = {"Mã tài khoản", "Tài khoản", "Tên", "Vai trò", "Trạng thái tài khoản"};
+        Object[][] rows = new Object[listUSER.size()][colNames.length];
+        for (int i = 0; i < listUSER.size(); i++) {
+            rows[i][0] = listUSER.get(i).getId();
+            rows[i][1] = listUSER.get(i).getTaiKhoan();
+            rows[i][2] = listUSER.get(i).getTen();
+            rows[i][3] = listUSER.get(i).getVaiTro();
+            if (listUSER.get(i).getTrangThai() == 1) {
+                rows[i][4] = "Có thể cấp";
+            } else {
+                rows[i][4] = "Không thể cấp";
             }
         }
-        DefaultTableModel model=new DefaultTableModel(rows,colNames);
+        DefaultTableModel model = new DefaultTableModel(rows, colNames);
         table_TK.setModel(model);
     }
     
@@ -164,12 +160,12 @@ public class AddRoleDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void btn_capTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capTKActionPerformed
-        int vitriRow=table_TK.getSelectedRow();
-        if(vitriRow==-1){
-            JOptionPane.showMessageDialog(null,"Bạn chưa chọn tài khoản","Error",0);
+        int vitriRow = table_TK.getSelectedRow();
+        if (vitriRow == -1) {
+            JOptionPane.showMessageDialog(null, "Bạn chưa chọn tài khoản", "Error", 0);
             return;
         }
-        int idUser=Integer.parseInt(table_TK.getValueAt(vitriRow,0).toString());
+        int idUser = Integer.parseInt(table_TK.getValueAt(vitriRow, 0).toString());
         String statusTK = table_TK.getValueAt(vitriRow, 4).toString();
         if (statusTK.equals("Có thể cấp")) {
             int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn cấp tài khoản cho nhân viên này",
@@ -181,12 +177,8 @@ public class AddRoleDialog extends javax.swing.JDialog {
                 this.dispose();
             }
         }
-        if(statusTK.equals("Đã khóa")){
-            JOptionPane.showMessageDialog(null,"Tài khoản đã bị khóa không thể cấp","Error",0);
-            return;
-        }
-        if(statusTK.equals("Không thể cấp")){
-            JOptionPane.showMessageDialog(null,"Tài khoản không thể cấp","Error",0);
+        if (statusTK.equals("Không thể cấp")) {
+            JOptionPane.showMessageDialog(null, "Tài khoản không thể cấp", "Error", 0);
             return;
         }
     }//GEN-LAST:event_btn_capTKActionPerformed

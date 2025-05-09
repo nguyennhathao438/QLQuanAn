@@ -38,7 +38,7 @@ public class ChuyenTrang {
         kindSelected = "TrangChinh";
         root.removeAll();
         root.setLayout(new BorderLayout());
-        root.add(new QKMonAnJPanel());
+        root.add(new TrangChuPanel());
         root.validate();
         root.repaint();
     }

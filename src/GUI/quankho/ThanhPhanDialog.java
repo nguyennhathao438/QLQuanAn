@@ -300,7 +300,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
             }
             setCongThuc();
             tenNL.setText("");
-            slNL.setText(maNL);
+            slNL.setText("");
         }
     }//GEN-LAST:event_addNLActionPerformed
 

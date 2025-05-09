@@ -64,12 +64,12 @@ public class UserDAO {
             if(rs.next()){ 
                 trangthai = rs.getInt("trangThai");
             }
-            if(trangthai ==1){ 
-                stmt.setInt(1,2);
+            if(trangthai !=3){ 
+                stmt.setInt(1,3);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
-            }else if(trangthai == 2){ 
-                stmt.setInt(1,1);
+            }else if(trangthai == 3){ 
+                stmt.setInt(1,2);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
             }
@@ -82,47 +82,43 @@ public class UserDAO {
     public void dangXuat(int id){ 
          toggleTrangThaiUser(id);
     }
-    public int getIDUserLogin(){ 
-        int id= 0 ;
-        String query = "SELECT id FROM USERS WHERE trangThai=2";
-        try(Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet rs =stmt.executeQuery();){ 
-            if(rs.next()){ 
+    public int getIDUserLogin() {
+        int id = 0;
+        String query = "SELECT id FROM USERS WHERE trangThai=3";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery();) {
+            if (rs.next()) {
                 id = rs.getInt("id");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return id ;
+        return id;
     }
-    public String getTenUserByID(int id){ 
+    public String getTenUserByID(int id) {
         String query = "SELECT ten FROM USERS WHERE id = ? ";
-        try(Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)){ 
-            stmt.setInt(1,id);
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){ 
+            if (rs.next()) {
                 return rs.getString("ten");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-       return "";
+        return "";
     }
-    public String getTenTaiKhoanUserByID(int id){ 
+    public String getTenTaiKhoanUserByID(int id) {
         String query = "SELECT taiKhoan FROM USERS WHERE id = ? ";
-        try(Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)){ 
-            stmt.setInt(1,id);
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){ 
+            if (rs.next()) {
                 return rs.getString("taiKhoan");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-       return "";
+        return "";
     }
 }
 

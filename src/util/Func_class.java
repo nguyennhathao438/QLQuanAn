@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -40,6 +42,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author kiman
  */
 public class Func_class {
+    //Hàm gán icon, ảnh cho jlabel,button
+    public void disPlayImage(int width,int height,String linkImage,JLabel jlabel){
+        ImageIcon imgIcon=new ImageIcon(linkImage);
+        Image image=imgIcon.getImage().getScaledInstance(width, height,Image.SCALE_SMOOTH);
+        jlabel.setIcon(new ImageIcon(image));
+    }
+    //Hàm căn giữa bảng
     public void centerTable(JTable table){
         DefaultTableCellRenderer center=new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
