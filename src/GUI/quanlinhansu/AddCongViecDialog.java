@@ -30,8 +30,8 @@ public class AddCongViecDialog extends javax.swing.JDialog {
         func.notAllowText(jtf_phuCap);
         func.notAllowText(jtf_heSoluong);
         func.notAllowText(jtf_luongCoBan);
-        func.setUpBtnTwo(btn_add, Color.GREEN, Color.GREEN, new Color(211,218,211),14);
-        func.setUpBtnTwo(btn_exit, Color.RED, Color.RED, new Color(211,218,211),14);
+        func.setUpBtnTwo(btn_add, Color.GREEN, Color.GREEN,Color.WHITE,14);
+        func.setUpBtnTwo(btn_exit, Color.RED, Color.RED, Color.WHITE,14);
     }
     public int check_add_CongViec(){
         if(jtf_name_cv.getText().equals("")){
@@ -94,7 +94,7 @@ public class AddCongViecDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(211, 218, 211));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên công việc");

@@ -4,8 +4,6 @@ package util;
 
 import java.sql.Connection; 
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class ConnectedDatabase {
     public static Connection getConnectedDB() {
         Connection c = null;
@@ -17,6 +15,7 @@ public class ConnectedDatabase {
             c = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Ket noi co so du lieu that bai");
         }
         return c;
     }

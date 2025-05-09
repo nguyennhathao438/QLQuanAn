@@ -366,30 +366,26 @@ public class BanJPanel extends javax.swing.JPanel {
 
     private void btn_TaoDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDonActionPerformed
         if (bandangchon == -1) {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-    if("Đã Đặt".equals(trangthai)){
-        JOptionPane.showMessageDialog(null, "Bàn đang đặt trước nếu muốn tạo hãy clear", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-    else if ("Trống".equals(trangthai)) {
-        BanManager.taoDon(bandangchon);
-        moDialogthucdon();
-    } else {
-        int chon = JOptionPane.showConfirmDialog(null,
-                "Bàn đang sử dụng. Bạn có muốn xem lại đơn không?",
-                "Thông báo", JOptionPane.YES_NO_OPTION);
-
-        if (chon == JOptionPane.YES_OPTION) {
-            moDialogthucdon();
-            BanManager.laydsmon(bandangchon);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để tạo đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }
-    // Cập nhật trạng thái bàn sau khi thao tác
-    capnhatbutton(bandangchon);
+        String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+        if ("Đã Đặt".equals(trangthai)) {
+            JOptionPane.showMessageDialog(null, "Bàn đang đặt trước nếu muốn tạo hãy clear", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if ("Trống".equals(trangthai)) {
+            BanManager.taoDon(bandangchon);
+            moDialogthucdon();
+        } else {
+            int chon = JOptionPane.showConfirmDialog(null,
+                    "Bàn đang sử dụng. Bạn có muốn xem lại đơn không?",
+                    "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (chon == JOptionPane.YES_OPTION) {
+                moDialogthucdon();
+                BanManager.laydsmon(bandangchon);
+            }
+        }
+        capnhatbutton(bandangchon);
     }//GEN-LAST:event_btn_TaoDonActionPerformed
 
     private void btn_thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhtoanActionPerformed
@@ -399,48 +395,63 @@ public class BanJPanel extends javax.swing.JPanel {
         MonAnBan ma = new MonAnBan();
         UserDAO us = new UserDAO();
         String makhach = jTextField2.getText().trim();
-        if (bandangchon == -1){
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
-        return;
-        }
-        String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-        if("Trống".equals(trangthai)){
-        JOptionPane.showMessageDialog(null, "Bàn đang trống không thể thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
-        return;
-        }
-        else if("Đã Đặt".equals(trangthai)){
-            JOptionPane.showMessageDialog(null, "Bàn đang được đặt trước không thể thanh toán", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        if (bandangchon == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        else if(!makhach.equals("") && !qh.kiemTraTonTaiKH(makhach)){
+        String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
+        if ("Trống".equals(trangthai)) {
+            JOptionPane.showMessageDialog(null, "Bàn đang trống không thể thanh toán", "Errol", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if ("Đã Đặt".equals(trangthai)) {
+            JOptionPane.showMessageDialog(null, "Bàn đang được đặt trước không thể thanh toán", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (!makhach.equals("") && !qh.kiemTraTonTaiKH(makhach)) {
             JOptionPane.showMessageDialog(null, "Khách hàng không tồn tại", "Errol", JOptionPane.ERROR_MESSAGE);
-        }
-        else if("Đang Dùng".equals(trangthai)){
-        String cthdMaKH = cthdbn.getMaKH();
-        boolean ktkhach = makhach != null;
-        int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn Thanh toán không? (Nếu đã thanh toán hãy Reset)", "Thông báo", JOptionPane.YES_NO_OPTION);
-        if(chon == JOptionPane.YES_OPTION){
-        double Tong = 0;
-        for(MonAnBan a:BanManager.dsmab[bandangchon].getDSMAB()){
-            Tong += a.getThanhtien();
-        }
-        cthdbn.setMaHoaDon(mamoi);
-        cthdbn.setThoiGian(new Date());
-        cthdbn.setThanhTien(Tong);        
-        cthdbn.setTenUser(us.getIDUserLogin());
-        cthdbn.setDsma(BanManager.dsmab[bandangchon].getDSMAB());
-        if(ktkhach && qh.kiemTraTonTaiKH(makhach)){
-            cthdbn.setMaKH(makhach);
-            qh.themHDBH(cthdbn, makhach,String.valueOf(bandangchon));
-        }else {
-            cthdbn.setMaKH(null);
-        qh.themHDBH(cthdbn,null,String.valueOf(bandangchon));
-        }
-        JOptionPane.showMessageDialog(null,"Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        BanManager.thanhtoan(bandangchon);
-        BanManager.Capnhattt(bandangchon, "Trống");
-            capnhatbutton(bandangchon);
-        }
+        } else if ("Đang Dùng".equals(trangthai)) {
+            String cthdMaKH = cthdbn.getMaKH();
+            boolean ktkhach = makhach != null;
+            String tienkhach = jLabel6.getText().trim();
+            String tonggia = jLabel4.getText().trim();
+            double tienKhachDua = Double.parseDouble(tienkhach.replaceAll("[^\\d.]", ""));
+            double tongTien = Double.parseDouble(tonggia.replaceAll("[^\\d.]", ""));
+            if (tienKhachDua < tongTien && !tienkhach.equals("")) {
+                JOptionPane.showMessageDialog(null, "Tiền khách đưa không đủ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            int chon = JOptionPane.showConfirmDialog(null, "Bạn có muốn Thanh toán không? (Nếu đã thanh toán hãy Reset)", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (chon == JOptionPane.YES_OPTION) {
+                if (tienKhachDua == 0) {
+                    JOptionPane.showMessageDialog(this, "Tiền khách đưa không đủ");
+                    return;
+                }
+                double Tong = 0;
+                for (MonAnBan a : BanManager.dsmab[bandangchon].getDSMAB()) {
+                    Tong += a.getThanhtien();
+                }
+                cthdbn.setMaHoaDon(mamoi);
+                cthdbn.setThoiGian(new Date());
+                cthdbn.setThanhTien(Tong);
+                cthdbn.setTenUser(us.getIDUserLogin());
+                cthdbn.setDsma(BanManager.dsmab[bandangchon].getDSMAB());
+                if (ktkhach && qh.kiemTraTonTaiKH(makhach)) {
+                    cthdbn.setMaKH(makhach);
+                    qh.themHDBH(cthdbn, makhach, String.valueOf(bandangchon));
+                } else {
+                    cthdbn.setMaKH(null);
+                    qh.themHDBH(cthdbn, null, String.valueOf(bandangchon));
+                }
+                JOptionPane.showMessageDialog(null, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                BanManager.thanhtoan(bandangchon);
+                BanManager.Capnhattt(bandangchon, "Trống");
+                capnhatbutton(bandangchon);
+                jLabel2.setText("");
+                jLabel4.setText("");
+                jLabel6.setText("");
+                jLabel8.setText("");
+                jTextField1.setText("");
+                jTextField2.setText("");
+            }
         }
     }//GEN-LAST:event_btn_thanhtoanActionPerformed
 
@@ -492,31 +503,7 @@ public class BanJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jlabel_taoDonMouseClicked
 
     private void btn_dattruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dattruocActionPerformed
-//        if (bandangchon == -1) {
-//        JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn để đặt đơn trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//        return;
-//    }
-//
-//    String trangthai = BanManager.dsBan[bandangchon].getTrangthai();
-//        if ("Trống".equals(trangthai)) {
-//        BanManager.DatBan(bandangchon);
-//        moDialogDatBan();
-//    }
-//        else if("Đang Dùng".equals(trangthai)){
-//            JOptionPane.showMessageDialog(null, "Bàn đang dùng không thể đặt trước", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//            return;
-//        }
-//        else {
-//        int chon = JOptionPane.showConfirmDialog(null,
-//                "Bàn đang sử dụng. Bạn có muốn sửa lại thông tin không?",
-//                "Thông báo", JOptionPane.YES_NO_OPTION);
-//
-//        if (chon == JOptionPane.YES_OPTION) {
-//            moDialogDatBan();
-//            BanManager.layTT(bandangchon);
-//        }
-//    }
-//        capnhatbutton(bandangchon);
+
     }//GEN-LAST:event_btn_dattruocActionPerformed
 
     private void jlabel_datTruocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_datTruocMouseClicked

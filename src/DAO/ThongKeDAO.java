@@ -18,7 +18,7 @@ public class ThongKeDAO {
     }
     public ArrayList<ThongKeThuChi> thongKeChiThang(String nam){ 
         ArrayList<ThongKeThuChi> dstk = new ArrayList();
-        String query = "SELECT MONTH(ngayNhap) AS thang,SUM(CTHOADONNH.gia) AS tong_tien FROM HOADONNH JOIN CTHOADONNH ON HOADONNH.maHDNH =CTHOADONNH.maHDNH WHERE YEAR(ngayNhap) = ? GROUP BY MONTH(ngayNhap) ORDER BY thang ";
+        String query = "SELECT MONTH(ngayNhap) AS thang,SUM(CTHOADONNH.gia*CTHOADONNH.soLuong) AS tong_tien FROM HOADONNH JOIN CTHOADONNH ON HOADONNH.maHDNH =CTHOADONNH.maHDNH WHERE YEAR(ngayNhap) = ? GROUP BY MONTH(ngayNhap) ORDER BY thang ";
         try(Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)){ 
             stmt.setString(1,nam);
@@ -103,6 +103,39 @@ public class ThongKeDAO {
             while(rs.next()){ 
                 tk= new ThongKeThuChi();
                 tk.setThoiGian(rs.getInt("thang"));
+                tk.setSoTien(rs.getDouble("tong_tien"));
+                dstk.add(tk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dstk;
+    }
+    public ArrayList<ThongKeThuChi> thongKeLuongQuy(String nam){ 
+        ArrayList<ThongKeThuChi> dstk = new ArrayList();
+        String query = "USE QuanLyQuanAn;\n" +
+"\n" +
+"SELECT \n" +
+"    DATEPART(QUARTER, CAST(CONCAT(namChamCong, '-', thangChamCong, '-01') AS DATE)) AS Quy,\n" +
+"    SUM(Luong.ThucLanh) AS tong_tien\n" +
+"FROM \n" +
+"    ChamCong\n" +
+"JOIN \n" +
+"    Luong ON Luong.maBCC = ChamCong.maBCC\n" +
+"WHERE \n" +
+"    namChamCong = ?\n" +
+"GROUP BY \n" +
+"    DATEPART(QUARTER, CAST(CONCAT(namChamCong, '-', thangChamCong, '-01') AS DATE))\n" +
+"ORDER BY \n" +
+"    Quy ASC;";
+        try(Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)){ 
+            stmt.setString(1,nam);
+            ResultSet rs = stmt.executeQuery();
+            ThongKeThuChi tk ;
+            while(rs.next()){ 
+                tk= new ThongKeThuChi();
+                tk.setThoiGian(rs.getInt("Quy"));
                 tk.setSoTien(rs.getDouble("tong_tien"));
                 dstk.add(tk);
             }

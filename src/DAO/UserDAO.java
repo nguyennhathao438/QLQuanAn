@@ -64,12 +64,12 @@ public class UserDAO {
             if(rs.next()){ 
                 trangthai = rs.getInt("trangThai");
             }
-            if(trangthai ==1){ 
-                stmt.setInt(1,2);
+            if(trangthai !=3){ 
+                stmt.setInt(1,3);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
-            }else if(trangthai == 2){ 
-                stmt.setInt(1,1);
+            }else if(trangthai == 3){ 
+                stmt.setInt(1,2);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
             }
@@ -84,7 +84,7 @@ public class UserDAO {
     }
     public int getIDUserLogin(){ 
         int id= 0 ;
-        String query = "SELECT id FROM USERS WHERE trangThai=2";
+        String query = "SELECT id FROM USERS WHERE trangThai=3";
         try(Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
                 ResultSet rs =stmt.executeQuery();){ 

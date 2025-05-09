@@ -14,6 +14,7 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -27,11 +28,12 @@ import java.text.SimpleDateFormat;
 import util.Func_class;
 
 public class QKHDNHJPanel extends javax.swing.JPanel {
+
     QuanKhoDAO kn = new QuanKhoDAO();
     LICHSUNH dshd = new LICHSUNH();
     UserDAO us = new UserDAO();
     ArrayList<HOADONNHAPHANG> lsnh = dshd.getLSNH();
-    Func_class func=new Func_class();
+    Func_class func = new Func_class();
     DefaultTableModel dtm = new DefaultTableModel();
 
     public QKHDNHJPanel() {
@@ -42,10 +44,16 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         design();
         setupTable();
     }
-    public void setupTable(){
-        func.centerTable(bangLSHDNH);
-        func.setUpTable(bangLSHDNH);        
+
+    public JTable getTable() {
+        return this.bangLSHDNH;
     }
+
+    public void setupTable() {
+        func.centerTable(bangLSHDNH);
+        func.setUpTable(bangLSHDNH);
+    }
+
     public void design() {
         label_nhaphang.setIcon(new FlatSVGIcon("./resources/icon/giohang.svg", 0.45f));
         jlabel_details.setIcon(new FlatSVGIcon("./resources/icon/details.svg", 0.45f));
@@ -55,28 +63,37 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         func.cursorPointer(jlabel_xuathoadon);
         func.setUpComBoBox(FilterCombo);
     }
+
     public void setData(ArrayList<HOADONNHAPHANG> lsnh) {
         DecimalFormat df = new DecimalFormat("#,###");
-        dtm.setRowCount(0);
-        // Tạo lại model mới hoàn toàn mỗi lần gọi
-        dtm = new DefaultTableModel();
-        dtm.addColumn("Mã hoá đơn");
-        dtm.addColumn("Nhà cung cấp");
-        dtm.addColumn("Tài khoản");
-        dtm.addColumn("Ngày Nhập");
-        dtm.addColumn("Giá ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Format đẹp
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Tạo model mới
+        DefaultTableModel newModel = new DefaultTableModel();
+        newModel.addColumn("Mã hoá đơn");
+        newModel.addColumn("Nhà cung cấp");
+        newModel.addColumn("Tài khoản");
+        newModel.addColumn("Ngày Nhập");
+        newModel.addColumn("Giá ");
+
         for (HOADONNHAPHANG a : lsnh) {
-            if (a == null) {
-                System.out.println("Rỗng");
-            } else {
+            if (a != null) {
                 String formattedGia = df.format(a.getThanhTien());
                 String formattedDate = sdf.format(a.getNgayNhap());
-                dtm.addRow(new Object[]{a.getMaHDNH(), a.getTenNCC(), us.getTenUserByID(a.getMangLam()), formattedDate, formattedGia});
-
+                newModel.addRow(new Object[]{
+                    a.getMaHDNH(),
+                    a.getTenNCC(),
+                    us.getTenUserByID(a.getMangLam()),
+                    formattedDate,
+                    formattedGia
+                });
             }
         }
-        bangLSHDNH.setModel(dtm); // Gán lại sau khi set xong
+
+        // Gán model mới vào bảng
+        bangLSHDNH.setModel(newModel);
+        // Nếu bạn cần sử dụng dtm tiếp, gán lại nó:
+        dtm = newModel;
     }
 
     @SuppressWarnings("unchecked")
@@ -333,7 +350,7 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
 
     private void label_nhaphangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_nhaphangMouseClicked
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        new HDNHDialog((Frame) parentWindow, true).setVisible(true);
+        new HDNHDialog((Frame) parentWindow, true, this).setVisible(true);
     }//GEN-LAST:event_label_nhaphangMouseClicked
 
     private void jlabel_detailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlabel_detailsMouseClicked
@@ -369,6 +386,15 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
     private JPanel quyPanel;
     private ArrayList<HOADONNHAPHANG> current = lsnh;
 
+//     private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
+//         String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
+//         ArrayList<HOADONNHAPHANG> Filter = current;
+//         // Gọi hàm lọc dữ liệu dựa theo lựa chọn
+//         if (selected.equals("Tất cả")) {
+// Collections.sort(Filter, Comparator.comparing(HOADONNHAPHANG::getMaHDNH));
+// 
+// 
+//             setData(Filter);
     private void FilterComboActionPerformed(java.awt.event.ActionEvent evt) {
         String selected = (String) FilterCombo.getSelectedItem(); // Lấy mục được chọn
         ArrayList<HOADONNHAPHANG> Filter = current;
@@ -401,14 +427,16 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
                 current = lsnh;
             } else {
                 Calendar calfrom = Calendar.getInstance();
-                calfrom.setTime(utilDate);
-                int thangfrom = calfrom.get(Calendar.MONTH) + 1;
-                int namfrom = calfrom.get(Calendar.YEAR);
-                Calendar calto = Calendar.getInstance();
-                calto.setTime(toDate);
-                int thangto = calto.get(Calendar.MONTH) + 1;
-                int namto = calto.get(Calendar.YEAR);
-                ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(thangfrom, namfrom, thangto, namto);
+                 calfrom.setTime(utilDate);
+                 int ngayfrom = calfrom.get(Calendar.DAY_OF_MONTH);
+                 int thangfrom = calfrom.get(Calendar.MONTH) + 1;
+                 int namfrom = calfrom.get(Calendar.YEAR);
+                 Calendar calto = Calendar.getInstance();
+                 calto.setTime(toDate);
+                 int thangto = calto.get(Calendar.MONTH) + 1;
+                 int namto = calto.get(Calendar.YEAR);
+                 int ngayto = calto.get(Calendar.DAY_OF_MONTH);
+                 ArrayList<HOADONNHAPHANG> ls = thongKeTheoThang(ngayfrom,thangfrom, namfrom, ngayto, thangto, namto);
                 current = ls;
             }
         } else if (isQuySelected) {
@@ -422,17 +450,22 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
             }
             ArrayList<HOADONNHAPHANG> ls = thongKeTheoQuy(quy, nam);
             current = ls;
+
         }
+        setData(current);
+        setupTable();
     }// GEN-LAST:event_ThongkeButtonActionPerformed
 
     private boolean isThangSelected = false;
     private boolean isQuySelected = false;
 
     private void ThangButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ThangButtonActionPerformed
+        isThangSelected = true;
+        isQuySelected = false;
 
         if (ThangButton.isSelected()) {
-            QuyButton.setSelected(false); // Bỏ chọn checkbox quý
-            // Hiện input ngày tháng (JDateChooser)
+            QuyButton.setSelected(false);
+
             TimeFrom.setVisible(true);
             TimeTo.setVisible(true);
             FromText.setVisible(true);
@@ -445,8 +478,9 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         }
     }
 
-    // GEN-LAST:event_ThangButtonActionPerformed
     private void QuyButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_QuyButtonActionPerformed
+        isThangSelected = false;
+        isQuySelected = true;
         if (QuyButton.isSelected()) {
             ThangButton.setSelected(false); // Bỏ chọn checkbox tháng
             // Ẩn input ngày tháng
@@ -459,12 +493,16 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
                 quyPanel.setVisible(true);
             }
         }
-        JPanel quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+        quyPanel = new JPanel(new GridLayout(2, 2, 5, 5));
+        if (txtQuy == null) {
+            txtQuy = new JTextField();
+        }
+        if (txtNam == null) {
+            txtNam = new JTextField();
+        }
         quyPanel.add(new JLabel("Nhập quý (1-4):"));
-        txtQuy = new JTextField();
         quyPanel.add(txtQuy);
         quyPanel.add(new JLabel("Nhập năm:"));
-        txtNam = new JTextField();
         quyPanel.add(txtNam);
         int result = JOptionPane.showConfirmDialog(this, quyPanel, "Thống kê theo quý",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -475,21 +513,42 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
         }
     }// GEN-LAST:event_QuyButtonActionPerformed
 
-    public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int thangfrom, int namfrom, int thangto, int namto) {
+    public ArrayList<HOADONNHAPHANG> thongKeTheoThang(int ngayfrom, int thangfrom, int namfrom, int ngayto, int thangto, int namto) {
         ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-        // Khởi tạo thời gian bắt đầu (đầu tháng from)
-        Calendar calFrom = Calendar.getInstance();
-        calFrom.set(namfrom, thangfrom - 1, 1); // Lưu ý: tháng tính từ 0
-
-        // Khởi tạo thời gian kết thúc (cuối tháng to)
-        Calendar calTo = Calendar.getInstance();
-        calTo.set(namto, thangto - 1, 1);
-        calTo.set(Calendar.DAY_OF_MONTH, calTo.getActualMaximum(Calendar.DAY_OF_MONTH)); // Lấy ngày cuối cùng
-        // của tháng
-        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-            java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
-            if (ngayNhap != null && !ngayNhap.before(calFrom.getTime())
-                    && !ngayNhap.after(calTo.getTime())) {
+        for (HOADONNHAPHANG cthd : lsnh) {
+            Date ngayNhap = new Date(cthd.getNgayNhap().getTime());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(ngayNhap);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH) + 1;
+            int year = cal.get(Calendar.YEAR);
+            boolean inRange = false;
+            if (year == namfrom && year == namto) {
+                if (month == thangfrom && month == thangto) {
+                    inRange = (day >= ngayfrom && day <= ngayto);
+                } else if (month == thangfrom) {
+                    inRange = (day >= ngayfrom);
+                } else if (month == thangto) {
+                    inRange = (day <= ngayto);
+                } else {
+                    inRange = (month > thangfrom && month < thangto);
+                }
+            } else if (year == namfrom) {
+                if (month == thangfrom) {
+                    inRange = (day >= ngayfrom);
+                } else {
+                    inRange = (month > thangfrom);
+                }
+            } else if (year == namto) {
+                if (month == thangto) {
+                    inRange = (day <= ngayto);
+                } else {
+                    inRange = (month < thangto);
+                }
+            } else {
+                inRange = (year > namfrom && year < namto);
+            }
+            if (inRange) {
                 result.add(cthd);
             }
         }
@@ -498,17 +557,28 @@ public class QKHDNHJPanel extends javax.swing.JPanel {
 
     public ArrayList<HOADONNHAPHANG> thongKeTheoQuy(int quy, int nam) {
         ArrayList<HOADONNHAPHANG> result = new ArrayList<>();
-        for (HOADONNHAPHANG cthd : dshd.getLSNH()) {
-            String maHDNH;
+
+        for (HOADONNHAPHANG cthd : lsnh) {
             java.util.Date ngayNhap = new java.util.Date(cthd.getNgayNhap().getTime());
             Calendar cal = Calendar.getInstance();
             cal.setTime(ngayNhap);
             int month = cal.get(Calendar.MONTH) + 1;
             int year = cal.get(Calendar.YEAR);
-            if (year == nam && ((quy - 1) * 3 + 1 <= month && month <= quy * 3)) {
+            boolean inRange = false;
+            // So sánh năm và tháng theo quý
+            if (year == nam) {
+                if ((quy == 1 && month >= 1 && month <= 3)
+                        || (quy == 2 && month >= 4 && month <= 6)
+                        || (quy == 3 && month >= 7 && month <= 9)
+                        || (quy == 4 && month >= 10 && month <= 12)) {
+                    inRange = true;
+                }
+            }
+            if (inRange) {
                 result.add(cthd);
             }
         }
+
         return result;
     }
 

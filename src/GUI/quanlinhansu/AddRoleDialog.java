@@ -13,10 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.Func_class;
 
-/**
- *
- * @author kiman
- */
 public class AddRoleDialog extends javax.swing.JDialog {
     USerDAO1 userDao = new USerDAO1();
     NhanVienDAO nvDao=new NhanVienDAO();
@@ -57,10 +53,10 @@ public class AddRoleDialog extends javax.swing.JDialog {
                 rows[i][4]="Đã khóa";
             }
             if(listUSER.get(i).getTrangThai()==1){
-                rows[i][4]="Chưa được cấp";
+                rows[i][4]="Có thể cấp";
             }
             if(listUSER.get(i).getTrangThai()==2){
-                rows[i][4]="Đã được cấp";
+                rows[i][4]="Không thể cấp";
             }
         }
         DefaultTableModel model=new DefaultTableModel(rows,colNames);
@@ -171,7 +167,7 @@ public class AddRoleDialog extends javax.swing.JDialog {
         }
         int idUser=Integer.parseInt(table_TK.getValueAt(vitriRow,0).toString());
         String statusTK = table_TK.getValueAt(vitriRow, 4).toString();
-        if (statusTK.equals("Chưa được cấp")) {
+        if (statusTK.equals("Có thể cấp")) {
             int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn cấp tài khoản cho nhân viên này",
                     "Xác nhận cấp", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION) {
@@ -185,8 +181,8 @@ public class AddRoleDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Tài khoản đã bị khóa không thể cấp","Error",0);
             return;
         }
-        if(statusTK.equals("Đã được cấp")){
-            JOptionPane.showMessageDialog(null,"Tài khoản đã được cấp","Error",0);
+        if(statusTK.equals("Không thể cấp")){
+            JOptionPane.showMessageDialog(null,"Tài khoản không thể cấp","Error",0);
             return;
         }
     }//GEN-LAST:event_btn_capTKActionPerformed

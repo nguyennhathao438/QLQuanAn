@@ -237,78 +237,72 @@ public class QuanKhoDAO {
         } 
         return cthd;
     }
-    public void themHDNH(CTHOADONNH hdnh,String maNCC,String[] maNL){ 
-         String queryHD = "INSERT INTO HOADONNH (maHDNH,ngayNhap,trangThai,maNCC,userID) VALUES(?,?,1,?,?) "; 
-         String queryCTHD = "INSERT INTO CTHOADONNH (maHDNH,maNL,soLuong,gia,hsd) VALUES(?,?,?,?,?)";
-         try(Connection conn = getConnection();
-            PreparedStatement stmthd = conn.prepareStatement(queryHD);
-                 PreparedStatement stmtcthd = conn.prepareStatement(queryCTHD)) {
-            stmthd.setString(1,hdnh.getMaHDNH());
+    public void themHDNH(CTHOADONNH hdnh, String maNCC, String[] maNL) {
+        String queryHD = "INSERT INTO HOADONNH (maHDNH,ngayNhap,trangThai,maNCC,userID) VALUES(?,?,1,?,?) ";
+        String queryCTHD = "INSERT INTO CTHOADONNH (maHDNH,maNL,soLuong,gia,hsd) VALUES(?,?,?,?,?)";
+        try (Connection conn = getConnection(); PreparedStatement stmthd = conn.prepareStatement(queryHD); PreparedStatement stmtcthd = conn.prepareStatement(queryCTHD)) {
+            stmthd.setString(1, hdnh.getMaHDNH());
             stmthd.setDate(2, new java.sql.Date(hdnh.getNgayNhap().getTime()));
-            stmthd.setString(3,maNCC);
+            stmthd.setString(3, maNCC);
             stmthd.setInt(4, hdnh.getMangLam());
-             stmthd.executeUpdate();
-             int i=0;
-             for(NLNhap a:hdnh.getDsnlnhap()){ 
-                 stmtcthd.setString(1,hdnh.getMaHDNH());
-                 stmtcthd.setString(2,maNL[i]);
-                 stmtcthd.setFloat(3,a.getSoLuong() );
-                 stmtcthd.setDouble(4, a.getGia());
-                 stmtcthd.setDate(5, new java.sql.Date(a.getHsd().getTime()));
-                 stmtcthd.addBatch();
-                 i++;
-             }
-             stmtcthd.executeBatch();
-        }catch(SQLException ex){ 
+            stmthd.executeUpdate();
+            int i = 0;
+            for (NLNhap a : hdnh.getDsnlnhap()) {
+                stmtcthd.setString(1, hdnh.getMaHDNH());
+                stmtcthd.setString(2, maNL[i]);
+                stmtcthd.setFloat(3, a.getSoLuong());
+                stmtcthd.setDouble(4, a.getGia());
+                stmtcthd.setDate(5, new java.sql.Date(a.getHsd().getTime()));
+                stmtcthd.addBatch();
+                i++;
+            }
+            stmtcthd.executeBatch();
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
     //Mon An
-    public void layDSMonAn(DSMonAn dsma){ 
-        String query="SELECT *FROM MONAN";
-        try(Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)){ 
+    public void layDSMonAn(DSMonAn dsma) {
+        String query = "SELECT *FROM MONAN";
+        try (Connection conn = getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                  MONAN ma=new MONAN();
-                         ma.setMaMA(rs.getString("maMA"));
-                    ma.setTenMA(rs.getString("tenMA"));
-                          ma.setLoaiMA(rs.getString("loaiMA"));
-                  ma.setMoTa(rs.getString("moTa"));
-                  ma.setGia(rs.getDouble("gia"));
-                  ma.setTrangThai(rs.getInt("trangThai"));         
-            dsma.themMA(ma);  
-           
-        }            
-        }catch (SQLException ex) {
+                MONAN ma = new MONAN();
+                ma.setMaMA(rs.getString("maMA"));
+                ma.setTenMA(rs.getString("tenMA"));
+                ma.setLoaiMA(rs.getString("loaiMA"));
+                ma.setMoTa(rs.getString("moTa"));
+                ma.setGia(rs.getDouble("gia"));
+                ma.setTrangThai(rs.getInt("trangThai"));
+                dsma.themMA(ma);
+
+            }
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }        
+        }
     }
-    public void layMonAnDcBan(DSMonAn dsma){ 
-        String query="SELECT MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ,MIN(FLOOR(NGUYENLIEU.tongSoLuong / THANHPHAN.soLuongNL)) AS soLuongCoTheBan\n" +
-"FROM MONAN \n" +
-"JOIN THANHPHAN ON MONAN.maMA= THANHPHAN.maMA\n" +
-"JOIN NGUYENLIEU ON THANHPHAN.maNL = NGUYENLIEU.maNL\n" +
-"GROUP BY MONAN.maMA ,MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ";
-        try(Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)){ 
+    public void layMonAnDcBan(DSMonAn dsma) {
+        String query = "SELECT MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ,MIN(FLOOR(NGUYENLIEU.tongSoLuong / THANHPHAN.soLuongNL)) AS soLuongCoTheBan\n"
+                + "FROM MONAN \n"
+                + "JOIN THANHPHAN ON MONAN.maMA= THANHPHAN.maMA\n"
+                + "JOIN NGUYENLIEU ON THANHPHAN.maNL = NGUYENLIEU.maNL\n"
+                + "GROUP BY MONAN.maMA ,MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ";
+        try (Connection conn = getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                  MONAN ma=new MONAN(
-                          rs.getString("maMA"),
-                  rs.getString("tenMA"),
-                          rs.getString("loaiMA"),
-                  rs.getString("moTa"),
-                  rs.getDouble("gia"),
-                  rs.getInt("trangThai"),
-                 rs.getInt("soLuongCoTheBan")
-                  );
-            dsma.themMA(ma);  
-           
-        }            
-        }catch (SQLException ex) {
+                MONAN ma = new MONAN(
+                        rs.getString("maMA"),
+                        rs.getString("tenMA"),
+                        rs.getString("loaiMA"),
+                        rs.getString("moTa"),
+                        rs.getDouble("gia"),
+                        rs.getInt("trangThai"),
+                        rs.getInt("soLuongCoTheBan")
+                );
+                dsma.themMA(ma);
+
+            }
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }        
+        }
     }
     public void themMonAn(MONAN ma){ 
         String query="INSERT INTO MONAN(maMA,tenMA,loaiMA,moTa,gia,trangThai) VALUES (?,?,?,?,?,2)" ;

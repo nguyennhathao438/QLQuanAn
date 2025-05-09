@@ -30,7 +30,7 @@ public class DetailsCongViecDialog extends javax.swing.JDialog {
         jtf_tenCV.setEditable(false);
         jtf_luongCoBan.setEditable(false);
         jtf_phuCap.setEditable(false);
-        func.setUpBtnTwo(jButton1, Color.RED, Color.RED, new Color(211,218,211),14);
+        func.setUpBtnTwo(jButton1, Color.RED, Color.RED, Color.WHITE,14);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -73,7 +73,7 @@ public class DetailsCongViecDialog extends javax.swing.JDialog {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(250, 255, 250));
+        jPanel2.setBackground(new java.awt.Color(211, 218, 211));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên công việc");
