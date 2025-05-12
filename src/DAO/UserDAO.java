@@ -82,6 +82,7 @@ public class UserDAO {
     public void dangXuat(int id){ 
          toggleTrangThaiUser(id);
     }
+    
     public int getIDUserLogin() {
         int id = 0;
         String query = "SELECT id FROM USERS WHERE trangThai=3";

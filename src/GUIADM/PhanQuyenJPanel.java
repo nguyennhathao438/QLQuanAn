@@ -30,15 +30,6 @@ public class PhanQuyenJPanel extends JPanel {
     private DefaultTableModel model;
     private RolePermissionDAO dao = new RolePermissionDAO();
     Func_class func=new Func_class();
-    public void setUpTable(){
-        func.centerTable(table);
-        table.setBackground(Color.white);
-        table.setShowVerticalLines(true);
-        table.setShowHorizontalLines(true);
-        table.setFillsViewportHeight(true);
-        Font font_hearderTable=new Font("Arial",Font.BOLD,13);
-        table.getTableHeader().setFont(font_hearderTable);
-    }
     public PhanQuyenJPanel() {
         setLayout(new BorderLayout());
 
@@ -131,7 +122,15 @@ public class PhanQuyenJPanel extends JPanel {
         });
         setUpTable();
     }
-
+    public void setUpTable() {
+        func.centerTable(table);
+        table.setBackground(Color.white);
+        table.setShowVerticalLines(true);
+        table.setShowHorizontalLines(true);
+        table.setFillsViewportHeight(true);
+        Font font_hearderTable = new Font("Arial", Font.BOLD, 13);
+        table.getTableHeader().setFont(font_hearderTable);
+    }
     private void loadData() {
         model.setRowCount(0);
         List<RolePermissionDTO> list = dao.getAllRolePermissions();

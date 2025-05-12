@@ -9,47 +9,46 @@ import DTO.LuongDTO;
 import util.ConnectedDatabase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class LuongDAO {
     public int insertLuong(LuongDTO luong) {
         try {
-            String sqlAddLuong = "INSERT INTO Luong(maBCC, luongThuong, luongThucTe, cacKhoanTru, thucLanh) "
-                    + "VALUES (?,?,?,?,?)";
+            String sqlAddLuong = "INSERT INTO Luong(maBCC, luongThucTe, cacKhoanTru, thucLanh) "
+                    + "VALUES (?,?,?,?)";
             PreparedStatement ps;
             ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlAddLuong);
             ps.setInt(1, luong.getMaBCC());
-            ps.setDouble(2, luong.getLuongThuong());
-            ps.setDouble(3, luong.getLuongThucTe());
-            ps.setDouble(4, luong.getCacKhoanTru());
-            ps.setDouble(5, luong.getThucLanh());
+            ps.setDouble(2, luong.getLuongThucTe());
+            ps.setDouble(3, luong.getCacKhoanTru());
+            ps.setDouble(4, luong.getThucLanh());
 
             if (ps.executeUpdate() > 0) {
                 return 1;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
     public int updateLuong(LuongDTO luong) {
         String sqlUpdate = "UPDATE Luong "
-                + "SET maBCC=?, luongThuong=?, luongThucTe=?, cacKhoanTru=?, thucLanh=? WHERE maLuong=?";
+                + "SET maBCC=?, luongThucTe=?, cacKhoanTru=?, thucLanh=? WHERE maLuong=?";
         PreparedStatement ps;
         try {
             ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlUpdate);
             ps.setInt(1, luong.getMaBCC());
-            ps.setDouble(2, luong.getLuongThuong());
-            ps.setDouble(3, luong.getLuongThucTe());
-            ps.setDouble(4, luong.getCacKhoanTru());
-            ps.setDouble(5, luong.getThucLanh());
-            ps.setInt(6, luong.getMaLuong());
+            ps.setDouble(2, luong.getLuongThucTe());
+            ps.setDouble(3, luong.getCacKhoanTru());
+            ps.setDouble(4, luong.getThucLanh());
+            ps.setInt(5, luong.getMaLuong());
 
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Cập nhật lương nhân viên thành công", "Success", 1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
@@ -63,7 +62,7 @@ public class LuongDAO {
             if(ps.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null,"Xóa Lương thành công","Sucess",1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
@@ -75,7 +74,6 @@ public class LuongDAO {
                 + "WHERE c.thangChamCong = ? AND c.namChamCong = ?";
         PreparedStatement ps;
         ResultSet rs;
-
         try {
             ps = ConnectedDatabase.getConnectedDB().prepareStatement(sqlSelectAll);
             ps.setInt(1, month);  // Set tháng
@@ -85,21 +83,18 @@ public class LuongDAO {
             while (rs.next()) {
                 int maLuong = rs.getInt("maLuong");
                 int maBCC = rs.getInt("maBCC");
-                double luongThuong = rs.getDouble("luongThuong");
                 double luongThucTe = rs.getDouble("luongThucTe");
                 double cacKhoanTru = rs.getDouble("cacKhoanTru");
                 double thucLanh = rs.getDouble("thucLanh");
 
-                LuongDTO luongDTO = new LuongDTO(maLuong, maBCC, luongThuong, luongThucTe, cacKhoanTru, thucLanh);
+                LuongDTO luongDTO = new LuongDTO(maLuong, maBCC, luongThucTe, cacKhoanTru, thucLanh);
 
                 // Thêm đối tượng LuongDTO vào danh sách kết quả
                 listLuong.add(luongDTO);
             }
-        } catch (Exception e) {
-            // Nếu có lỗi, in ra chi tiết lỗi
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         // Trả về danh sách lương đã lọc theo tháng và năm
         return listLuong;
     }
@@ -114,7 +109,7 @@ public class LuongDAO {
             if (rs.next() && rs.getInt(1) > 0) {
                 return true;  // Nếu có kết quả thì trả về true
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;  // Nếu không có kết quả thì trả về false

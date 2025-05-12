@@ -26,11 +26,15 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -60,10 +64,102 @@ public class Func_class {
         //Gán center cho các jlabel của header table
         centerHeader.setHorizontalAlignment(JLabel.CENTER);
     }
+    public void setUpJScrollPane(JScrollPane scrollPane) {
+        if (scrollPane != null) {
+            scrollPane.setBorder(null);
+            JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+            verticalBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
+            verticalBar.setUI(new BasicScrollBarUI() {
+                @Override
+                protected void configureScrollBarColors() {
+                    this.thumbColor = new Color(180, 180, 180);  // Màu thanh kéo
+                    this.trackColor = new Color(245, 245, 245);  // Màu nền rãnh
+                }
+
+                @Override
+                protected JButton createDecreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                @Override
+                protected JButton createIncreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                private JButton createZeroButton() {
+                    JButton button = new JButton();
+                    button.setPreferredSize(new Dimension(0, 0));
+                    button.setMinimumSize(new Dimension(0, 0));
+                    button.setMaximumSize(new Dimension(0, 0));
+                    return button;
+                }
+            });
+        }
+    }
+    public void setUpTable(JTable table,JScrollPane scrollPane) {
+        table.setRowHeight(28);
+        table.setBackground(Color.WHITE);
+        table.setGridColor(new Color(230, 230, 230)); // Đường kẻ nhẹ
+        table.setShowGrid(true);
+        table.setFillsViewportHeight(true);
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(new Color(30, 144, 255)); // xanh dương
+        header.setForeground(Color.BLACK);
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        header.setReorderingAllowed(false);
+        header.setResizingAllowed(false);
+        // Màu nền xen kẽ các dòng và màu khi chọn
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? new Color(245, 245, 245) : Color.WHITE); // xen kẽ
+                } else {
+                    c.setBackground(new Color(173, 216, 230)); // màu khi chọn
+                }
+                return c;
+            }
+        });
+        if (scrollPane != null) {
+            scrollPane.setBorder(null);
+            JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+            verticalBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
+            verticalBar.setUI(new BasicScrollBarUI() {
+                @Override
+                protected void configureScrollBarColors() {
+                    this.thumbColor = new Color(180, 180, 180);  // Màu thanh kéo
+                    this.trackColor = new Color(245, 245, 245);  // Màu nền rãnh
+                }
+
+                @Override
+                protected JButton createDecreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                @Override
+                protected JButton createIncreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                private JButton createZeroButton() {
+                    JButton button = new JButton();
+                    button.setPreferredSize(new Dimension(0, 0));
+                    button.setMinimumSize(new Dimension(0, 0));
+                    button.setMaximumSize(new Dimension(0, 0));
+                    return button;
+                }
+            });
+        }
+    }
+
+ 
     public void cursorPointer(JLabel label){
         label.setCursor(new Cursor(Cursor.HAND_CURSOR) {
         });
     }
+    
     //Hàm ngăn chặn không cho nhập phím chữ
     public void notAllowText(JTextField jtf){
         jtf.addKeyListener(new KeyAdapter(){
@@ -85,15 +181,6 @@ public class Func_class {
                 }
             }
         });
-    }
-    public void setUpTable(JTable table){
-        table.setRowHeight(25);
-        table.setBackground(Color.white);
-        table.setShowVerticalLines(false);
-        table.setShowHorizontalLines(true);
-        table.setFillsViewportHeight(true);
-        Font font_hearderTable=new Font("Arial",Font.BOLD,13);
-        table.getTableHeader().setFont(font_hearderTable);
     }
     public void setUpJTF(JTextField jtf){
         jtf.setFont(new Font("Segoe UI", Font.PLAIN, 14));

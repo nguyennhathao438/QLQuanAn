@@ -37,12 +37,13 @@ public class UserFormPanel extends javax.swing.JDialog {
     USerDAO1 dao = new USerDAO1();
     UserManagerPanel userPanel;
     Func_class func = new Func_class();
-    public UserFormPanel(java.awt.Frame parent, boolean modal,UserManagerPanel userPanel,User user) {
+    public UserFormPanel(java.awt.Frame parent, boolean modal,UserManagerPanel userPanel,User user,String title) {
         super(parent, modal);
         initComponents();
         this.userPanel=userPanel;
         this.user=user;
         func.setUpComBoBox(comboVaiTro);
+        this.setTitle(title);
         this.setLocationRelativeTo(null);
         initUI();
         loadVaiTro();
@@ -83,7 +84,7 @@ public class UserFormPanel extends javax.swing.JDialog {
         btnLuu.setMargin(new Insets(8, 20, 8, 20)); // top, left, bottom, right
         btnHuy.setMargin(new Insets(8, 20, 8, 20));
         btnLuu.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
-btnHuy.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+        btnHuy.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         add(formPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }

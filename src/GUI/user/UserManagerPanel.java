@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
-import util.DropShadowBorder;
 import util.Func_class;
 
 /**
@@ -37,11 +36,12 @@ public class UserManagerPanel extends javax.swing.JPanel {
     public void khoiTao(){
         setIcon();
         setUpTable();
-        setBorder();
         setUpJTF();
         setUpBtn();
         setTextHidden();
         setMouseClick();
+        fillComBoBOx();
+        setCursorPoiter();
     }
     public void setCursorPoiter(){
         func.cursorPointer(jlabel_add);
@@ -60,28 +60,31 @@ public class UserManagerPanel extends javax.swing.JPanel {
     public void setUpJTF(){
         func.setUpJTF(jtf_find);
     }
-    public void setBorder(){
-        panel_chucNang.setBorder(new DropShadowBorder(1,Color.BLACK));
-        panel_timKiem.setBorder(new DropShadowBorder(1,Color.BLACK));
-    }
     public void setUpTable(){
         loadUsers(dao.getAllUsers());
         func.centerTable(table_user);
-        func.setUpTable(table_user);
+        func.setUpTable(table_user,jScrollPane1);
     }
     public void setIcon() {
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg", 0.055f));
         jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg", 0.85f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg", 0.75f));
-        btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg", 0.3f));
-        btn_look.setIcon(new FlatSVGIcon("./resources/icon/find.svg", 0.35f));
+        btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg", 0.25f));
+        btn_look.setIcon(new FlatSVGIcon("./resources/icon/look.svg", 0.6f));
+    }
+    public void fillComBoBOx() {
+        String[] cbbs = {"Tất cả","Tài khoản", "Tên USER", "Vai trò"};
+        func.setUpComBoBox(jComboBox1);
+        for (String item : cbbs) {
+            jComboBox1.addItem(item);
+        }
     }
     public void setMouseClick() {
         jlabel_add.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Window parentWindow = SwingUtilities.getWindowAncestor(UserManagerPanel.this);
-                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this, null).setVisible(true);
+                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this, null,"Thêm tài khoản").setVisible(true);
             }
         });
 
@@ -94,7 +97,7 @@ public class UserManagerPanel extends javax.swing.JPanel {
                     int id = (int) model.getValueAt(row, 0);
                     User user = dao.getUserById(id);
                     Window parentWindow = SwingUtilities.getWindowAncestor(UserManagerPanel.this);
-                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this, user).setVisible(true);
+                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this,user,"Sửa tài khoản").setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn người dùng để sửa.");
                 }
@@ -144,6 +147,10 @@ public class UserManagerPanel extends javax.swing.JPanel {
         jtf_find = new javax.swing.JTextField();
         btn_look = new javax.swing.JButton();
         btn_refresh = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+
+        panel_chucNang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jLabel4.setText("  Thêm");
 
@@ -160,11 +167,11 @@ public class UserManagerPanel extends javax.swing.JPanel {
                 .addGroup(panel_chucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(jlabel_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(panel_chucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabel_update, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                    .addComponent(jlabel_update, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addGroup(panel_chucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlabel_delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,9 +192,9 @@ public class UserManagerPanel extends javax.swing.JPanel {
                     .addGroup(panel_chucNangLayout.createSequentialGroup()
                         .addComponent(jlabel_update, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_chucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addGroup(panel_chucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -204,12 +211,15 @@ public class UserManagerPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(table_user);
 
+        panel_timKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+
         btn_look.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_lookActionPerformed(evt);
             }
         });
 
+        btn_refresh.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         btn_refresh.setText("Làm mới");
         btn_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,27 +227,38 @@ public class UserManagerPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel1.setText("Tìm kiếm theo");
+
         javax.swing.GroupLayout panel_timKiemLayout = new javax.swing.GroupLayout(panel_timKiem);
         panel_timKiem.setLayout(panel_timKiemLayout);
         panel_timKiemLayout.setHorizontalGroup(
             panel_timKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_timKiemLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(panel_timKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_timKiemLayout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtf_find, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_look, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_timKiemLayout.setVerticalGroup(
             panel_timKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_timKiemLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(4, 4, 4)
                 .addGroup(panel_timKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtf_find)
                     .addComponent(btn_look, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jtf_find)
+                    .addComponent(jComboBox1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -246,24 +267,24 @@ public class UserManagerPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(panel_chucNang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panel_timKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panel_chucNang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_timKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel_chucNang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_timKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -275,24 +296,41 @@ public class UserManagerPanel extends javax.swing.JPanel {
 
     private void btn_lookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookActionPerformed
         String find_text = jtf_find.getText().toLowerCase();
+        String choose_cbb = jComboBox1.getSelectedItem().toString();
         List<User> listUser = dao.getAllUsers();
         listUserTemp.clear();
         for (User u : listUser) {
             String id = String.valueOf(u.getId()).toLowerCase();
-            if (id.contains(find_text) || u.getTaiKhoan().toLowerCase().contains(find_text)
-                    || u.getTen().toLowerCase().contains(find_text) || u.getVaiTro().toLowerCase().contains(find_text)) {
-                listUserTemp.add(u);
+            if (choose_cbb.equals("Tất cả")) {
+                if (id.contains(find_text) || u.getTaiKhoan().toLowerCase().contains(find_text)
+                        || u.getTen().toLowerCase().contains(find_text) || u.getVaiTro().toLowerCase().contains(find_text)) {
+                    listUserTemp.add(u);
+                }
+            } else if (choose_cbb.equals("Tài khoản")) {
+                if (u.getTaiKhoan().toLowerCase().contains(find_text)) {
+                    listUserTemp.add(u);
+                }
+            } else if (choose_cbb.equals("Tên USER")) {
+                if (u.getTen().toLowerCase().contains(find_text)) {
+                    listUserTemp.add(u);
+                }
+            } else {
+                if (u.getVaiTro().toLowerCase().contains(find_text)) {
+                    listUserTemp.add(u);
+                }
             }
         }
         loadUsers(listUserTemp);
         func.centerTable(table_user);
-        func.setUpTable(table_user);
+        func.setUpTable(table_user, jScrollPane1);
     }//GEN-LAST:event_btn_lookActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_look;
     private javax.swing.JButton btn_refresh;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

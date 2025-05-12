@@ -22,6 +22,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
         design();
         func.notAllowNumber(text_ten);
         func.notAllowText(Text_SDT);
+        this.setTitle("Thêm khách hàng");
     }
     public void design(){
         func.setUpBtnTwo(btn_them, Color.GREEN, Color.GREEN,new Color(211,218,211),14);
@@ -54,7 +55,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(243, 243, 243));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -111,7 +112,7 @@ public class AddKhachHangDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Text_SDT)
                     .addComponent(Text_DiaChi))

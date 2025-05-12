@@ -10,9 +10,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-
     UserDAO userDAO = new UserDAO();
-
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
@@ -22,7 +20,6 @@ public class Login extends javax.swing.JFrame {
     public void setUp() {
         jLabel5.setIcon(new FlatSVGIcon("./resources/icon/employee_1.svg", 0.1f));
         jLabel6.setIcon(new FlatSVGIcon("./resources/icon/restaurantLogin.svg", 0.95f));
-        //jLabel5.setIcon(new FlatSVGIcon("./resources/icon/food.svg", 0.95f));
     }
 
     @SuppressWarnings("unchecked")

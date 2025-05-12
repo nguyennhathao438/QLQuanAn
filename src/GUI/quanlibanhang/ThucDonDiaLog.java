@@ -49,9 +49,9 @@ public class ThucDonDiaLog extends javax.swing.JDialog {
         setTextHidden();
         setIcon();
         setUpBtn();
-        fc.setUpTable(bangMenu);
+        fc.setUpTable(bangMenu,jScrollPane3);
         fc.centerTable(bangMenu);
-        fc.setUpTable(bangCTMenu);
+        fc.setUpTable(bangCTMenu,jScrollPane2);
         fc.centerTable(bangCTMenu);
     }
     public void setTextHidden(){

@@ -12,7 +12,6 @@ import java.awt.Frame;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -30,13 +29,13 @@ public class HoaDonPanel extends javax.swing.JPanel {
         initComponents();
         bangHoaDon.setModel(dtm);
         setData();
-        setIcon();
+        design();
         setTextHidden();
-        fc.setUpTable(bangHoaDon);
+        fc.setUpTable(bangHoaDon,jScrollPane1);
         fc.centerTable(bangHoaDon);
     }
-    public void setIcon(){
-        btn_check.setIcon(new FlatSVGIcon("./resources/icon/find.svg",0.35f));
+    public void design(){
+        btn_check.setIcon(new FlatSVGIcon("./resources/icon/look.svg",0.6f));
         btn_Reset.setIcon(new FlatSVGIcon("./resources/icon/Refresh_1.svg",0.04f));
         label_chiTiet.setIcon(new FlatSVGIcon("./resources/icon/details.svg",0.45f));
         label_pdf.setIcon(new FlatSVGIcon("./resources/icon/PDF.svg",0.06f));
@@ -55,7 +54,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     public void setData(){
         DecimalFormat df = new DecimalFormat("#,###");
         Giacb.removeAllItems();
-        Giacb.addItem("--Select Giá--");
+        Giacb.addItem("SẮP XẾP GIÁ");
         Giacb.addItem("Tăng dần");
         Giacb.addItem("Giảm dần");
         Giacb.setSelectedIndex(0);
@@ -117,7 +116,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_chiTiet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_chiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,16 +125,16 @@ public class HoaDonPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label_pdf, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                    .addComponent(label_pdf, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                     .addComponent(label_chiTiet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel9))
-                .addGap(196, 196, 196))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -178,7 +177,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
                 .addComponent(btn_Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Giacb, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,10 +227,11 @@ public class HoaDonPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -240,14 +240,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_searchActionPerformed
 
     private void bangHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bangHoaDonMouseClicked
-        int rows = bangHoaDon.getSelectedRow();
-        if(rows != -1){
-            String maHD = bangHoaDon.getValueAt(rows, 0).toString();
-            Object kh = bangHoaDon.getValueAt(rows, 1);
-            String maKH = Objects.toString(kh, "");
-            String thoigian = bangHoaDon.getValueAt(rows, 2).toString();
-            String ThanhTien = bangHoaDon.getValueAt(rows, 3).toString();
-        }
+
     }//GEN-LAST:event_bangHoaDonMouseClicked
 
     private void btn_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkActionPerformed
@@ -267,7 +260,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
             return;
         }
         String selected = Giacb.getSelectedItem().toString().trim();
-        if (selected.equals("--Select Giá--")) {
+        if (selected.equals("SẮP XẾP GIÁ")) {
             DecimalFormat df = new DecimalFormat("#,###");
             dtm.setRowCount(0);
             for (HoaDon hd : lsb.getLSB()) {
@@ -306,7 +299,15 @@ public class HoaDonPanel extends javax.swing.JPanel {
             return;
         }
         String maHD = dtm.getValueAt(row, 0).toString();
-        CTHOADONDiaLog dialog = new CTHOADONDiaLog((Frame) SwingUtilities.getWindowAncestor(this), true, maHD);
+        String tenKH;
+        Object kh = bangHoaDon.getValueAt(row, 1);
+        if(kh==null)
+            tenKH = null ; 
+        else
+            tenKH = kh.toString();
+        String nguoiTaoDon = bangHoaDon.getValueAt(row, 2).toString();
+        String thoiGian = String.valueOf(bangHoaDon.getValueAt(row, 3).toString());
+        CTHOADONDiaLog dialog = new CTHOADONDiaLog((Frame) SwingUtilities.getWindowAncestor(this), true, maHD,tenKH,nguoiTaoDon,thoiGian);
         dialog.setVisible(true);
     }//GEN-LAST:event_label_chiTietMouseClicked
 

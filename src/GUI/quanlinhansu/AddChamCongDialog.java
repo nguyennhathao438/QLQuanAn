@@ -396,7 +396,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         }
         DefaultTableModel model=new DefaultTableModel(rows,colNames);
         table_NV=new JTable(model);
-        func.setUpTable(table_NV);
+        func.setUpTable(table_NV,null);
         func.centerTable(table_NV);
         JScrollPane scrollPane = new JScrollPane(table_NV);
         JPanel jpn_table=new JPanel(new BorderLayout());
@@ -409,12 +409,10 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         JPanel panel_bottom=new JPanel(new FlowLayout());
         btnThem=new JButton("Thêm chấm công");
         btnThongKe=new JButton("Thống kê");
-        func.setUpBtn(btnThem,Color.WHITE,Color.CYAN);
-        func.setUpBtn(btnThongKe,Color.WHITE,Color.ORANGE);
+        func.setUpBtnTwo(btnThem,Color.GREEN,Color.GREEN,new Color(211,218,211),14);
+        func.setUpBtnTwo(btnThongKe,Color.CYAN,Color.CYAN,new Color(211,218,211),14);
         btnThongKe.setFocusPainted(false);
         btnThem.setFocusPainted(false);
-        btnThem.setBackground(Color.WHITE);
-        btnThongKe.setBackground(Color.WHITE);
         btnThem.setPreferredSize(new Dimension(150,40));
         btnThongKe.setPreferredSize(new Dimension(130,40));
         panel_bottom.add(btnThem);

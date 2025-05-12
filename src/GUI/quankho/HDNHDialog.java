@@ -43,6 +43,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     ArrayList<NLNhap> dsnlnhap=new ArrayList();
     int index=0;
     Func_class func=new Func_class();
+
     public HDNHDialog(java.awt.Frame parent, boolean modal,QKHDNHJPanel quankhoPanel) {
         super(parent, modal);
         initComponents();
@@ -65,7 +66,8 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     public void setUpTable(){
         setData();
         func.centerTable(bangNL);
-        func.setUpTable(bangNL);
+        func.setUpTable(bangNL,jScrollPane2);
+        func.setUpJScrollPane(jScrollPane3);
     }
     public void design(){
        func.setUpBtnTwo(addNL, Color.GREEN, Color.GREEN, Color.WHITE, 14);
@@ -135,6 +137,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel3.setBackground(new java.awt.Color(243, 243, 243));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tạo Hoá Đơn"));
 
         jLabel1.setText("Số Lượng");
@@ -346,7 +349,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         if(index == 0){
-            JOptionPane.showMessageDialog(rootPane, "Vui long them nguyen lieu");
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng thêm nguyên liệu");
             return ;
         }
         UserDAO us = new UserDAO();
@@ -398,15 +401,15 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
     private boolean kiemTra(){ 
         int row=bangNL.getSelectedRow();
         if(row == -1){ 
-            JOptionPane.showMessageDialog(this, "Vui long click vao nguyen lieu");
+            JOptionPane.showMessageDialog(this, "Vui lòng click vào nguyên liệu");
             return false;
         }else{ 
             if(gia.getText() == ""){ 
-               JOptionPane.showMessageDialog(this, "Vui long nhap gia");
+               JOptionPane.showMessageDialog(this, "Vui lòng nhập giá");
                return false;
             }  
             if(hansudung.getDate() == null){ 
-                JOptionPane.showMessageDialog(this, "Vui long nhap ngay het han");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập ngày hết hạn");
                return false;
             }
             Date today= new Date();
@@ -416,7 +419,7 @@ DefaultListModel<NHACUNGCAP> dlm=new DefaultListModel();
                return false;
             }
             if(soLuong.getText() == ""){ 
-                JOptionPane.showMessageDialog(this, "Vui long nhap so luong");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng");
                return false;
             }
             

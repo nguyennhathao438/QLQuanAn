@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.CTHOADON;
+import DTO.CTHOADON; 
 import DTO.DSKhach;
 import DTO.HoaDon;
 import DTO.LICHSUBAN;
@@ -21,14 +21,12 @@ public class QuanHangDAO {
         return ConnectedDatabase.getConnectedDB();
     }
     // lam viec voi Khach Hang
-    public void LayKH(DSKhach dsk){
+    public void LayKH(DSKhach dsk) {
         String query = "SELECT maKH,tenKH,loaiKH,soDienThoai,diaChi FROM KHACHHANG WHERE trangThai = 1";
-        try(Connection conn = getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query)){
+        try (Connection conn = getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 khachDTO kh = new khachDTO(
-                            rs.getString("maKH"),
+                        rs.getString("maKH"),
                         rs.getString("tenKH"),
                         rs.getString("loaiKH"),
                         rs.getString("soDienThoai"),
@@ -36,48 +34,66 @@ public class QuanHangDAO {
                 );
                 dsk.themKhach(kh);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public void themKH(khachDTO kh){
-        String query="INSERT INTO KHACHHANG(maKH,tenKH,loaiKH,soDienThoai,diaChi,trangThai) VALUES (?,?,?,?,?,1)" ;
-        try(Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1,kh.getMaKH());
-            stmt.setString(2,kh.getTenkhach());
-            stmt.setString(3,kh.getLoaiKhach());
-            stmt.setString(4,kh.getSDT());
-            stmt.setString(5,kh.getDiachi());
+    
+    public void themKH(khachDTO kh) {
+        String query = "INSERT INTO KHACHHANG(maKH,tenKH,loaiKH,soDienThoai,diaChi,trangThai) VALUES (?,?,?,?,?,1)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, kh.getMaKH());
+            stmt.setString(2, kh.getTenkhach());
+            stmt.setString(3, kh.getLoaiKhach());
+            stmt.setString(4, kh.getSDT());
+            stmt.setString(5, kh.getDiachi());
             stmt.executeUpdate();
-        }catch(SQLException ex){ 
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public void suaKH(khachDTO kh){
-        String sql="UPDATE KHACHHANG SET tenKH=?,loaiKH=?,soDienThoai=?,diaChi=? WHERE maKH=?;";
-        try(Connection conn =getConnection();
-                PreparedStatement stmt =conn.prepareStatement(sql)){            
-            stmt.setString(1,kh.getTenkhach());
-            stmt.setString(2,kh.getLoaiKhach());
-            stmt.setString(3,kh.getSDT());
-            stmt.setString(4,kh.getDiachi());
-            stmt.setString(5,kh.getMaKH());
+    
+    public void suaKH(khachDTO kh) {
+        String sql = "UPDATE KHACHHANG SET tenKH=?,loaiKH=?,soDienThoai=?,diaChi=? WHERE maKH=?;";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, kh.getTenkhach());
+            stmt.setString(2, kh.getLoaiKhach());
+            stmt.setString(3, kh.getSDT());
+            stmt.setString(4, kh.getDiachi());
+            stmt.setString(5, kh.getMaKH());
             stmt.executeUpdate();
-        }catch(SQLException e){ 
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void xoaKH(String maKH) throws SQLException{
-        String query ="UPDATE KHACHHANG SET trangThai = 0 WHERE maKH = ?;";
-                try(Connection con = getConnection();
-                        PreparedStatement stmt = con.prepareStatement(query)){
-                    stmt.setString(1, maKH);
-                    stmt.executeUpdate();
-                } catch(SQLException e){
-                    e.printStackTrace();
-                }
+
+    public void xoaKH(String maKH) throws SQLException {
+        String query = "UPDATE KHACHHANG SET trangThai = 0 WHERE maKH = ?;";
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    public String getTenKhachHangByMaKH(String maKH) {
+        String tenKH = null;
+        String query = "SELECT tenKH FROM KHACHHANG WHERE maKH = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    tenKH = rs.getString("tenKH");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return tenKH;
+    }
+    
+    
     // Hoa Don
     public void themCTHDBH(MonAnBan mab,String soban){ 
         String maHDtam ="HDBAN"+soban;
@@ -125,12 +141,10 @@ public class QuanHangDAO {
         }
         
     }
-    public void LayHDBH(LICHSUBAN lsb){
+    public void LayHDBH(LICHSUBAN lsb) {
         String query = "SELECT hd.maHD, hd.thoiGian, hd.thanhTien, kh.tenKH, hd.userID FROM HOADON hd LEFT JOIN KHACHHANG kh ON hd.maKH = kh.maKH WHERE maHD LIKE 'HD___'";
-        try(Connection con = getConnection();
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query)) {
-            while(rs.next()) {
+        try (Connection con = getConnection(); Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
                 lsb.ThemHDB(new HoaDon(
                         rs.getString("maHD"),
                         rs.getDate("thoiGian"),
@@ -140,24 +154,25 @@ public class QuanHangDAO {
                 )
                 );
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public CTHOADON LayHD(String maHD){
-        CTHOADON ct =new CTHOADON();
+
+    public CTHOADON LayHD(String maHD) {
+        CTHOADON ct = new CTHOADON();
         String query = "SELECT * FROM HOADON,CTHOADON,MONAN WHERE HOADON.maHD=CTHOADON.maHD AND CTHOADON.maMA=MONAN.maMA AND HOADON.maHD =?";
-        try(Connection con = getConnection();
-                PreparedStatement stmt = con.prepareStatement(query)) {
-           stmt.setString(1,maHD);
-           ResultSet rs= stmt.executeQuery();
-           ArrayList<MonAnBan> dsma = new ArrayList();
-           MonAnBan ma;
-            if(rs.next()){ 
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, maHD);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<MonAnBan> dsma = new ArrayList();
+            MonAnBan ma;
+            if (rs.next()) {
                 ct.setMaHoaDon(maHD);
                 ct.setMaKH(rs.getString("maKH"));
                 ct.setThanhTien(rs.getDouble("thanhTien"));
-                ct.setThoiGian( new java.sql.Date(rs.getDate("thoiGian").getTime()));
+                ct.setTenUser(rs.getInt("userID"));
+                ct.setThoiGian(new java.sql.Date(rs.getDate("thoiGian").getTime()));
                 ma = new MonAnBan();
                 ma.setMaMA(rs.getString("maMA"));
                 ma.setTenMA(rs.getString("tenMA"));
@@ -165,19 +180,19 @@ public class QuanHangDAO {
                 ma.setThanhtien(rs.getDouble("gia"));
                 dsma.add(ma);
             }
-           while(rs.next()){ 
-               ma = new MonAnBan();
+            while (rs.next()) {
+                ma = new MonAnBan();
                 ma.setMaMA(rs.getString("maMA"));
                 ma.setTenMA(rs.getString("tenMA"));
                 ma.setSoluong(rs.getInt("soLuongMA"));
                 ma.setThanhtien(rs.getDouble("gia"));
                 dsma.add(ma);
-           }
-           ct.setDsma(dsma);
-        }catch (SQLException ex) {
+            }
+            ct.setDsma(dsma);
+        } catch (SQLException ex) {
             Logger.getLogger(QuanHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return ct ;
+        return ct;
     }
     public CTHOADON LayCTHDBH(String hd){
         CTHOADON cthdbh = new CTHOADON();

@@ -4,40 +4,34 @@
  */
 package GUIADM;
 
-import DAO.RolePermissionDAO;
 import DTO.PermissionDTO;
 import DAO.RolePermissionDAO;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author THANH HIEU
  */
 public class PhanQuyenDialog extends JDialog {
-    private JTextField txtMaVT, txtTenVT;
-    private JPanel checkboxPanel;
-    private JButton btnSave;
-    private boolean isEdit;
+    JTextField txtMaVT, txtTenVT;
+    JPanel checkboxPanel;
+    JButton btnSave;
+    boolean isEdit;
 
-    private RolePermissionDAO dao = new RolePermissionDAO();
-    private List<JCheckBox> checkBoxes = new ArrayList<>();
+    RolePermissionDAO dao = new RolePermissionDAO();
+    List<JCheckBox> checkBoxes = new ArrayList<>();
 
     public PhanQuyenDialog(Frame parent, boolean isEdit, String maVTEdit, String tenVTEdit) {
         super(parent, isEdit ? "Sửa phân quyền" : "Thêm phân quyền", true);

@@ -22,6 +22,7 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
         qh.LayKH(dsk);
         laydulieu();
         design();
+        this.setTitle("Chỉnh sửa khách hàng");
         setLocationRelativeTo(null);
     }
     public void design(){
@@ -60,7 +61,7 @@ public class EditKhachHangDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(243, 243, 243));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

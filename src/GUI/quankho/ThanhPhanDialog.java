@@ -37,7 +37,8 @@ QuanKhoDAO kn=new QuanKhoDAO();
         bangNL.setModel(dtm);
         setBangNL();
         func.centerTable(bangNL);
-        func.setUpTable(bangNL);
+        func.setUpTable(bangNL,jScrollPane1);
+        func.setUpJScrollPane(jScrollPane2);
         func.setUpBtnTwo(addNL, Color.GREEN, Color.GREEN, Color.WHITE, 14);
         func.setUpBtnTwo(clearNL, Color.RED, Color.RED, Color.WHITE, 14);
         func.setUpBtnTwo(conFirm, Color.CYAN, Color.CYAN, Color.WHITE, 14);
@@ -142,8 +143,10 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel1.setText("Tên Nguyên Liệu");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setText("Số Lượng");
 
         tenNL.setBackground(new java.awt.Color(255, 255, 255));

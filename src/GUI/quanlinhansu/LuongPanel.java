@@ -114,12 +114,11 @@ public class LuongPanel extends javax.swing.JPanel {
             final double TIEN_TANG_CA = 45000;
 
             double luongNgay = luongCoBan / SO_NGAY_CONG_CHUAN;
-            double luongThucTe = luongNgay * soNgayLamViec * heSoLuong;
-            double luongThuong = soGioTangCa * TIEN_TANG_CA + phuCap;
+            double luongThucTe = (luongNgay * soNgayLamViec * heSoLuong)+(soGioTangCa*TIEN_TANG_CA)+phuCap;
             double cacKhoanTru = soNgayTre * TIEN_DI_TRE + soNgayNghi * luongNgay;
-            double luongThucLanh = luongThucTe + luongThuong - cacKhoanTru;
+            double luongThucLanh = luongThucTe - cacKhoanTru;
 
-            LuongDTO luong = new LuongDTO(maBCC, luongThuong, luongThucTe, cacKhoanTru, luongThucLanh);
+            LuongDTO luong = new LuongDTO(maBCC, luongThucTe, cacKhoanTru, luongThucLanh);
             luongDao.insertLuong(luong);
         }
         loadDataLuong();
@@ -127,15 +126,19 @@ public class LuongPanel extends javax.swing.JPanel {
     }
     
     public void loadDataLuong() {
-        this.removeAll(); // 👉 xóa hết components cũ trước khi add lại
-        this.setLayout(new BorderLayout()); // cần reset lại layout
-        this.add(jpanel_top, BorderLayout.NORTH); // 
+        this.removeAll(); // Xóa hết các components cũ trước khi add lại
+        this.setLayout(new BorderLayout()); // Reset lại layout
+        this.add(jpanel_top, BorderLayout.NORTH); // Thêm jpanel_top vào vị trí NORTH
+
         int selectMonth = getMonthCombobox();
         int selectYear = getYearCombobox();
         listLuong = luongDao.listLuong(selectMonth, selectYear);
-        String[] colNames = {"Mã Lương","ID-Họ tên", "Lương cơ bản", "Lương thực tế", "Lương thưởng", "Các khoản trừ", "Thực lãnh"};
+
+        String[] colNames = {"Mã Lương", "Mã NV-Họ Tên", "Lương Cơ Bản", "Lương Thực Tế","Các Khoản Trừ", "Thực Lãnh"};
         Object[][] rows = new Object[listLuong.size()][colNames.length];
         DecimalFormat df = new DecimalFormat("#,###");
+
+        // Tạo dữ liệu cho bảng
         for (int i = 0; i < listLuong.size(); i++) {
             rows[i][0] = listLuong.get(i).getMaLuong();
             mapChamCong = chamcongDao.mapChamCong();
@@ -151,20 +154,33 @@ public class LuongPanel extends javax.swing.JPanel {
             double luongCoBan = new LuongDAO().getLuongCoBanByMaLuong(listLuong.get(i).getMaLuong());
             rows[i][2] = df.format(luongCoBan);
             rows[i][3] = df.format(listLuong.get(i).getLuongThucTe());
-            rows[i][4] = df.format(listLuong.get(i).getLuongThuong());
-            rows[i][5] = df.format(listLuong.get(i).getCacKhoanTru());
-            rows[i][6] = df.format(listLuong.get(i).getThucLanh());
+            rows[i][4] = df.format(listLuong.get(i).getCacKhoanTru());
+            rows[i][5] = df.format(listLuong.get(i).getThucLanh());
         }
+
+        // Tạo bảng và mô hình dữ liệu
         DefaultTableModel model = new DefaultTableModel(rows, colNames);
         table_luong = new JTable(model);
-        func.setUpTable(table_luong);
+
+        // Giả sử func.setUpTable sẽ được sử dụng như sau
+        func.setUpTable(table_luong, null); // Bạn có thể truyền vào null nếu không cần trực tiếp dùng JScrollPane tại đây
+
+        // Căn giữa cho bảng
         func.centerTable(table_luong);
+
+        // Tạo JScrollPane chứa bảng
         JScrollPane scrollPane = new JScrollPane(table_luong);
+
+        // Tạo JPanel chứa JScrollPane
         JPanel jpn_table = new JPanel(new BorderLayout());
         jpn_table.add(scrollPane, BorderLayout.CENTER);
+
+        // Thêm JPanel chứa bảng vào UI
         this.add(jpn_table, BorderLayout.CENTER);
-        this.revalidate(); // 👉 cập nhật lại UI
+        this.revalidate(); // Cập nhật lại UI
         this.repaint();
+
+        // Điều chỉnh độ rộng cột
         table_luong.getColumnModel().getColumn(0).setPreferredWidth(45);
         table_luong.getColumnModel().getColumn(1).setPreferredWidth(150);
     }

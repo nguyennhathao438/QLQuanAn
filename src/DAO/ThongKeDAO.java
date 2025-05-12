@@ -1,7 +1,6 @@
 
 package DAO;
 
-import DTO.DSMonAn;
 import DTO.ThongKeThuChi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,9 +110,42 @@ public class ThongKeDAO {
         }
         return dstk;
     }
+    public ArrayList<ThongKeThuChi> thongKeLuongQuy(String nam){ 
+        ArrayList<ThongKeThuChi> dstk = new ArrayList();
+        String query = "USE QuanLyQuanAn;\n" +
+"\n" +
+"SELECT \n" +
+"    DATEPART(QUARTER, CAST(CONCAT(namChamCong, '-', thangChamCong, '-01') AS DATE)) AS Quy,\n" +
+"    SUM(Luong.ThucLanh) AS tong_tien\n" +
+"FROM \n" +
+"    ChamCong\n" +
+"JOIN \n" +
+"    Luong ON Luong.maBCC = ChamCong.maBCC\n" +
+"WHERE \n" +
+"    namChamCong = ?\n" +
+"GROUP BY \n" +
+"    DATEPART(QUARTER, CAST(CONCAT(namChamCong, '-', thangChamCong, '-01') AS DATE))\n" +
+"ORDER BY \n" +
+"    Quy ASC;";
+        try(Connection conn = getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)){ 
+            stmt.setString(1,nam);
+            ResultSet rs = stmt.executeQuery();
+            ThongKeThuChi tk ;
+            while(rs.next()){ 
+                tk= new ThongKeThuChi();
+                tk.setThoiGian(rs.getInt("Quy"));
+                tk.setSoTien(rs.getDouble("tong_tien"));
+                dstk.add(tk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dstk;
+    }
     public ArrayList<ThongKeThuChi> thongKeDoanhThuThang(String nam){ 
         ArrayList<ThongKeThuChi> dstk = new ArrayList();
-        String query = "SELECT thangChamCong as thang , ( ISNULL((SELECT SUM(thanhTien) FROM HOADON WHERE MONTH(thoiGian) = cc.thangChamCong AND YEAR(thoiGian)= cc.namChamCong ),0 ) - ISNULL((SELECT SUM(gia) FROM CTHOADONNH JOIN HOADONNH ON CTHOADONNH.maHDNH=HOADONNH.maHDNH WHERE MONTH(HOADONNH.ngayNhap) = cc.thangChamCong AND YEAR(HOADONNH.ngayNhap)= cc.namChamCong ),0) -ISNULL((SELECT SUM(thucLanh) FROM Luong JOIN ChamCong cc1 ON Luong.maBCC =cc1.maBCC WHERE cc1.thangChamCong = cc.thangChamCong AND cc1.namChamCong=cc.namChamCong),0) )as doanh_thu FROM ChamCong cc WHERE namChamCong = ? ORDER BY thang ASC";
+        String query = "SELECT thangChamCong as thang ,( ISNULL((SELECT SUM(thanhTien) FROM HOADON WHERE MONTH(thoiGian) = cc.thangChamCong AND YEAR(thoiGian)= cc.namChamCong ),0 ) - ISNULL((SELECT SUM(gia*soLuong) FROM CTHOADONNH JOIN HOADONNH ON CTHOADONNH.maHDNH=HOADONNH.maHDNH WHERE MONTH(HOADONNH.ngayNhap) = cc.thangChamCong AND YEAR(HOADONNH.ngayNhap)= cc.namChamCong ),0) -ISNULL((SELECT SUM(thucLanh) FROM Luong JOIN ChamCong cc1 ON Luong.maBCC =cc1.maBCC WHERE cc1.thangChamCong = cc.thangChamCong AND cc1.namChamCong=cc.namChamCong),0) )as doanh_thu FROM ChamCong cc WHERE namChamCong = ? ORDER BY thang ASC";
         try(Connection conn = getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)){ 
             stmt.setString(1,nam);

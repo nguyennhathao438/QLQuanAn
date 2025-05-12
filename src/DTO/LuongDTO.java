@@ -8,7 +8,6 @@ public class LuongDTO {
 
     private int maLuong;
     private int maBCC;
-    private double luongThuong;
     private double luongThucTe;
     private double cacKhoanTru;
     private double thucLanh;
@@ -16,17 +15,15 @@ public class LuongDTO {
     public LuongDTO() {
     }
 
-    public LuongDTO(int maLuong, int maBCC, double luongThuong, double luongThucTe, double cacKhoanTru, double thucLanh) {
+    public LuongDTO(int maLuong, int maBCC, double luongThucTe, double cacKhoanTru, double thucLanh) {
         this.maLuong = maLuong;
         this.maBCC = maBCC;
-        this.luongThuong = luongThuong;
         this.luongThucTe = luongThucTe;
         this.cacKhoanTru = cacKhoanTru;
         this.thucLanh = thucLanh;
     }
-    public LuongDTO(int maBCC, double luongThuong, double luongThucTe, double cacKhoanTru, double thucLanh) {
+    public LuongDTO(int maBCC, double luongThucTe, double cacKhoanTru, double thucLanh) {
         this.maBCC = maBCC;
-        this.luongThuong = luongThuong;
         this.luongThucTe = luongThucTe;
         this.cacKhoanTru = cacKhoanTru;
         this.thucLanh = thucLanh;
@@ -48,13 +45,6 @@ public class LuongDTO {
         this.maBCC = maBCC;
     }
 
-    public double getLuongThuong() {
-        return luongThuong;
-    }
-
-    public void setLuongThuong(double luongThuong) {
-        this.luongThuong = luongThuong;
-    }
 
     public double getLuongThucTe() {
         return luongThucTe;

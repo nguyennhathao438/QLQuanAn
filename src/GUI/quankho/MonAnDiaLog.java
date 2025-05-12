@@ -28,7 +28,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
         this.panel = panel;
         initComponents();
         kn.layDSMonAn(dsma);
-        setLocationRelativeTo(null);
+        this.setTitle("Thêm món ăn");
         setLocationRelativeTo(null);
         fc.notAllowNumber(tenMA);
         fc.notAllowText(gia);
@@ -53,6 +53,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 moTa.setText(a.getMoTa());
             }
         }
+        this.setTitle("Sửa món ăn");
         setLocationRelativeTo(null);
     }
  
@@ -76,20 +77,26 @@ QuanKhoDAO kn=new QuanKhoDAO();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(243, 243, 243));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Món Ăn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel1.setText("Mã Món Ăn");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setText("Tên Món Ăn");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel3.setText("Giá Bán");
 
         moTa.setColumns(20);
         moTa.setRows(5);
         jScrollPane1.setViewportView(moTa);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel4.setText("Mô Tả");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel5.setText("Loại Món Ăn");
 
         loaiMA.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kho", "Hấp", "Xào", "Chiên", "Nướng", "Nước", "Tráng Miệng", " " }));
@@ -112,9 +119,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                     .addComponent(jLabel3)
                     .addComponent(gia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel4)))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,7 +168,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(172, 172, 172)
                 .addComponent(submit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -174,7 +179,7 @@ QuanKhoDAO kn=new QuanKhoDAO();
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

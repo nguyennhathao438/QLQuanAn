@@ -1,11 +1,11 @@
 
 package export_file;
 import DAO.QuanHangDAO;
+import DAO.UserDAO;
 import DTO.CTHOADON;
 import DTO.LICHSUBAN;
 import DTO.MonAnBan;
 import java.io.FileOutputStream;
-import java.text.DecimalFormat;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.File;
@@ -18,29 +18,26 @@ public class XuatHoaDonBan {
     QuanHangDAO qh = new QuanHangDAO();
     CTHOADON cthd = new CTHOADON();
     CTHOADON hdb = new CTHOADON();
-    LICHSUBAN lsb = new LICHSUBAN();
+    UserDAO userDao = new UserDAO();
 
     public void XuatPDFBan(String mahd) {
         cthd = qh.LayCTHDBH(mahd);
         hdb = qh.LayHD(mahd);
+
         try {
-            // Tạo thư mục mặc định
-            File defaultDir = new File(System.getProperty("user.home") + "\\pdfXuatHoaDonBan");
+            File defaultDir = new File("C:\\pdf_HoaDonBan");
             if (!defaultDir.exists()) {
                 defaultDir.mkdirs();
             }
 
-            // Tự động tăng số thứ tự
             int nextNum = getNextPDFNumber(defaultDir);
-
-            // Mở hộp thoại lưu file
             JFileChooser fileChooser = new JFileChooser(defaultDir);
-            fileChooser.setDialogTitle("Chon noi luu file PDF");
+            fileChooser.setDialogTitle("Chọn nơi lưu file PDF");
             fileChooser.setSelectedFile(new File("hoadonban_" + nextNum + ".pdf"));
 
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection != JFileChooser.APPROVE_OPTION) {
-                return; // Người dùng hủy
+                return;
             }
 
             File selectedFile = fileChooser.getSelectedFile();
@@ -49,51 +46,122 @@ public class XuatHoaDonBan {
                 filePath += ".pdf";
             }
 
-            // Tạo tài liệu PDF
-            DecimalFormat df = new DecimalFormat("#,###.##");
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
             document.open();
 
-            Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-            Paragraph title = new Paragraph("HOA DON BAN HANG", titleFont);
+            BaseFont bf = BaseFont.createFont("resources/fonts/times.ttf", BaseFont.IDENTITY_H, true);
+            Font fontHeader = new Font(bf, 25, Font.BOLD);
+            Font fontTitle = new Font(bf, 14, Font.BOLD);
+            Font fontNormal = new Font(bf, 12);
+            Font fontBoldItalic = new Font(bf, 12, Font.BOLDITALIC);
+
+            // Header
+            PdfPTable titleRow = new PdfPTable(2);
+            titleRow.setWidthPercentage(100);
+            titleRow.setWidths(new float[]{6f, 4f});
+
+            PdfPCell leftTitle = new PdfPCell(new Phrase("HỆ THỐNG QUẢN LÝ QUÁN ĂN NHÓM 15", fontTitle));
+            leftTitle.setBorder(Rectangle.NO_BORDER);
+            leftTitle.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            String tgHienTai = java.time.LocalDateTime.now()
+                    .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            PdfPCell rightTime = new PdfPCell(new Phrase("Thời gian in hóa đơn: " + tgHienTai, fontNormal));
+            rightTime.setBorder(Rectangle.NO_BORDER);
+            rightTime.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            titleRow.addCell(leftTitle);
+            titleRow.addCell(rightTime);
+            document.add(titleRow);
+
+            document.add(new Paragraph("\n", fontNormal));
+
+            // Tiêu đề
+            Paragraph title = new Paragraph("HÓA ĐƠN BÁN HÀNG", fontHeader);
             title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingAfter(15);
             document.add(title);
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------"));
 
-            document.add(new Paragraph("Ma Hoa Don : " + hdb.getMaHoaDon()));
-            document.add(new Paragraph("Khach Hang : " + hdb.getMaKH()));
-            document.add(new Paragraph("Ngay Nhap : " + hdb.getThoiGian()));
-            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------"));
+            // Thông tin chung
+            System.out.println("Mã USER xuất hóa đơn bán là : "+hdb.getTenUser());
+            String nguoiTaoDon = userDao.getTenUserByID(hdb.getTenUser());
+            String tenKH = qh.getTenKhachHangByMaKH(hdb.getMaKH());
+            Paragraph thongtin = new Paragraph(String.format(
+                    "Mã Hóa Đơn: %s\nKhách Hàng: %s\nNgười Tạo Đơn: %s\nThời gian: %s\n\n",
+                    hdb.getMaHoaDon(), tenKH, nguoiTaoDon, hdb.getThoiGian()
+            ), fontNormal);
+            thongtin.setSpacingAfter(10);
+            document.add(thongtin);
 
+            // Bảng món ăn
             PdfPTable table = new PdfPTable(3);
+            table.setWidths(new float[]{5f, 2f, 3f});
             table.setWidthPercentage(100);
-            table.setSpacingBefore(10f);
-            table.setSpacingAfter(10f);
+            String[] headers = {"Tên món", "Số lượng", "Giá (VNĐ)"};
+            for (String col : headers) {
+                PdfPCell cell = new PdfPCell(new Phrase(col, fontTitle));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+            }
 
-            Font titleFontCell = new Font(Font.FontFamily.HELVETICA, 14);
-            table.addCell(new PdfPCell(new Phrase("Ten mon : ", titleFontCell)));
-            table.addCell(new PdfPCell(new Phrase("So Luong : ", titleFontCell)));
-            table.addCell(new PdfPCell(new Phrase("Gia : ", titleFontCell)));
-
+            double tong = 0;
             for (MonAnBan a : cthd.getDsma()) {
-                table.addCell(new PdfPCell(new Phrase(a.getTenMA())));
-                table.addCell(new PdfPCell(new Phrase(String.valueOf(a.getSoluong()))));
-                table.addCell(new PdfPCell(new Phrase(String.valueOf(a.getGia()))));
+                double gia = a.getGia();
+                tong += gia;
+
+                PdfPCell tenCell = new PdfPCell(new Phrase(a.getTenMA(), fontNormal));
+                tenCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tenCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+                PdfPCell slCell = new PdfPCell(new Phrase(String.valueOf(a.getSoluong()), fontNormal));
+                slCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                slCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+                PdfPCell giaCell = new PdfPCell(new Phrase(String.format("%,.0f", gia), fontNormal));
+                giaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                giaCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+                table.addCell(tenCell);
+                table.addCell(slCell);
+                table.addCell(giaCell);
             }
 
             document.add(table);
-            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------"));
-            String tongtien = df.format(hdb.getThanhTien());
-            document.add(new Paragraph("Tong Tien : " + tongtien + "đ"));
 
+            // Tổng cộng
+            Paragraph total = new Paragraph("\nTổng thành tiền: " + String.format("%,.0f", tong) + " VNĐ", fontTitle);
+            total.setAlignment(Element.ALIGN_RIGHT);
+            document.add(total);
+            document.add(new Paragraph("\n\n\n", fontNormal));
+
+            // Chữ ký
+            PdfPTable tableKy = new PdfPTable(3);
+            tableKy.setWidthPercentage(100f);
+            String[] labels = {"Người lập hóa đơn", "Người giao", "Khách hàng"};
+            String[] subs = {"(Ký và ghi rõ họ tên)", "(Ký và ghi rõ họ tên)", "(Ký và ghi rõ họ tên)"};
+
+            for (String label : labels) {
+                PdfPCell cell = new PdfPCell(new Phrase(label, fontBoldItalic));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tableKy.addCell(cell);
+            }
+            for (String sub : subs) {
+                PdfPCell cell = new PdfPCell(new Phrase(sub, fontNormal));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tableKy.addCell(cell);
+            }
+
+            document.add(tableKy);
             document.close();
 
-            JOptionPane.showMessageDialog(null, "Xuat file PDF thanh cong!");
+            JOptionPane.showMessageDialog(null, "Xuất file PDF thành công!");
+
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Loi khi xuat PDF: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Lỗi khi xuất PDF: " + e.getMessage());
         }
     }
 

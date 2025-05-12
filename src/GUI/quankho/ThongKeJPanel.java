@@ -10,6 +10,7 @@ import DTO.ThongKeThuChi;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -93,6 +94,31 @@ public class ThongKeJPanel extends javax.swing.JPanel {
         pnThongKe.add(chartPanel, BorderLayout.CENTER);
         pnThongKe.validate();
     }
+    public void setThongKeLuongQuy(String year) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        ArrayList<ThongKeThuChi> dstkluong = kn.thongKeLuongQuy(year);
+        for (ThongKeThuChi a : dstkluong) {
+            dataset.addValue(a.getSoTien(), "Tiền trả lương", String.valueOf(a.getThoiGian()));
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Thống kê lương nhân viên",
+                "Quý",
+                "Số tiền",
+                dataset
+        );
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setItemMargin(0.05);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(678, 441));
+
+        pnThongKe.removeAll();
+        pnThongKe.setLayout(new BorderLayout());
+        pnThongKe.add(chartPanel, BorderLayout.CENTER);
+        pnThongKe.validate();
+    }
     public void setThongKeQuy(String year) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         ArrayList<ThongKeThuChi> dstkthu = kn.thongKeThuQuy(year);
@@ -127,6 +153,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         ArrayList<ThongKeThuChi> dstkdt = kn.thongKeDoanhThuThang(year);
         for (ThongKeThuChi a : dstkdt) {
+            DecimalFormat df = new DecimalFormat("#,###");
             dataset.addValue(a.getSoTien(), "Doanh thu", String.valueOf(a.getThoiGian()));
         }
 
@@ -234,6 +261,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nam, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(seenBD, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -272,7 +300,6 @@ public void setThongKeNLThang(String year) {
         // Cột của bảng
         String[] columnNames = {"Tháng", "Mã NL", "Tên NL", "Loại NL", "Số lượng", "Tổng tiền"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
         // Đổ dữ liệu ban đầu
         for (NLNhapDTO a : nln) {
             Object[] rowData = {
@@ -281,14 +308,14 @@ public void setThongKeNLThang(String year) {
                 a.getTenNL(),
                 a.getLoaiNL(),
                 a.getSoluong(),
-                a.getGia()
+                String.format("%,.0f",a.getGia()*a.getSoluong())
             };
             model.addRow(rowData);
         }
 
         JTable table = new JTable(model);
         func.centerTable(table);
-        func.setUpTable(table);
+        func.setUpTable(table,null);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(678, 441));
 
@@ -322,7 +349,7 @@ public void setThongKeNLThang(String year) {
                         a.getTenNL(),
                         a.getLoaiNL(),
                         a.getSoluong(),
-                        a.getGia()
+                        String.format("%,.0f",a.getGia()*a.getSoluong())
                     });
                 }
 
@@ -330,6 +357,7 @@ public void setThongKeNLThang(String year) {
                 isTop5[0] = true;
             } else {
                 // Quay lại hiển thị đầy đủ
+                
                 for (NLNhapDTO a : originalData) {
                     newModel.addRow(new Object[]{
                         "Tháng " + a.getNgayNhap(),
@@ -337,7 +365,7 @@ public void setThongKeNLThang(String year) {
                         a.getTenNL(),
                         a.getLoaiNL(),
                         a.getSoluong(),
-                        a.getGia()
+                        String.format("%,.0f",a.getGia()*a.getSoluong())
                     });
                 }
 
@@ -347,7 +375,7 @@ public void setThongKeNLThang(String year) {
 
             table.setModel(newModel); // Cập nhật model mới
             func.centerTable(table);
-            func.setUpTable(table);
+            func.setUpTable(table,scrollPane);
         });
     }
     public void setThongKeNLQuy(String year) {
@@ -367,14 +395,14 @@ public void setThongKeNLThang(String year) {
                 a.getTenNL(),
                 a.getLoaiNL(),
                 a.getSoluong(),
-                a.getGia()
+                String.format("%,.0f",a.getGia()*a.getSoluong())
             };
             model.addRow(rowData);
         }
 
         JTable table = new JTable(model);
         func.centerTable(table);
-        func.setUpTable(table);
+        func.setUpTable(table,null);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(678, 441));
 
@@ -408,7 +436,7 @@ public void setThongKeNLThang(String year) {
                         a.getTenNL(),
                         a.getLoaiNL(),
                         a.getSoluong(),
-                        a.getGia()
+                        String.format("%,.0f",a.getGia()*a.getSoluong())
                     });
                 }
 
@@ -423,7 +451,7 @@ public void setThongKeNLThang(String year) {
                         a.getTenNL(),
                         a.getLoaiNL(),
                         a.getSoluong(),
-                        a.getGia()
+                        String.format("%,.0f",a.getGia()*a.getSoluong())
                     });
                 }
 
@@ -433,7 +461,7 @@ public void setThongKeNLThang(String year) {
 
             table.setModel(newModel); // Cập nhật model mới
             func.centerTable(table);
-            func.setUpTable(table);
+            func.setUpTable(table,scrollPane);
         });
     }
 
@@ -461,7 +489,7 @@ public void setThongKeNLThang(String year) {
         // Tạo JTable và đặt trong JScrollPane
         JTable table = new JTable(model);
         func.centerTable(table);
-        func.setUpTable(table);
+        func.setUpTable(table,null);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(678, 441));
 
@@ -508,7 +536,7 @@ public void setThongKeNLThang(String year) {
             }
             table.setModel(newModel); // Cập nhật model mới
             func.centerTable(table);
-            func.setUpTable(table);
+            func.setUpTable(table,scrollPane);
         });
     }
 
@@ -535,7 +563,7 @@ public void setThongKeNLThang(String year) {
         // Tạo JTable và đặt trong JScrollPane
         JTable table = new JTable(model);
         func.centerTable(table);
-        func.setUpTable(table);
+        func.setUpTable(table,null);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(678, 441));
 
@@ -589,7 +617,7 @@ public void setThongKeNLThang(String year) {
 
             table.setModel(newModel); // Cập nhật model mới
             func.centerTable(table);
-            func.setUpTable(table);
+            func.setUpTable(table,scrollPane);
         });
     }
     private void seenBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seenBDActionPerformed
@@ -603,7 +631,12 @@ public void setThongKeNLThang(String year) {
                 setThongKeQuy(year);
             }
         } else if (mode == 1) {
-            setThongKeLuongThang(year);
+            if (thoiGian.equals("tháng")) {
+                setThongKeLuongThang(year);
+            } else {
+                setThongKeLuongQuy(year);
+            }
+            
 
         } else if (mode == 2) {
             System.out.println("Hello");
