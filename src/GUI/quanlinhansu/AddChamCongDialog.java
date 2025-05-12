@@ -396,9 +396,9 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         }
         DefaultTableModel model=new DefaultTableModel(rows,colNames);
         table_NV=new JTable(model);
-        func.setUpTable(table_NV,null);
-        func.centerTable(table_NV);
         JScrollPane scrollPane = new JScrollPane(table_NV);
+         func.setUpTable(table_NV,scrollPane);
+        func.centerTable(table_NV);
         JPanel jpn_table=new JPanel(new BorderLayout());
         jpn_table.add(scrollPane,BorderLayout.CENTER);
         this.add(jpn_table,BorderLayout.WEST);
