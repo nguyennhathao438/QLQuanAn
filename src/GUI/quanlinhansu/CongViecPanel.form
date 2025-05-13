@@ -99,17 +99,16 @@
                           <Component id="jlabel_delete" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jlabel_chiTietCV" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel4" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel5" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="jLabel8" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -153,17 +152,26 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="13" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="  Th&#xea;m"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="13" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="    S&#x1eed;a"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="    X&#xf3;a"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="13" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="   X&#xf3;a"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlabel_chiTietCV">
@@ -173,7 +181,10 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value=" Chi ti&#x1ebf;t"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="13" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Chi ti&#x1ebf;t"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -199,18 +210,18 @@
                       <Group type="102" attributes="0">
                           <Component id="cbb_choose" min="-2" pref="132" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jtf_find_congViec" pref="149" max="32767" attributes="0"/>
+                          <Component id="jtf_find_congViec" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_look" min="-2" pref="43" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_lamMoi" min="-2" pref="133" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -226,7 +237,7 @@
                           <Component id="cbb_choose" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="jtf_find_congViec" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="btn_lamMoi" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btn_lamMoi" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>

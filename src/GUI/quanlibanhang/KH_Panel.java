@@ -113,10 +113,13 @@ public class KH_Panel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(217, 217, 217));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel7.setText("  Thêm");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel8.setText("    Xóa");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel9.setText("    Sửa");
 
         jlabel_add.addMouseListener(new java.awt.event.MouseAdapter() {

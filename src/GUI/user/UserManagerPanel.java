@@ -153,10 +153,13 @@ public class UserManagerPanel extends javax.swing.JPanel {
         panel_chucNang.setBackground(new java.awt.Color(217, 217, 217));
         panel_chucNang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel4.setText("  Thêm");
 
-        jLabel5.setText("    Sửa");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel5.setText("     Sửa");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel6.setText("    Xóa ");
 
         javax.swing.GroupLayout panel_chucNangLayout = new javax.swing.GroupLayout(panel_chucNang);
