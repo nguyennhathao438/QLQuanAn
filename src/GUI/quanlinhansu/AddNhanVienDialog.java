@@ -8,8 +8,8 @@ import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.CongViecDTO;
 import DTO.NhanVienDTO;
-import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
@@ -229,6 +229,18 @@ public class AddNhanVienDialog extends javax.swing.JDialog {
             int maCV = mapCV.get(combobox_cv.getSelectedItem().toString());
             Date ngaySinh = jdatechooser_ngaySinh.getDate();
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
+            Calendar currentCalendar = Calendar.getInstance();
+            int currentYear = currentCalendar.get(Calendar.YEAR);
+
+            Calendar birthCalendar = Calendar.getInstance();
+            birthCalendar.setTime(ngaySinh);
+            int birthYear = birthCalendar.get(Calendar.YEAR);
+
+            // Kiểm tra nếu tuổi nhỏ hơn 18
+            if (currentYear - birthYear < 18) {
+                JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             String gioiTinh = null;
             if (jradio_nam.isSelected()) {
                 gioiTinh = jradio_nam.getText();

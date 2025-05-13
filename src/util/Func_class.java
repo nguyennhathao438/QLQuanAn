@@ -103,7 +103,6 @@ public class Func_class {
         table.setShowGrid(true);
         table.setFillsViewportHeight(true);
         JTableHeader header = table.getTableHeader();
-        header.setBackground(new Color(30, 144, 255)); // xanh dương
         header.setForeground(Color.BLACK);
         header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         header.setReorderingAllowed(false);

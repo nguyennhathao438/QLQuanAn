@@ -2,21 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package GUI.user;
+package GUIADM;
 
-import DAO.USerDAO1;
-import DTO.User;
+import DAO.RolePermissionDAO;
+import DTO.RolePermissionDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import util.Func_class;
 
@@ -24,16 +36,33 @@ import util.Func_class;
  *
  * @author kiman
  */
-public class UserManagerPanel extends javax.swing.JPanel {
+public class PhanQuyenPanel extends javax.swing.JPanel {
+
     DefaultTableModel model;
-    USerDAO1 dao = new USerDAO1();
-    Func_class func=new Func_class();
-    List<User> listUserTemp=new ArrayList<>();
-    public UserManagerPanel() {
+    RolePermissionDAO dao = new RolePermissionDAO();
+    Func_class func = new Func_class();
+    List<RolePermissionDTO> listRoleTemp = new ArrayList<>();
+
+    public PhanQuyenPanel() {
         initComponents();
+        model = new DefaultTableModel(new String[]{"Mã Vai Trò", "Tên Vai Trò", "Tên Quyền"}, 0);
+        table.setModel(model);
         khoiTao();
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (value instanceof String && ((String) value).startsWith("<html>")) {
+                    label.setVerticalAlignment(SwingConstants.TOP);
+                }
+                return label;
+            }
+        });
+
     }
-    public void khoiTao(){
+
+    public void khoiTao() {
         setIcon();
         setUpTable();
         setUpJTF();
@@ -43,28 +72,86 @@ public class UserManagerPanel extends javax.swing.JPanel {
         fillComBoBOx();
         setCursorPoiter();
     }
-    public void setCursorPoiter(){
+
+    public void setCursorPoiter() {
         func.cursorPointer(jlabel_add);
         func.cursorPointer(jlabel_update);
         func.cursorPointer(jlabel_delete);
     }
-    public void setUpBtn(){
-        func.setUpBtn(btn_look, Color.WHITE,new Color(220,220,220));
-        func.setUpBtn(btn_refresh, Color.WHITE,new Color(220,220,220));
+
+    public void setUpBtn() {
+        func.setUpBtn(btn_look, Color.WHITE, new Color(220, 220, 220));
+        func.setUpBtn(btn_refresh, Color.WHITE, new Color(220, 220, 220));
     }
-    public void setTextHidden(){
+
+    public void setTextHidden() {
         PromptSupport.setPrompt("Tìm kiếm nhanh", jtf_find);
         PromptSupport.setForeground(Color.GRAY, jtf_find);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, jtf_find);
     }
-    public void setUpJTF(){
+
+    public void setUpJTF() {
         func.setUpJTF(jtf_find);
     }
-    public void setUpTable(){
-        loadUsers(dao.getAllUsers());
-        func.centerTable(table_user);
-        func.setUpTable(table_user,jScrollPane1);
+
+    public void setUpTable() {
+        loadData(dao.getAllRolePermissions());
+        func.centerTable(table);
+        table.setBackground(Color.WHITE);
+        table.setGridColor(new Color(230, 230, 230)); // Đường kẻ nhẹ
+        table.setShowGrid(true);
+        table.setFillsViewportHeight(true);
+        JTableHeader header = table.getTableHeader();
+        header.setForeground(Color.BLACK);
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        header.setReorderingAllowed(false);
+        header.setResizingAllowed(false);
+        // Màu nền xen kẽ các dòng và màu khi chọn
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? new Color(245, 245, 245) : Color.WHITE); // xen kẽ
+                } else {
+                    c.setBackground(new Color(173, 216, 230)); // màu khi chọn
+                }
+                return c;
+            }
+        });
+        if (jScrollPane1 != null) {
+            jScrollPane1.setBorder(null);
+            JScrollBar verticalBar = jScrollPane1.getVerticalScrollBar();
+            verticalBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
+            verticalBar.setUI(new BasicScrollBarUI() {
+                @Override
+                protected void configureScrollBarColors() {
+                    this.thumbColor = new Color(180, 180, 180);  // Màu thanh kéo
+                    this.trackColor = new Color(245, 245, 245);  // Màu nền rãnh
+                }
+
+                @Override
+                protected JButton createDecreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                @Override
+                protected JButton createIncreaseButton(int orientation) {
+                    return createZeroButton();
+                }
+
+                private JButton createZeroButton() {
+                    JButton button = new JButton();
+                    button.setPreferredSize(new Dimension(0, 0));
+                    button.setMinimumSize(new Dimension(0, 0));
+                    button.setMaximumSize(new Dimension(0, 0));
+                    return button;
+                }
+            });
+        }
     }
+
     public void setIcon() {
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg", 0.055f));
         jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg", 0.85f));
@@ -72,64 +159,101 @@ public class UserManagerPanel extends javax.swing.JPanel {
         btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg", 0.25f));
         btn_look.setIcon(new FlatSVGIcon("./resources/icon/look.svg", 0.6f));
     }
+
     public void fillComBoBOx() {
-        String[] cbbs = {"Tất cả","Tài khoản", "Tên USER", "Vai trò"};
+        String[] cbbs = {"Tất cả", "Mã vai trò", "Tên vai trò", "Tên quyền"};
         func.setUpComBoBox(jComboBox1);
         for (String item : cbbs) {
             jComboBox1.addItem(item);
         }
     }
+
     public void setMouseClick() {
         jlabel_add.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Window parentWindow = SwingUtilities.getWindowAncestor(UserManagerPanel.this);
-                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this, null,"Thêm tài khoản").setVisible(true);
+                PhanQuyenDialog dialog = new PhanQuyenDialog((Frame) SwingUtilities.getWindowAncestor(PhanQuyenPanel.this), false, null, null);
+                dialog.setVisible(true);
+                loadData(dao.getAllRolePermissions());
+                //setUpTable();
             }
         });
 
-// Sự kiện sửa người dùng
-        jlabel_update.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = table_user.getSelectedRow();
-                if (row >= 0) {
-                    int id = (int) model.getValueAt(row, 0);
-                    User user = dao.getUserById(id);
-                    Window parentWindow = SwingUtilities.getWindowAncestor(UserManagerPanel.this);
-                new UserFormPanel((Frame) parentWindow, true, UserManagerPanel.this,user,"Sửa tài khoản").setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn người dùng để sửa.");
-                }
-            }
-        });
-
-// Sự kiện xoá người dùng
         jlabel_delete.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = table_user.getSelectedRow();
-                if (row >= 0) {
-                    int id = (int) model.getValueAt(row, 0);
-                    dao.voHieuHoaUser(id);
-                    setUpTable();
+                int row = table.getSelectedRow();
+                if (row != -1) {
+                    String maVT = (String) model.getValueAt(row, 0);
+                    String tenVT = (String) model.getValueAt(row, 1);
+                    int confirm = JOptionPane.showConfirmDialog(null, "Xóa vai trò \"" + tenVT + "\"?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        dao.deleteRole(maVT);
+                        JOptionPane.showMessageDialog(null, "Xóa thành công.");
+                        loadData(dao.getAllRolePermissions());
+                        //setUpTable();
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn người dùng để xoá.");
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn vai trò cần xóa.");
                 }
             }
         });
-    }
-    public void loadUsers(List<User> list) {
-        model =new DefaultTableModel(new Object[]{"ID", "Tài khoản", "Tên","Vai trò"}, 0);
-        for (User u : list) {
-            if (u.getTrangThai() != 0) { // Chỉ hiện người còn hoạt động
-                model.addRow(new Object[]{
-                    u.getId(), u.getTaiKhoan(), u.getTen(), u.getVaiTro()
-                });
+
+        jlabel_update.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = table.getSelectedRow();
+                if (row != -1) {
+                    String maVT = (String) model.getValueAt(row, 0);
+                    String tenVT = (String) model.getValueAt(row, 1);
+                    PhanQuyenDialog dialog = new PhanQuyenDialog((Frame) SwingUtilities.getWindowAncestor(PhanQuyenPanel.this), true, maVT, tenVT);
+                    dialog.setVisible(true);
+                    loadData(dao.getAllRolePermissions());
+                    // setUpTable();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn vai trò cần sửa.");
+                }
             }
-        }
-        table_user.setModel(model);
+        });
+
     }
+
+    private void loadData(List<RolePermissionDTO> list) {
+        model.setRowCount(0);
+
+        // Gom quyền theo vai trò
+        Map<String, StringBuilder> mapMaVTToQuyen = new LinkedHashMap<>();
+        Map<String, String> mapMaVTToTenVT = new LinkedHashMap<>();
+
+        for (RolePermissionDTO dto : list) {
+            String maVT = dto.getMaVT();
+            String tenVT = dto.getTenVT();
+            String tenQuyen = dto.getTenQuyen();
+
+            mapMaVTToTenVT.put(maVT, tenVT);
+            mapMaVTToQuyen.putIfAbsent(maVT, new StringBuilder());
+
+            StringBuilder sb = mapMaVTToQuyen.get(maVT);
+            if (sb.length() > 0) {
+                sb.append("<br>");
+            }
+            sb.append(tenQuyen);
+        }
+
+        int rowIndex = 0;
+        for (String maVT : mapMaVTToQuyen.keySet()) {
+            String tenVT = mapMaVTToTenVT.get(maVT);
+            String quyenHTML = "<html>" + mapMaVTToQuyen.get(maVT).toString() + "</html>";
+
+            model.addRow(new Object[]{maVT, tenVT, quyenHTML});
+
+            int quyenCount = mapMaVTToQuyen.get(maVT).toString().split("<br>").length;
+            int rowHeight = Math.max(40, quyenCount * 20);
+            table.setRowHeight(rowIndex, rowHeight);
+            rowIndex++;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,7 +266,7 @@ public class UserManagerPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_user = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         panel_timKiem = new javax.swing.JPanel();
         jtf_find = new javax.swing.JTextField();
         btn_look = new javax.swing.JButton();
@@ -199,7 +323,7 @@ public class UserManagerPanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        table_user.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -210,7 +334,7 @@ public class UserManagerPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(table_user);
+        jScrollPane1.setViewportView(table);
 
         panel_timKiem.setBackground(new java.awt.Color(217, 217, 217));
         panel_timKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
@@ -293,38 +417,37 @@ public class UserManagerPanel extends javax.swing.JPanel {
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         jtf_find.setText("");
-        setUpTable();
+        loadData(dao.getAllRolePermissions());
+        func.centerTable(table);
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void btn_lookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookActionPerformed
         String find_text = jtf_find.getText().toLowerCase();
         String choose_cbb = jComboBox1.getSelectedItem().toString();
-        List<User> listUser = dao.getAllUsers();
-        listUserTemp.clear();
-        for (User u : listUser) {
-            String id = String.valueOf(u.getId()).toLowerCase();
+        List<RolePermissionDTO> listRole = dao.getAllRolePermissions();
+        listRoleTemp.clear();
+        for (RolePermissionDTO u : listRole) {
             if (choose_cbb.equals("Tất cả")) {
-                if (id.contains(find_text) || u.getTaiKhoan().toLowerCase().contains(find_text)
-                        || u.getTen().toLowerCase().contains(find_text) || u.getVaiTro().toLowerCase().contains(find_text)) {
-                    listUserTemp.add(u);
+                if (u.getMaVT().toLowerCase().contains(find_text) || u.getTenVT().toLowerCase().contains(find_text)
+                        || u.getTenQuyen().toLowerCase().contains(find_text)) {
+                    listRoleTemp.add(u);
                 }
-            } else if (choose_cbb.equals("Tài khoản")) {
-                if (u.getTaiKhoan().toLowerCase().contains(find_text)) {
-                    listUserTemp.add(u);
+            } else if (choose_cbb.equals("Mã vai trò")) {
+                if (u.getMaVT().toLowerCase().contains(find_text)) {
+                    listRoleTemp.add(u);
                 }
-            } else if (choose_cbb.equals("Tên USER")) {
-                if (u.getTen().toLowerCase().contains(find_text)) {
-                    listUserTemp.add(u);
+            } else if (choose_cbb.equals("Tên vai trò")) {
+                if (u.getTenVT().toLowerCase().contains(find_text)) {
+                    listRoleTemp.add(u);
                 }
             } else {
-                if (u.getVaiTro().toLowerCase().contains(find_text)) {
-                    listUserTemp.add(u);
+                if (u.getTenQuyen().toLowerCase().contains(find_text)) {
+                    listRoleTemp.add(u);
                 }
             }
         }
-        loadUsers(listUserTemp);
-        func.centerTable(table_user);
-        func.setUpTable(table_user, jScrollPane1);
+        loadData(listRoleTemp);
+        func.centerTable(table);
     }//GEN-LAST:event_btn_lookActionPerformed
 
 
@@ -343,6 +466,6 @@ public class UserManagerPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jtf_find;
     private javax.swing.JPanel panel_chucNang;
     private javax.swing.JPanel panel_timKiem;
-    private javax.swing.JTable table_user;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

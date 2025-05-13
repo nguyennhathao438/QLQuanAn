@@ -23,6 +23,7 @@ import GUI.quanlinhansu.LuongPanel;
 import GUI.quanlinhansu.NhanVienPanel;
 import GUI.user.UserManagerPanel;
 import GUIADM.PhanQuyenJPanel;
+import GUIADM.PhanQuyenPanel;
 
 public class ChuyenTrang {
 
@@ -103,7 +104,7 @@ public class ChuyenTrang {
                         node = new KH_Panel();
                         break;
                     case "Q12":
-                        node = new PhanQuyenJPanel();
+                        node = new PhanQuyenPanel();
                         break;
                     case "Q11":
                         node = new UserManagerPanel();

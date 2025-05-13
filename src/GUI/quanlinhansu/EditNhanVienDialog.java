@@ -5,8 +5,8 @@ import DAO.CongViecDAO;
 import DAO.NhanVienDAO;
 import DTO.CongViecDTO;
 import DTO.NhanVienDTO;
-import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
@@ -225,23 +225,36 @@ public class EditNhanVienDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_update_nvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_update_nvMouseClicked
-        if(check_edit_NhanVien()==1){
-            int maNV=nv.getMaNV();
-            String tenNV=jtf_name_nv.getText();
-            String sdt=jtf_sdt_nv.getText();
-            if(sdt.length()!=10||sdt.charAt(0)!='0'){
-                JOptionPane.showMessageDialog(null,"Số điện thoại không hợp lệ","Error",0);
+        if (check_edit_NhanVien() == 1) {
+            int maNV = nv.getMaNV();
+            String tenNV = jtf_name_nv.getText();
+            String sdt = jtf_sdt_nv.getText();
+            if (sdt.length() != 10 || sdt.charAt(0) != '0') {
+                JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Error", 0);
                 return;
             }
             int maCV = mapCV.get(combobox_cv.getSelectedItem().toString());
             Date ngaySinh = jdatechooser_ngaySinh.getDate();
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
-            String gioiTinh=null;
-            if(jradio_nam.isSelected())
-            gioiTinh=jradio_nam.getText();
-            else
-            gioiTinh=jradio_nu.getText();
-            nv=new NhanVienDTO(maNV,tenNV,ngaySinhSQL,gioiTinh,sdt,maCV);
+            Calendar currentCalendar = Calendar.getInstance();
+            int currentYear = currentCalendar.get(Calendar.YEAR);
+
+            Calendar birthCalendar = Calendar.getInstance();
+            birthCalendar.setTime(ngaySinh);
+            int birthYear = birthCalendar.get(Calendar.YEAR);
+
+            // Kiểm tra nếu tuổi nhỏ hơn 18
+            if (currentYear - birthYear < 18) {
+                JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String gioiTinh;
+            if (jradio_nam.isSelected()) {
+                gioiTinh = jradio_nam.getText();
+            } else {
+                gioiTinh = jradio_nu.getText();
+            }
+            nv = new NhanVienDTO(maNV, tenNV, ngaySinhSQL, gioiTinh, sdt, maCV);
             nvDao.updateNhanVien(nv);
             nvPanel.setUpTable();
             this.dispose();

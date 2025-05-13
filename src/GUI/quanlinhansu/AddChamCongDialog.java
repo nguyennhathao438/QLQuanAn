@@ -65,7 +65,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
     JPanel jpanel_thongTinNhanVien, jpanel_buttons_chamCong, jpanel_calendar,jpanel_TangCa_option,jpanel_option;
     JRadioButton rb1h, rb2h, rb3h, rb4h;
     ButtonGroup groupTangCa;
-    int gioTangCaDangChon = 1; // mặc định là 1 giờ
+    int gioTangCaDangChon = 1;
     public AddChamCongDialog(java.awt.Frame parent, boolean modal,ChamCongPanel chamcongPanel) {
         super(parent, modal);
         initComponents();
@@ -621,16 +621,16 @@ public class AddChamCongDialog extends javax.swing.JDialog {
     private void thongKeChamCong() {
         int nghi = 0, diTre = 0, tangCa = 0;
         for (String status : trangThaiNgay.values()) {
-            switch (status) {
-                case "Nghỉ":
-                    nghi++;
-                    break;
-                case "Đi trễ":
-                    diTre++;
-                    break;
-                case "Tăng ca":
-                    tangCa++;
-                    break;
+            System.out.println("Trang thai : "+ status);
+            if (status.equals("Nghỉ")) {
+                nghi++;
+            } else if (status.equals("Đi trễ")) {
+                diTre++;
+            }
+            else{
+                String[] parts= status.split("-");
+                int time = Integer.parseInt(parts[1].replaceAll("giờ","").trim());
+                tangCa+=time;
             }
         }
         int tongNgay = 0;
@@ -641,7 +641,7 @@ public class AddChamCongDialog extends javax.swing.JDialog {
         }
         int diLam = tongNgay - nghi;
         String msg = String.format(
-                "Thống kê chấm công:\n- Ngày đi làm: %d\n- Nghỉ: %d\n- Đi trễ: %d\n- Tăng ca: %d",
+                "Thống kê chấm công:\n- Ngày đi làm: %d ngày\n- Nghỉ: %d ngày \n- Đi trễ: %d ngày \n- Tăng ca: %d giờ",
                 diLam, nghi, diTre, tangCa
         );
         JOptionPane.showMessageDialog(this, msg, "Kết quả", JOptionPane.INFORMATION_MESSAGE);

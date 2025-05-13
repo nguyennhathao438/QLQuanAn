@@ -65,8 +65,8 @@ public class ChamCongPanel extends javax.swing.JPanel {
     }
     public void setUpBtn(){
         func.setUpBtn(btn_refresh,Color.WHITE,new Color(220,220,220));
-        func.setUpBtnTwo(btn_them_chamCong,Color.ORANGE,Color.ORANGE,new Color(211,218,211),14);
-        func.setUpBtnTwo(btn_excel,Color.ORANGE,Color.ORANGE,new Color(211,218,211),14);
+        func.setUpBtnTwo(btn_them_chamCong,Color.ORANGE,Color.ORANGE,Color.WHITE,14);
+        func.setUpBtnTwo(btn_excel,Color.ORANGE,Color.ORANGE,Color.WHITE,14);
         func.setUpBtn(btn_look, Color.WHITE, new Color(220,220,220));
     }
     public void setTextHidden(){
