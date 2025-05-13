@@ -119,7 +119,7 @@ public class QKNCCJPanel extends javax.swing.JPanel {
         jLabel2.setText("    Xoá");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel3.setText("    Sửa");
+        jLabel3.setText("     Sửa");
 
         jlabel_add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -283,7 +283,7 @@ public class QKNCCJPanel extends javax.swing.JPanel {
     public void setIcon() {
         jButton4.setIcon(new FlatSVGIcon("./resources/icon/look.svg", 0.6f));
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg", 0.06f));
-        jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg", 0.85f));
+        jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update.svg", 0.9f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg", 0.75f));
         btn_refresh.setIcon(new FlatSVGIcon("./resources/icon/refresh.svg", 0.25f));
     }  

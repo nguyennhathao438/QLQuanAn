@@ -67,7 +67,7 @@ public class KH_Panel extends javax.swing.JPanel {
     }
     public void setIcon(){
         jlabel_add.setIcon(new FlatSVGIcon("./resources/icon/add_1.svg",0.06f));
-        jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update_1.svg",0.065f));
+        jlabel_update.setIcon(new FlatSVGIcon("./resources/icon/update_1.svg",0.07f));
         btn_Refresh.setIcon(new FlatSVGIcon("./resources/icon/Refresh_1.svg",0.04f));
         btn_ok.setIcon(new FlatSVGIcon("./resources/icon/look.svg",0.65f));
         jlabel_delete.setIcon(new FlatSVGIcon("./resources/icon/delete.svg",0.75f));
