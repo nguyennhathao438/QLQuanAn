@@ -533,6 +533,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
 
         for (HoaDon hd : lsb.getLSB()) {
             String tenKH = hd.getMaKH();
+            if(tenKH == null && !selectedKH.equals("Tất cả")) continue;
             String tenUser = us.getTenUserByID(hd.getTenUser());
 
             boolean matchKH = selectedKH.equals("Tất cả") || tenKH.equals(selectedKH);

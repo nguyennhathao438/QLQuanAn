@@ -517,7 +517,6 @@ public class BanJPanel extends javax.swing.JPanel {
             return;
         }
         else if ("Trống".equals(trangthai)) {
-            BanManager.DatBan(bandangchon);
             moDialogDatBan();
         } else {
             int chon = JOptionPane.showConfirmDialog(null,

@@ -24,6 +24,9 @@ public class BanManager {
     public static void DatBan(int soban){
         dsBan[soban].setTrangthai("Đã Đặt");
     }
+    public static boolean isTrongBan(int soban){
+        return dsBan[soban].getTrangthai().equalsIgnoreCase("Trống");
+    }
     public static void themTT(int soban,DatBan db){
         dsdb[soban].themTT(db);
     }
