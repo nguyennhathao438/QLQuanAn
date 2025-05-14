@@ -280,6 +280,20 @@ public class QuanKhoDAO {
             ex.printStackTrace();
         }
     }
+    public String getLoaiMAByMaMA(String maMA) {
+        String query = "SELECT loaiMA FROM MONAN WHERE maMA = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, maMA);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("loaiMA");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy hoặc có lỗi
+    }
     public void layMonAnDcBan(DSMonAn dsma) {
         String query = "SELECT MONAN.maMA,tenMA,loaiMA,MONAN.moTa,gia,MONAN.trangThai ,MIN(FLOOR(NGUYENLIEU.tongSoLuong / THANHPHAN.soLuongNL)) AS soLuongCoTheBan\n"
                 + "FROM MONAN \n"

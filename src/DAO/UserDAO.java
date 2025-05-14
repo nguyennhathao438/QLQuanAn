@@ -52,28 +52,25 @@ public class UserDAO {
     }
     public int toggleTrangThaiUser(int id) {
         int kt = -1;
-        String queryget ="SELECT trangThai FROM USERS WHERE id =? ";
+        String queryget = "SELECT trangThai FROM USERS WHERE id =? ";
         String query = "UPDATE USERS SET trangThai = ? WHERE id = ?";
-        try(Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query);
-                PreparedStatement stmtget = conn.prepareStatement(queryget);
-){ 
-            stmtget.setInt(1,id);
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query); PreparedStatement stmtget = conn.prepareStatement(queryget);) {
+            stmtget.setInt(1, id);
             ResultSet rs = stmtget.executeQuery();
             int trangthai = 0;
-            if(rs.next()){ 
+            if (rs.next()) {
                 trangthai = rs.getInt("trangThai");
             }
-            if(trangthai !=3){ 
-                stmt.setInt(1,3);
+            if (trangthai != 3) {
+                stmt.setInt(1, 3);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
-            }else if(trangthai == 3){ 
-                stmt.setInt(1,2);
+            } else if (trangthai == 3) {
+                stmt.setInt(1, 2);
                 stmt.setInt(2, id);
                 kt = stmt.executeUpdate();
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,6 +92,7 @@ public class UserDAO {
         }
         return id;
     }
+
     public String getTenUserByID(int id) {
         String query = "SELECT ten FROM USERS WHERE id = ? ";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -108,6 +106,7 @@ public class UserDAO {
         }
         return "";
     }
+
     public String getTenTaiKhoanUserByID(int id) {
         String query = "SELECT taiKhoan FROM USERS WHERE id = ? ";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
