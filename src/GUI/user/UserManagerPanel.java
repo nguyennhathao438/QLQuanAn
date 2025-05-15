@@ -150,7 +150,6 @@ public class UserManagerPanel extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
-        panel_chucNang.setBackground(new java.awt.Color(217, 217, 217));
         panel_chucNang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -209,7 +208,6 @@ public class UserManagerPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(table_user);
 
-        panel_timKiem.setBackground(new java.awt.Color(217, 217, 217));
         panel_timKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         btn_look.addActionListener(new java.awt.event.ActionListener() {

@@ -126,7 +126,6 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
         });
         pubangMA.add(deleteMA);
 
-        jPanel2.setBackground(new java.awt.Color(217, 217, 217));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức Năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -215,7 +214,6 @@ public class QKMonAnJPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(217, 217, 217));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm Kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         searchText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

@@ -158,7 +158,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(table_nv);
 
-        jpanel_chucNang1.setBackground(new java.awt.Color(217, 217, 217));
         jpanel_chucNang1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jlabel_update.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,7 +253,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jpanel_chucNang2.setBackground(new java.awt.Color(217, 217, 217));
         jpanel_chucNang2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         btn_lamMoi.setText("Làm mới");

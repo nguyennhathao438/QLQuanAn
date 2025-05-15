@@ -109,7 +109,6 @@ public class QKNCCJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         bangNCC = new javax.swing.JTable();
 
-        jPanel3.setBackground(new java.awt.Color(217, 217, 217));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -174,7 +173,6 @@ public class QKNCCJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(217, 217, 217));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm Kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jButton4.addActionListener(new java.awt.event.ActionListener() {

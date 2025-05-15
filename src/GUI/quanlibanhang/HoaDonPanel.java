@@ -161,7 +161,6 @@ public class HoaDonPanel extends javax.swing.JPanel {
         Giacb = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(217, 217, 217));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
 
         label_chiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -211,7 +210,6 @@ public class HoaDonPanel extends javax.swing.JPanel {
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(217, 217, 217));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -535,7 +533,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
             String tenKH = hd.getMaKH();
             String tenUser = us.getTenUserByID(hd.getTenUser());
 
-            boolean matchKH = selectedKH.equals("Tất cả") || tenKH.equals(selectedKH);
+            boolean matchKH = selectedKH.equals("Tất cả") || (tenKH != null && tenKH.equals(selectedKH));
             boolean matchUser = selectedUser.equals("Tất cả") || tenUser.equals(selectedUser);
             boolean matchDate = true;
 

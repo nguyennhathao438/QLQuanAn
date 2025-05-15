@@ -22,7 +22,6 @@ import GUI.quanlinhansu.CongViecPanel;
 import GUI.quanlinhansu.LuongPanel;
 import GUI.quanlinhansu.NhanVienPanel;
 import GUI.user.UserManagerPanel;
-import GUIADM.PhanQuyenJPanel;
 import GUIADM.PhanQuyenPanel;
 
 public class ChuyenTrang {
@@ -34,7 +33,24 @@ public class ChuyenTrang {
     public ChuyenTrang(JPanel root) {
         this.root = root;
     }
+    public void setView(String kind) {
+        JPanel view;
+        switch (kind) {
+            case "Q03": view = new QKMonAnJPanel(); break;
+            case "Q14": view = new NhanVienPanel(); break;
+            case "Q07": view = new BanJPanel(); break;
+            // Thêm các case khác tương ứng các quyền nếu cần
+            default: view = new JPanel(); break;
+        }
 
+        root.removeAll();
+        root.setLayout(new BorderLayout());
+        root.add(view);
+        root.validate();
+        root.repaint();
+
+        kindSelected = kind;
+    }
     public void setTrang(JPanel jpn) {
         kindSelected = "TrangChinh";
         root.removeAll();

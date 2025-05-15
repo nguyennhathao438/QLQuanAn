@@ -1,7 +1,9 @@
 package GUI.Layout;
 
 import DAO.PhanQuyenDAL;
+import DAO.USerDAO1;
 import DAO.UserDAO;
+import DTO.User;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import controller.Bean;
 import controller.ChuyenTrang;
@@ -46,6 +48,7 @@ public class Menu extends javax.swing.JFrame {
     HashMap<String, String> mapQuyens;
     String maVT = "";
     UserDAO us = new UserDAO();
+    USerDAO1 us1 = new USerDAO1();
 
     public Menu(String maVT) {
         this.maVT = maVT;
@@ -87,7 +90,7 @@ public class Menu extends javax.swing.JFrame {
         // Danh sách quyền (mô phỏng, bạn nên thay thế phần này theo nhu cầu)
         ArrayList<String> arrs = pqDao.getDSQuyen(maVT);
         mapQuyens = getMapQuyens();
-        JPanel jpnView = new JPanel();
+        JPanel jpnView;
         jpnView = new JPanel();
         jpnView.setLayout(new BorderLayout()); // Bạn có thể đổi layout tùy nội dung bên trong
         jpnView.setBackground(Color.WHITE); // Tuỳ chỉnh màu nền
@@ -98,16 +101,36 @@ public class Menu extends javax.swing.JFrame {
 // Thêm panel chính vào giữa
         this.add(jpnView, BorderLayout.CENTER);
 
-        ChuyenTrang ct=new ChuyenTrang(jpnView);
-        ct.setTrang(jpnView);
+        ChuyenTrang ct = new ChuyenTrang(jpnView);
+
+// Quy định mapping vai trò -> mã quyền load ban đầu
+        String initKind;
+        switch (maVT) {
+            case "ADMIN":
+            case "QK":
+                initKind = "Q03"; // Món ăn
+                break;
+            case "QLNS":
+                initKind = "Q14"; // Nhân viên (Phân quyền)
+                break;
+            case "NVBH":
+                initKind = "Q07"; // Bán hàng
+                break;
+            default:
+                initKind = "Q03"; // Mặc định
+                break;
+        }
+
+// Load panel theo quyền
+        ct.setView(initKind);
+
+// Tạo menu bên sidebar dựa trên quyền
         ArrayList<Bean> menu = new ArrayList<>();
         List<String> quyenOrder = new ArrayList<>(List.of(
-                "Q03", // Món ăn
-                "Q01", // Nguyên Liệu
-                "Q02", // Nhà Cung Cấp
-                "Q07", "Q08","Q04", "Q05", "Q11", "Q13", "Q14", "Q10", "Q09","Q06",
-                "Q12" // Phân quyền để cuối
+                "Q03", "Q01", "Q02", "Q07", "Q08", "Q04", "Q05", "Q14",
+                "Q13", "Q10", "Q09", "Q11", "Q06", "Q12"
         ));
+
         for (String maQuyen : quyenOrder) {
             if (arrs.contains(maQuyen)) {
                 String tenQuyen = mapQuyens.get(maQuyen);
@@ -117,13 +140,20 @@ public class Menu extends javax.swing.JFrame {
                 menuItemPanels.add(menuItem);
                 sidebarPanel.add(menuItem);
                 sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-                
             }
         }
         ct.setEvent(menu);
+
+// Tô màu menu theo quyền đầu tiên phù hợp vai trò
         for (Bean bean : menu) {
-            if (bean.getKind().equals("Q03")) {
-                bean.getJpn().setBackground(Color.WHITE); // tô màu trắng cho panel món ăn
+            String kind = bean.getKind();
+            JPanel panel = bean.getJpn();
+
+            if ((maVT.equals("ADMIN") && kind.equals("Q03"))
+                    || (maVT.equals("QLNS") && kind.equals("Q14"))
+                    || (maVT.equals("QK") && kind.equals("Q03"))
+                    || (maVT.equals("NVBH") && kind.equals("Q07"))) {
+                panel.setBackground(Color.WHITE);
                 break;
             }
         }
@@ -237,11 +267,11 @@ public class Menu extends javax.swing.JFrame {
         quyenMap.put("Q07", "Bàn");
         quyenMap.put("Q08", "Khách hàng");
         quyenMap.put("Q05", "Hóa đơn bán hàng");
-        
+
         quyenMap.put("Q10", "Chấm công");
         quyenMap.put("Q09", "Tính lương");
         quyenMap.put("Q06", "Thống kê");
-        
+
         quyenMap.put("Q13", "Công việc");
         quyenMap.put("Q14", "Nhân viên");
         quyenMap.put("Q11", "Tài khoản");

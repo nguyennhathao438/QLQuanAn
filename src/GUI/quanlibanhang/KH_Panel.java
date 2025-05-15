@@ -110,7 +110,6 @@ public class KH_Panel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         BangKh = new javax.swing.JTable();
 
-        jPanel1.setBackground(new java.awt.Color(217, 217, 217));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -180,7 +179,6 @@ public class KH_Panel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(217, 217, 217));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
         btn_ok.addActionListener(new java.awt.event.ActionListener() {
@@ -270,10 +268,11 @@ public class KH_Panel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addContainerGap())
         );
